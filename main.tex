@@ -108,13 +108,103 @@ concreto [4, 9].
 % SUGGERIMENTO DIDATTICO: Introduciamo l'operatore [[C]]phi [2, 10].
 % È qui che parleremo del Teorema 3.2 (Caratterizzazione) che abbiamo visto prima [11].
 
-\section{Assiomatizzazione e Limiti della CL}
+La Coalition Logic (CL) fornisce un linguaggio formale per ragionare sul potere
+che i gruppi di agenti possono esercitare simultaneamente in un gioco
+\cite{1, 5}.
+
+\subsection{Sintassi: l'operatore $[[C]] \phi$}
+
+Dato un insieme di agenti $Ag$ e un insieme di proposizioni atomiche $\Phi$,
+la sintassi della CL è definita come segue \cite{31, 90}:
+\begin{equation}
+	\phi ::= p \mid \neg \phi \mid \phi_1 \lor \phi_2 \mid [[C]] \phi
+\end{equation}
+La formula $[[C]] \phi$ esprime intuitivamente che la coalizione $C$ ha una
+strategia comune per \textbf{forzare} un esito che soddisfi $\phi$,
+indipendentemente dalle azioni degli agenti in $Ag \setminus C$ \cite{12, 13}.
+
+\subsection{Dai Coalition Frames ai Modelli}
+
+Per definire rigorosamente la verità di queste formule, dobbiamo distinguere
+tra la struttura del mondo (Frame) e i fatti che vi accadono (Modello).
+
+\begin{itemize}
+	\item \textbf{Coalition Frame:} È una coppia $\mathcal{F} = (S, E)$ dove
+	      $S$ è l'insieme degli stati e $E$ è una \textbf{struttura di effettività}
+	      che assegna a ogni stato $s$ una funzione di effettività \textbf{giocabile}
+	      (\textit{playable}) \cite{31}.
+	\item \textbf{Coalition Model:} È una tripla $\mathcal{M} = (S, E, \pi)$
+	      che aggiunge al frame una funzione di valutazione $\pi$, la quale stabilisce
+	      quali proposizioni atomiche siano vere in ogni stato \cite{32, 91}.
+\end{itemize}
+
+La semantica dell'operatore coalizionale è data da \cite{33, 94}:
+\begin{equation}
+	M, s \models [[C]] \phi \iff \phi^M \in E(s, C)
+\end{equation}
+dove $\phi^M = \{t \in S \mid M, t \models \phi\}$. Una coalizione può forzare
+$\phi$ se l'insieme degli stati in cui $\phi$ è vera fa parte dei suoi
+esiti forzabili.
+
+\subsection{Il Teorema 3.2: Il Ponte tra Logica e Giochi}
+
+Il risultato teorico più profondo di questa sezione è il \textbf{Teorema 3.2
+	(Characterization)}. Esso stabilisce che:
+\begin{quote}
+	\textit{Una funzione di effettività $E$ è giocabile se e solo se è la
+		funzione di effettività di un qualche gioco strategico} \cite{19, 32}.
+\end{quote}
+
+Questo teorema è fondamentale perché garantisce che i \textbf{coalition frames}
+astratti siano a tutti gli effetti dei \textbf{game frames} concreti \cite{32}.
+Esso permette alla logica di astrarre dalla complessità tecnica delle strategie
+individuali, mantenendo però la certezza che ogni enunciato della CL sia
+fondato su una reale struttura di gioco strategico \cite{34}.\section{Assiomatizzazione e Limiti della CL}
 % SUGGERIMENTO DIDATTICO: Elenca gli assiomi base (superadditività, ecc.) [12].
 % Introduci il problema della "succinctness": perché enumerare tutte le coalizioni è inefficiente [13, 14]?
 
 \section{Quantified Coalition Logic (QCL): Predicati di Coalizione}
 % SUGGERIMENTO DIDATTICO: Questa è la parte nuova della seconda fonte.
 % Spiega come usiamo sottoinsiemi, sovrainsiemi e cardinalità per descrivere gruppi (subseteq, geq) [15, 16].
+
+Il sistema assiomatico della Coalition Logic ($\mathbf{CL}$) cattura formalmente
+le proprietà di giocabilità discusse in precedenza. Gli assiomi principali
+includono \cite{35, 37}:
+\begin{itemize}
+	\item \textbf{Ag-massimalità ($Ag$):} $\neg [[\emptyset]]\neg \phi \to [[Ag]]\phi$,
+	      che stabilisce un legame tra l'inevitabilità e il potere totale.
+	\item \textbf{Superadditività ($S$):} $([[C_1]]\phi_1 \land [[C_2]]\phi_2) \to
+		      [[C_1 \cup C_2]](\phi_1 \land \phi_2)$ per coalizioni disgiunte. Questo
+	      assioma riflette la capacità degli agenti di combinare le proprie strategie \cite{37, 65}.
+\end{itemize}
+
+\subsection{Il Limite della Concisione (Succinctness)}
+
+Nonostante la sua completezza, la CL presenta un limite computazionale e
+pratico: la \textbf{succinctness} (concisione) \cite{83}. In CL, se vogliamo
+esprimere che ``esiste una coalizione che può forzare $\phi$'', siamo
+costretti a elencare esplicitamente ogni possibile combinazione di agenti
+in una disgiunzione:
+\begin{equation}
+	[[C_1]]\phi \lor [[C_2]]\phi \lor \dots \lor [[C_{2^n}]]\phi
+\end{equation}
+In un sistema con $n$ agenti, la lunghezza di tale formula cresce in modo
+\textbf{esponenziale} rispetto al numero di agenti, rendendo la logica
+inefficiente per descrivere sistemi complessi \cite{95, 96}.
+
+\subsection{La Soluzione: Predicati di Coalizione}
+
+Per superare questo ostacolo, la Quantified Coalition Logic (QCL) introduce
+il concetto di \textbf{predicato di coalizione} $P$ \cite{87, 96}. Invece di
+elencare i membri, descriviamo le proprietà dei gruppi:
+\begin{itemize}
+	\item \textbf{Inclusione ($subseteq, supseteq$):} Permette di definire
+	      gruppi che sono sottoinsiemi o sovrainsiemi di una data coalizione $C$ \cite{97, 98}.
+	\item \textbf{Cardinalità ($geq(n)$):} Introduce la possibilità di
+	      ragionare sulla taglia del gruppo (es. ``almeno $n$ agenti''), permettendo
+	      di formalizzare concetti come la \textbf{maggioranza} in modo estremamente
+	      conciso \cite{155, 156, 163}.
+\end{itemize}
 
 \section{Operatori Quantificati: Esistenziale e Universale}
 % SUGGERIMENTO DIDATTICO: Introduciamo <P>phi e [P]phi [17, 18].
