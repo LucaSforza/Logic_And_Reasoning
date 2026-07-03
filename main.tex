@@ -21,12 +21,88 @@
 % 18:00 - 20:00 -> Esempi Pratici e Conclusioni (Sezione 8)
 
 \section{Introduzione: Dai Modelli Kripke ai Frame di Gioco}
-% SUGGERIMENTO DIDATTICO: Qui devi spiegare perché la logica modale standard non basta.
-% Passiamo da un solo agente a un'interazione simultanea tra molti [6, 7].
+La modellazione delle azioni e dei loro effetti è un compito centrale in informatica, logica ed economia [1]. Nel caso più semplice, ovvero quello di un \textbf{singolo agente}, la logica modale tradizionale utilizza i \textbf{modelli di Kripke}, dove una relazione di accessibilità associa a ogni stato del mondo tutti i possibili stati che l'agente può raggiungere attraverso le proprie azioni [1]. In questo contesto, una formula modale esprime ciò che l'agente può \lq\lq{}portare a compimento\rq\rq{} [1].
+
+Tuttavia, quando si estende questo approccio a più agenti, sorge un problema fondamentale: la logica multi-agente standard considera gli individui in \textbf{isolamento} [2]. Sebbene si possa definire cosa l'agente 1 o l'agente 2 possono fare singolarmente, queste logiche non spiegano cosa accada quando agiscono \textbf{simultaneamente} [2]. Poiché le azioni degli agenti spesso interagiscono tra loro, il risultato finale dipende dalla combinazione delle scelte di tutti i partecipanti [2, 3].
+
+Per superare questo limite, Marc Pauly introduce i \textbf{frame di gioco} (\textit{game frames}), che associano a ogni stato una forma di gioco strategico dove gli esiti sono altri stati del modello [3, 4]. La \textbf{Coalition Logic (CL)} nasce quindi per formalizzare il ragionamento sul \textbf{potere coalizionale}: essa permette di esprimere cosa un gruppo di agenti può ottenere tramite un'azione collettiva, indipendentemente dalle scelte degli altri [5-7].
+
+Nonostante la potenza concettuale della CL, emerge un limite pratico riguardante la \textbf{concisione} (\textit{succinctness}) [8, 9]. In un sistema con molti agenti, esprimere proprietà generali (come \lq\lq{}una coalizione di maggioranza può vincere\rq\rq{}) richiederebbe formule esponenzialmente lunghe, poiché la CL costringe a elencare esplicitamente ogni possibile combinazione di membri della coalizione [8, 10, 11]. Questa sfida motiva lo sviluppo della \textbf{Quantified Coalition Logic (QCL)}, che introduce predicati e quantificatori per descrivere le coalizioni in modo più efficiente e compatto [8, 9].
 
 \section{Il Concetto di Potere Coalizionale}
 % SUGGERIMENTO DIDATTICO: Spiega la funzione di effettività.
 % Cosa significa "forzare" un esito (E-effectivity) [8, 9]?
+
+Quindi come detto nell'introduzione noi abbiamo che la logica modale semplice è un sistema di un singilo agente.
+
+Poiché dato uno stato del mondo $s$ e $t$ e data una relazione $R$ che definisce le possibili azioni dell'agente.
+
+Un agente modifica lo stato del mondo portandolo dallo stato $s$ allo stato $t$ ($s R t$).
+
+Ma questo non permette di modellare sistemi multi-agenti, dove azioni diverse effettuate da più agenti in modo indipendente possono influenzare lo stato finale.
+
+Quindi l'idea è di modellare un sistema multi-agente come un modello dove associamo ad ogni stato del modello ad un gioco strategico che devono giocare gli agenti.
+
+Un gioco strategico $G = (N, \{\Sigma_i \mid i \in N\},o,S)$ dove: $N$ è l'insieme degli agenti, poi esiste un insieme di strategie (insiemi di azionu possibili) che ogni agente
+è associato, un insieme $S$ di stati possibili e una funzione $o : \prod_{i \in N} \Sigma_i \rightarrow S$.
+
+Ora dobbiamo definire un game frame dove ogni stato è associato ad un gioco strategico.
+
+Definzione game frames:
+
+Sia $\Gamma^N_S$ l'insieme di tutti i giochi strategici possibili dato un insieme $N$ di agenti e un insieme $S$ di stati.
+
+Un game frame è una tupla (S,$\gamma$) dove $S$ è l'insieme non banale di stati e $\gamma : S \rightarrow \Gamma^N_S$
+è una funzione che associa stati e giochi strategici.
+
+\subsection{Dalla Strategia al Potere: la Funzione di Effettività}
+
+Il passaggio fondamentale della Coalition Logic è astrarre i dettagli del gioco
+per concentrarsi solo su ciò che le coalizioni possono ottenere. Questo è
+formalizzato dalla \textbf{funzione di effettività} $E_G$ derivata da un gioco $G$.
+
+Definzione funzione di effettività: $E_G : \mathcal{P}(N) \rightarrow \mathcal{P}(\mathcal{P}(S))$.
+
+Ossia: dato un insieme di agenti, la funzione $E_G$ ritorna un insieme di stati $X$ che sono gli stati
+raggiungibili dalla coalizione con una strategia condivisa.
+
+Formalmente:
+
+Data una coalizione $C \subseteq N$, diciamo che $C$ è \textbf{effettiva} per un
+insieme di esiti $X \subseteq S$ (scritto $X \in E_G(C)$) se e solo se:
+\begin{equation}
+	\exists \sigma_C \forall \sigma_{N \setminus C} : o(\sigma_C, \sigma_{N \setminus C}) \in X
+\end{equation}
+
+In termini intuitivi, questo significa che la coalizione $C$ può \textbf{forzare}
+l'esito del gioco all'interno dell'insieme $X$. Il concetto di ``forzare'' implica
+che $C$ possiede una strategia comune tale che, \textbf{indipendentemente} dalle
+scelte fatte dagli agenti esterni alla coalizione ($N \setminus C$), lo stato
+risultante apparterrà necessariamente a $X$ [1, 2].
+
+\subsection{Proprietà del Potere Coalizionale: la Playability}
+
+Non tutte le funzioni matematiche possono rappresentare un gioco reale. Una
+funzione di effettività è definita \textbf{giocabile} (\textit{playable}) se
+riflette le dinamiche di un vero gioco strategico [3, 4]. Le proprietà
+essenziali che devi considerare sono:
+
+\begin{itemize}
+	\item \textbf{Monotonicità dell'esito (Outcome-monotonic):} Se una coalizione può forzare $X$,
+	      può forzare anche ogni insieme $Y$ più grande di $X$. Se garantisco la
+	      vittoria, garantisco anche che ``qualcuno vincerà'' [5, 6]. Ovvero: $ \text{for all } X \subseteq X' \subseteq S $ and for all $ C \subseteq N $, if $X \in E(C)$ then $X' \in E(C)$
+	\item \textbf{Superadditività:} Se due coalizioni disgiunte possono forzare
+	      rispettivamente gli esiti $X_1$ e $X_2$, allora unendo le forze possono
+	      forzare l'intersezione $X_1 \cap X_2$. Questo esprime matematicamente il
+	      \textbf{vantaggio della cooperazione} [5, 7, 8].
+	\item \textbf{$N$-massimalità:} La coalizione di tutti i giocatori può
+	      forzare un esito $X$ se e solo se la coalizione vuota non può forzare il
+	      contrario ($S \setminus X$) [5, 6].
+\end{itemize}
+
+Queste proprietà garantiscono, per il \textbf{Teorema 3.2 (Caratterizzazione)},
+che la nostra analisi logica sia sempre supportata da un modello di gioco
+concreto [4, 9].
 
 \section{Coalition Logic (CL): Sintassi e Semantica}
 % SUGGERIMENTO DIDATTICO: Introduciamo l'operatore [[C]]phi [2, 10].
