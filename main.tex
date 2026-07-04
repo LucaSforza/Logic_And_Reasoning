@@ -159,53 +159,55 @@ Questo teorema è fondamentale perché garantisce che i \textbf{coalition frames
 astratti siano a tutti gli effetti dei \textbf{game frames} concreti \cite{32}.
 Esso permette alla logica di astrarre dalla complessità tecnica delle strategie
 individuali, mantenendo però la certezza che ogni enunciato della CL sia
-fondato su una reale struttura di gioco strategico \cite{34}.\section{Assiomatizzazione e Limiti della CL}
+fondato su una reale struttura di gioco strategico \cite{34}.
+\section{Assiomatizzazione e Limiti della CL}
 % SUGGERIMENTO DIDATTICO: Elenca gli assiomi base (superadditività, ecc.) [12].
 % Introduci il problema della "succinctness": perché enumerare tutte le coalizioni è inefficiente [13, 14]?
+
+Il sistema formale della Coalition Logic ($\mathbf{CL}$) è progettato per
+riflettere matematicamente le proprietà di giocabilità delle funzioni di
+effettività \cite{35}.
+
+\subsection{Gli Assiomi Base}
+
+L'assiomatizzazione proposta da Pauly è completa rispetto alla classe dei
+modelli di coalizione e si basa sui seguenti schemi principali \cite{35, 37}:
+\begin{itemize}
+	\item \textbf{Consistenza ($\bot$):} $\neg [[C]] \bot$. Nessuna coalizione
+	      può forzare l'impossibile \cite{37, 94}.
+	\item \textbf{Efficacia ($\top$):} $[[C]] \top$. Ogni coalizione può
+	      sempre forzare un esito che sia almeno banalmente vero \cite{37}.
+	\item \textbf{$Ag$-massimalità ($Ag$):} $\neg [[\emptyset]] \neg \phi \to [[Ag]] \phi$.
+	      Ciò che non è forzato come inevitabile dalla coalizione vuota può essere
+	      ottenuto dalla coalizione di tutti gli agenti \cite{37, 92}.
+	\item \textbf{Superadditività ($S$):} $([[C_1]] \phi_1 \land [[C_2]] \phi_2)
+		      \to [[C_1 \cup C_2]] (\phi_1 \land \phi_2)$ per $C_1 \cap C_2 = \emptyset$.
+	      Questo è l'assioma più critico: esprime la capacità degli agenti di
+	      \textbf{combinare le proprie strategie} per restringere l'esito finale
+	      \cite{37, 65}.
+\end{itemize}
+
+\subsection{Il Problema della Concisione (Succinctness)}
+
+Nonostante la sua solidità teorica, la CL soffre di un limite pratico noto
+come mancanza di \textbf{concisione} (\textit{succinctness}) \cite{83, 87}.
+In CL, l'unico modo per riferirsi alle coalizioni è l'enumerazione esplicita
+dei loro membri all'interno dell'operatore $[[C]]$.
+
+Se volessimo esprimere una proprietà generale, come ``esiste almeno una
+coalizione in grado di forzare $\phi$'', la CL ci imporrebbe di scrivere
+una disgiunzione di tutti i possibili sottoinsiemi di agenti \cite{95}:
+\begin{equation}
+	[[C_1]] \phi \lor [[C_2]] \phi \lor \dots \lor [[C_{2^n}]] \phi
+\end{equation}
+In un sistema con $n$ agenti, la lunghezza di questa formula cresce in modo
+\textbf{esponenziale} ($2^n$), rendendo la specifica di sistemi complessi
+o di meccanismi come il voto a maggioranza praticamente impossibile da
+gestire manualmente o computazionalmente \cite{83, 125}.
 
 \section{Quantified Coalition Logic (QCL): Predicati di Coalizione}
 % SUGGERIMENTO DIDATTICO: Questa è la parte nuova della seconda fonte.
 % Spiega come usiamo sottoinsiemi, sovrainsiemi e cardinalità per descrivere gruppi (subseteq, geq) [15, 16].
-
-Il sistema assiomatico della Coalition Logic ($\mathbf{CL}$) cattura formalmente
-le proprietà di giocabilità discusse in precedenza. Gli assiomi principali
-includono \cite{35, 37}:
-\begin{itemize}
-	\item \textbf{Ag-massimalità ($Ag$):} $\neg [[\emptyset]]\neg \phi \to [[Ag]]\phi$,
-	      che stabilisce un legame tra l'inevitabilità e il potere totale.
-	\item \textbf{Superadditività ($S$):} $([[C_1]]\phi_1 \land [[C_2]]\phi_2) \to
-		      [[C_1 \cup C_2]](\phi_1 \land \phi_2)$ per coalizioni disgiunte. Questo
-	      assioma riflette la capacità degli agenti di combinare le proprie strategie \cite{37, 65}.
-\end{itemize}
-
-\subsection{Il Limite della Concisione (Succinctness)}
-
-Nonostante la sua completezza, la CL presenta un limite computazionale e
-pratico: la \textbf{succinctness} (concisione) \cite{83}. In CL, se vogliamo
-esprimere che ``esiste una coalizione che può forzare $\phi$'', siamo
-costretti a elencare esplicitamente ogni possibile combinazione di agenti
-in una disgiunzione:
-\begin{equation}
-	[[C_1]]\phi \lor [[C_2]]\phi \lor \dots \lor [[C_{2^n}]]\phi
-\end{equation}
-In un sistema con $n$ agenti, la lunghezza di tale formula cresce in modo
-\textbf{esponenziale} rispetto al numero di agenti, rendendo la logica
-inefficiente per descrivere sistemi complessi \cite{95, 96}.
-
-\subsection{La Soluzione: Predicati di Coalizione}
-
-Per superare questo ostacolo, la Quantified Coalition Logic (QCL) introduce
-il concetto di \textbf{predicato di coalizione} $P$ \cite{87, 96}. Invece di
-elencare i membri, descriviamo le proprietà dei gruppi:
-\begin{itemize}
-	\item \textbf{Inclusione ($subseteq, supseteq$):} Permette di definire
-	      gruppi che sono sottoinsiemi o sovrainsiemi di una data coalizione $C$ \cite{97, 98}.
-	\item \textbf{Cardinalità ($geq(n)$):} Introduce la possibilità di
-	      ragionare sulla taglia del gruppo (es. ``almeno $n$ agenti''), permettendo
-	      di formalizzare concetti come la \textbf{maggioranza} in modo estremamente
-	      conciso \cite{155, 156, 163}.
-\end{itemize}
-
 \section{Operatori Quantificati: Esistenziale e Universale}
 % SUGGERIMENTO DIDATTICO: Introduciamo <P>phi e [P]phi [17, 18].
 % Mostra come questi operatori rendono la logica esponenzialmente più concisa [5].
