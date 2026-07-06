@@ -208,19 +208,207 @@ gestire manualmente o computazionalmente \cite{83, 125}.
 \section{Quantified Coalition Logic (QCL): Predicati di Coalizione}
 % SUGGERIMENTO DIDATTICO: Questa è la parte nuova della seconda fonte.
 % Spiega come usiamo sottoinsiemi, sovrainsiemi e cardinalità per descrivere gruppi (subseteq, geq) [15, 16].
+
+Per risolvere il limite della concisione riscontrato nella CL, la seconda fonte
+introduce la \textbf{Quantified Coalition Logic (QCL)} \cite{83}. L'innovazione
+principale non risiede in un aumento del potere espressivo, ma nell'introduzione
+di un linguaggio formale per descrivere le proprietà delle coalizioni tramite
+\textbf{predicati} \cite{87, 96}.
+
+\subsection{Sintassi dei Predicati di Coalizione}
+
+Invece di elencare i membri di una coalizione $C$, utilizziamo un linguaggio di
+predicati $P$ valutati rispetto a una coalizione concreta $Co \subseteq Ag$
+\cite{97}. I predicati atomici fondamentali sono \cite{97, 98}:
+\begin{itemize}
+	\item \textbf{Inclusione ($subseteq(C)$):} $Co \models_{cp} subseteq(C)$
+	      se e solo se $Co \subseteq C$.
+	\item \textbf{Contenimento ($supseteq(C)$):} $Co \models_{cp} supseteq(C)$
+	      se e solo se $Co \supseteq C$.
+\end{itemize}
+Questi atomi possono essere combinati con i connettivi booleani classici
+($\neg, \lor, \land$) per costruire descrizioni complesse, come il predicato
+\textbf{eq(C)} ($subseteq(C) \land supseteq(C)$) che identifica esattamente
+la coalizione $C$ \cite{99}.
+
+\subsection{Estensione alla Cardinalità: il predicato $geq(n)$}
+
+Una delle aggiunte più significative per la concisione è il predicato di
+\textbf{cardinalità} $geq(n)$ \cite{155}.
+\begin{equation}
+	Co \models_{cp} geq(n) \iff |Co| \geq n
+\end{equation}
+Sebbene $geq(n)$ sia teoricamente definibile in CL tramite una disgiunzione
+esponenziale di tutte le coalizioni di taglia $n$, la sua introduzione come
+predicato atomico in QCL permette di esprimere concetti come la
+\textbf{maggioranza} ($maj(n)$) in modo estremamente compatto \cite{156, 163}.
+
+\subsection{Il Vantaggio della Concisione}
+
+L'uso dei predicati trasforma il modo in cui specifichiamo i sistemi. Mentre in
+CL la formula deve crescere con il numero di agenti, in QCL la lunghezza della
+specifica rimane legata alla complessità della \textit{proprietà} del gruppo
+(es. la sua taglia) piuttosto che al numero di combinazioni possibili di
+individui.
 \section{Operatori Quantificati: Esistenziale e Universale}
 % SUGGERIMENTO DIDATTICO: Introduciamo <P>phi e [P]phi [17, 18].
 % Mostra come questi operatori rendono la logica esponenzialmente più concisa [5].
 
+L'innovazione semantica della QCL consiste nel sostituire l'operatore di abilità
+diretto $[[C]]$ con operatori quantificati parametrizzati dai predicati
+coalizionali $P$ \cite{87}. Questo permette di ragionare non più su gruppi
+fissi, ma su classi di coalizioni che soddisfano determinate proprietà.
+
+\subsection{Sintassi e Semantica degli Operatori $\langle P \rangle$ e $[P]$}
+
+La QCL introduce due operatori modali fondamentali per la quantificazione
+\cite{105}:
+\begin{itemize}
+	\item $\langle P \rangle \phi$: Esprime che \textbf{esiste almeno una}
+	      coalizione $C$ che soddisfa il predicato $P$ tale da poter forzare l'esito $\phi$.
+	\item $[P] \phi$: Esprime che \textbf{tutte} le coalizioni che soddisfano
+	      il predicato $P$ sono in grado di forzare l'esito $\phi$.
+\end{itemize}
+
+Le condizioni di verità sono definite come segue \cite{107}:
+\begin{equation}
+	M, s \models \langle P \rangle \phi \iff \exists C \subseteq Ag : (C \models_{cp} P \text{ e } \phi^M \in E(C, s))
+\end{equation}
+\begin{equation}
+	M, s \models [P] \phi \iff \forall C \subseteq Ag : (C \models_{cp} P \implies \phi^M \in E(C, s))
+\end{equation}
+
+È importante notare che l'operatore $[P]$ non è semplicemente il duale di
+$\langle P \rangle$. Mentre il duale logico $\neg \langle P \rangle \neg \phi$
+seguirebbe uno schema di quantificatori $\forall \forall \exists$, l'operatore
+universale $[P]$ segue lo schema $\forall \exists \forall$ (per ogni gruppo,
+esiste una strategia, per ogni esito), che è quello richiesto per modellare
+correttamente l'abilità collettiva \cite{107, 108}.
+
+\subsection{La Concisione Esponenziale (Succinctness)}
+
+Il vantaggio cruciale di questi operatori è la loro \textbf{succinctness}.
+Secondo il \textbf{Teorema 5}, esiste una sequenza di formule QCL per le
+quali ogni formula CL equivalente è \textbf{esponenzialmente più lunga}
+\cite{125}.
+
+Ad esempio, per descrivere un meccanismo di voto dove ``ogni maggioranza può
+determinare l'esito'', la CL richiederebbe di elencare ogni singola
+combinazione possibile di agenti che formano una maggioranza. In QCL,
+grazie alla combinazione di operatori universali e predicati di cardinalità,
+la stessa proprietà si esprime con la formula compatta $[maj(n)] \phi$ \cite{165}.
 \section{Metateoria: Complessità Computazionale}
 % SUGGERIMENTO DIDATTICO: Un punto fondamentale per il tuo pubblico sarà che,
 % nonostante la QCL sia più potente espressivamente, rimane PSPACE-completa come la CL [19, 20].
+Il problema della soddisfacibilità per la CL di Pauly è \textbf{PSPACE-completo}
+\cite{1, 5, 62}. Questa complessità è superiore a quella della logica
+proposizionale classica (NP-completa) a causa dell'assioma di
+\textbf{superadditività} \cite{65}. Mentre in altri sistemi l'agente deve solo
+ragionare su fatti isolati, in CL il computer deve calcolare come le
+strategie degli agenti possono essere \textbf{combinate} quando formano
+una coalizione, rendendo il calcolo strutturalmente più complesso \cite{5, 65}.
 
+\subsection{QCL: Concisione senza Costi Aggiuntivi}
+
+Il risultato più sorprendente della seconda fonte riguarda il confronto tra
+CL e QCL. Nonostante la QCL permetta di ``comprimere'' formule
+esponenzialmente lunghe in specifiche molto brevi (succinctness), essa
+\textbf{non aumenta la complessità computazionale} del sistema \cite{83, 87}.
+
+\begin{itemize}
+	\item \textbf{Soddisfacibilità:} Determinare se una formula QCL ha un
+	      modello rimane un problema \textbf{PSPACE-completo}, esattamente come
+	      nella CL \cite{83, 145, 146}.
+	\item \textbf{Model Checking:} Se il modello è fornito in modo esplicito,
+	      il controllo di verità rimane in tempo polinomiale \cite{139, 140}. Se invece
+	      usiamo rappresentazioni concise (come RML), il model checking per QCL
+	      resta \textbf{PSPACE-completo}, allineandosi ai risultati della CL \cite{141, 144}.
+\end{itemize}
+
+In sintesi, la QCL offre un linguaggio molto più efficiente per l'essere
+umano (formule più brevi) senza diventare più difficile da gestire per
+la macchina \cite{83, 165}.
 \section{Applicazioni: Meccanismi di Voto e Scelte Sociali}
 % SUGGERIMENTO DIDATTICO: Usa l'esempio del voto a maggioranza per mostrare
 % la bellezza della QCL rispetto alla CL [21, 22].
 
+Il potere coalizionale trova la sua applicazione più naturale e intuitiva nella
+teoria delle \textbf{scelte sociali}, dove gli agenti sono votanti che cercano
+di forzare determinati risultati elettorali [1, 2].
+
+\subsection{Il Voto a Maggioranza: un test di efficienza}
+
+Consideriamo un elettorato composto da $n$ agenti che devono scegliere tra due
+possibili esiti, $\omega_1$ e $\omega_2$ [3]. In un sistema a
+\textbf{maggioranza semplice}, vogliamo formalizzare che ogni gruppo che
+superi la metà dei votanti ha il potere di decidere l'esito [4].
+
+In \textbf{Coalition Logic (CL)}, questa specifica è problematica: per
+esprimere che "una maggioranza può determinare $\omega_1$", dovremmo scrivere
+una disgiunzione che elenca \textbf{ogni possibile combinazione} di agenti
+la cui taglia sia superiore a $n/2$ [3, 5]. Se $n=100$, il numero di
+coalizioni possibili è astronomico, rendendo la formula CL umanamente e
+computazionalmente ingestibile [2, 6].
+
+\subsection{La concisione della QCL}
+
+La \textbf{Quantified Coalition Logic (QCL)} risolve questo problema
+utilizzando il predicato di cardinalità $maj(n)$. I requisiti di un sistema
+di voto equo possono essere scritti in modo \textbf{estremamente compatto} [7]:
+
+\begin{itemize}
+	\item \textbf{Potere della maggioranza:} Ogni maggioranza può forzare
+	      $\omega_1$ o $\omega_2$:
+	      $[maj(n)]\omega_1 \land [maj(n)]\omega_2$
+	\item \textbf{Restrizione delle minoranze:} Nessuna coalizione che non
+	      sia una maggioranza può forzare un esito:
+	      $(\neg \langle \neg maj(n) \rangle \omega_1) \land (\neg \langle \neg maj(n) \rangle \omega_2)$
+	\item \textbf{Esito garantito:} Deve risultare almeno uno dei due esiti:
+	      $\langle any \rangle (\omega_1 \lor \omega_2)$
+	\item \textbf{Incompatibilità:} Non possono essere scelti entrambi
+	      contemporaneamente:
+	      $\langle any \rangle \neg (\omega_1 \land \omega_2)$
+\end{itemize}
+
+Questo esempio dimostra la "bellezza" della QCL: mentre in CL la lunghezza
+della formula esplode all'aumentare dei votanti, in QCL la specifica rimane
+breve e leggibile, indipendentemente dal numero di agenti coinvolti [7].
 \section{Conclusioni e Riflessioni Personali}
 % SUGGERIMENTO DIDATTICO: Riassumi il legame tra teoria dei giochi e logica formale.
+Il percorso analizzato in questa presentazione mostra come la logica modale,
+tradizionalmente focalizzata su singoli processi o agenti isolati, possa
+evolversi in un potente strumento di analisi per le interazioni strategiche
+collettive.
 
+\subsection{Il Legame tra Logica e Teoria dei Giochi}
+
+La principale conclusione teorica è che la \textbf{Coalition Logic (CL)} e la
+sua estensione quantificata (\textbf{QCL}) forniscono una visione
+unificante della logica modale attraverso la lente della teoria dei giochi
+\cite{1, 5}. Grazie al concetto di \textbf{funzione di effettività},
+l'astrazione logica non perde il contatto con la realtà strategica: ogni
+formula $[[C]] \phi$ o $\langle P \rangle \phi$ è solidamente ancorata a un
+\textbf{game frame}, garantendo che ciò che dichiariamo possibile sia
+effettivamente realizzabile tramite una strategia comune \cite{32, 87}.
+
+\subsection{Dal Potere Teorico alla Pratica: il Ruolo della QCL}
+
+Mentre la CL di Pauly getta le basi semantiche, la \textbf{QCL} di Ågotnes
+rappresenta il passaggio fondamentale verso l'applicabilità pratica. La
+capacità della QCL di essere \textbf{esponenzialmente più concisa} della
+CL senza aumentarne la complessità computazionale (restando in
+\textbf{PSPACE}) dimostra che è possibile modellare sistemi sociali complessi
+e meccanismi di voto su larga scala in modo efficiente \cite{83, 125, 144}.
+
+\subsection{Riflessioni Finali}
+
+In conclusione, queste logiche non sono solo esercizi accademici, ma
+costituiscono il nucleo di quello che Marc Pauly definisce
+\textbf{``Social Software''} \cite{170}. Esse ci permettono di verificare
+formalmente la robustezza delle nostre istituzioni (come i sistemi di voto)
+e di progettare sistemi multi-agente in cui la cooperazione non è solo
+auspicata, ma logicamente garantita e verificabile. Gli sviluppi futuri
+che integrano preferenze e conoscenze degli agenti aprono la strada a una
+comprensione ancora più profonda della formazione delle coalizioni e della
+razionalità collettiva \cite{79, 166}.
 \end{document}
