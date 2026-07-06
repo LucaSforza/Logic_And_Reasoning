@@ -2,7 +2,12 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
-\usepackage{amsfonts, amssymb, amsmath}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{microtype}
+
+\newtheorem{theorem}{Teorema}[section]
 
 \title{Riassunto Didattico: Logica di Coalizione e Quantificazione}
 \author{Studente: [Il Tuo Nome]}
@@ -110,18 +115,18 @@ concreto [4, 9].
 
 La Coalition Logic (CL) fornisce un linguaggio formale per ragionare sul potere
 che i gruppi di agenti possono esercitare simultaneamente in un gioco
-\cite{1, 5}.
+.
 
 \subsection{Sintassi: l'operatore $[[C]] \phi$}
 
 Dato un insieme di agenti $Ag$ e un insieme di proposizioni atomiche $\Phi$,
-la sintassi della CL è definita come segue \cite{31, 90}:
+la sintassi della CL è definita come segue :
 \begin{equation}
 	\phi ::= p \mid \neg \phi \mid \phi_1 \lor \phi_2 \mid [[C]] \phi
 \end{equation}
 La formula $[[C]] \phi$ esprime intuitivamente che la coalizione $C$ ha una
 strategia comune per \textbf{forzare} un esito che soddisfi $\phi$,
-indipendentemente dalle azioni degli agenti in $Ag \setminus C$ \cite{12, 13}.
+indipendentemente dalle azioni degli agenti in $Ag \setminus C$ .
 
 \subsection{Dai Coalition Frames ai Modelli}
 
@@ -132,13 +137,13 @@ tra la struttura del mondo (Frame) e i fatti che vi accadono (Modello).
 	\item \textbf{Coalition Frame:} È una coppia $\mathcal{F} = (S, E)$ dove
 	      $S$ è l'insieme degli stati e $E$ è una \textbf{struttura di effettività}
 	      che assegna a ogni stato $s$ una funzione di effettività \textbf{giocabile}
-	      (\textit{playable}) \cite{31}.
+	      (\textit{playable}) .
 	\item \textbf{Coalition Model:} È una tripla $\mathcal{M} = (S, E, \pi)$
 	      che aggiunge al frame una funzione di valutazione $\pi$, la quale stabilisce
-	      quali proposizioni atomiche siano vere in ogni stato \cite{32, 91}.
+	      quali proposizioni atomiche siano vere in ogni stato .
 \end{itemize}
 
-La semantica dell'operatore coalizionale è data da \cite{33, 94}:
+La semantica dell'operatore coalizionale è data da :
 \begin{equation}
 	M, s \models [[C]] \phi \iff \phi^M \in E(s, C)
 \end{equation}
@@ -148,78 +153,178 @@ esiti forzabili.
 
 \subsection{Il Teorema 3.2: Il Ponte tra Logica e Giochi}
 
-Il risultato teorico più profondo di questa sezione è il \textbf{Teorema 3.2
-	(Characterization)}. Esso stabilisce che:
-\begin{quote}
-	\textit{Una funzione di effettività $E$ è giocabile se e solo se è la
-		funzione di effettività di un qualche gioco strategico} \cite{19, 32}.
-\end{quote}
+Il risultato teorico più importante della Coalition Logic è il cosiddetto
+\emph{Teorema di Caratterizzazione}.
 
-Questo teorema è fondamentale perché garantisce che i \textbf{coalition frames}
-astratti siano a tutti gli effetti dei \textbf{game frames} concreti \cite{32}.
-Esso permette alla logica di astrarre dalla complessità tecnica delle strategie
-individuali, mantenendo però la certezza che ogni enunciato della CL sia
-fondato su una reale struttura di gioco strategico \cite{34}.
+\begin{theorem}[Caratterizzazione]
+	Una funzione di effettività $E$ è giocabile se e solo se esiste un gioco
+	strategico $G$ tale che la funzione di effettività indotta da $G$ coincide
+	con $E$.
+\end{theorem}
+
+Questo risultato mette in corrispondenza due punti di vista differenti.
+
+Da una parte abbiamo la descrizione astratta del potere delle coalizioni
+tramite una funzione di effettività; dall'altra abbiamo un vero gioco
+strategico, costituito da agenti, strategie ed esiti.
+
+Il teorema dimostra che queste due rappresentazioni sono equivalenti.
+
+\begin{proof}
+
+	La dimostrazione è composta da due implicazioni.
+
+	\medskip
+
+	\textbf{($\Rightarrow$)}
+
+	Supponiamo che $E$ sia la funzione di effettività di un gioco strategico.
+
+	Mostriamo che soddisfa automaticamente tutte le proprietà di
+	giocabilità.
+
+	\begin{itemize}
+
+		\item
+		      La monotonicità dell'esito segue immediatamente dal fatto che,
+		      se una coalizione riesce a forzare un insieme di esiti $X$,
+		      allora riesce anche a forzare ogni insieme più grande
+		      $Y\supseteq X$.
+
+		      Infatti la stessa strategia continua a garantire un risultato
+		      appartenente a $Y$.
+
+		\item
+
+		      La superadditività deriva dall'indipendenza delle strategie delle
+		      coalizioni disgiunte.
+
+		      Se due coalizioni disgiunte possono forzare rispettivamente
+		      $X_1$ e $X_2$, allora possono giocare simultaneamente le due
+		      strategie.
+
+		      Poiché gli agenti appartengono a coalizioni disgiunte,
+		      le strategie non interferiscono tra loro.
+
+		      Il risultato ottenuto appartiene necessariamente
+		      all'intersezione
+
+		      \[
+			      X_1\cap X_2.
+		      \]
+
+		\item
+
+		      La proprietà di $Ag$-massimalità deriva dal fatto che la coalizione
+		      di tutti gli agenti controlla completamente il gioco.
+
+		      Se la coalizione vuota non può impedire un insieme di esiti,
+		      allora l'insieme completo degli agenti può scegliere strategie che
+		      realizzano proprio tali esiti.
+
+	\end{itemize}
+
+	Pertanto ogni gioco strategico induce una funzione di effettività
+	giocabile.
+
+	\bigskip
+
+	\textbf{($\Leftarrow$)}
+
+	Supponiamo ora che $E$ sia giocabile.
+
+	L'idea consiste nel costruire un gioco strategico artificiale che
+	riproduca esattamente il comportamento descritto da $E$.
+
+	Per ogni coalizione vengono introdotte strategie che rappresentano
+	le possibili scelte garantite dalla funzione di effettività.
+
+	Gli esiti del gioco vengono poi definiti in modo tale che,
+	quando una coalizione seleziona una strategia vincente,
+	l'esito prodotto appartenga esattamente all'insieme che la funzione
+	$E$ dichiara realizzabile.
+
+	Le proprietà di monotonicità, superadditività e massimalità
+	garantiscono che questa costruzione sia coerente e che non produca
+	contraddizioni tra strategie differenti.
+
+	Ne consegue che il gioco costruito induce precisamente la funzione
+	di effettività iniziale.
+
+	Pertanto ogni funzione giocabile proviene da un opportuno gioco
+	strategico.
+
+\end{proof}
+
+Questo teorema giustifica l'intera Coalition Logic.
+
+Infatti la logica può lavorare direttamente sulle funzioni di
+effettività, evitando di descrivere esplicitamente tutte le strategie
+del gioco, senza perdere alcuna informazione essenziale.
+
+Dal punto di vista matematico, i coalition frames non sono quindi una
+semplice astrazione, ma rappresentano fedelmente veri giochi
+strategici.
 \section{Assiomatizzazione e Limiti della CL}
 % SUGGERIMENTO DIDATTICO: Elenca gli assiomi base (superadditività, ecc.) [12].
 % Introduci il problema della "succinctness": perché enumerare tutte le coalizioni è inefficiente [13, 14]?
 
 Il sistema formale della Coalition Logic ($\mathbf{CL}$) è progettato per
 riflettere matematicamente le proprietà di giocabilità delle funzioni di
-effettività \cite{35}.
+effettività .
 
 \subsection{Gli Assiomi Base}
 
 L'assiomatizzazione proposta da Pauly è completa rispetto alla classe dei
-modelli di coalizione e si basa sui seguenti schemi principali \cite{35, 37}:
+modelli di coalizione e si basa sui seguenti schemi principali :
 \begin{itemize}
 	\item \textbf{Consistenza ($\bot$):} $\neg [[C]] \bot$. Nessuna coalizione
-	      può forzare l'impossibile \cite{37, 94}.
+	      può forzare l'impossibile .
 	\item \textbf{Efficacia ($\top$):} $[[C]] \top$. Ogni coalizione può
-	      sempre forzare un esito che sia almeno banalmente vero \cite{37}.
+	      sempre forzare un esito che sia almeno banalmente vero .
 	\item \textbf{$Ag$-massimalità ($Ag$):} $\neg [[\emptyset]] \neg \phi \to [[Ag]] \phi$.
 	      Ciò che non è forzato come inevitabile dalla coalizione vuota può essere
-	      ottenuto dalla coalizione di tutti gli agenti \cite{37, 92}.
+	      ottenuto dalla coalizione di tutti gli agenti .
 	\item \textbf{Superadditività ($S$):} $([[C_1]] \phi_1 \land [[C_2]] \phi_2)
 		      \to [[C_1 \cup C_2]] (\phi_1 \land \phi_2)$ per $C_1 \cap C_2 = \emptyset$.
 	      Questo è l'assioma più critico: esprime la capacità degli agenti di
 	      \textbf{combinare le proprie strategie} per restringere l'esito finale
-	      \cite{37, 65}.
+	      .
 \end{itemize}
 
 \subsection{Il Problema della Concisione (Succinctness)}
 
 Nonostante la sua solidità teorica, la CL soffre di un limite pratico noto
-come mancanza di \textbf{concisione} (\textit{succinctness}) \cite{83, 87}.
+come mancanza di \textbf{concisione} (\textit{succinctness}) .
 In CL, l'unico modo per riferirsi alle coalizioni è l'enumerazione esplicita
 dei loro membri all'interno dell'operatore $[[C]]$.
 
 Se volessimo esprimere una proprietà generale, come ``esiste almeno una
 coalizione in grado di forzare $\phi$'', la CL ci imporrebbe di scrivere
-una disgiunzione di tutti i possibili sottoinsiemi di agenti \cite{95}:
+una disgiunzione di tutti i possibili sottoinsiemi di agenti :
 \begin{equation}
 	[[C_1]] \phi \lor [[C_2]] \phi \lor \dots \lor [[C_{2^n}]] \phi
 \end{equation}
 In un sistema con $n$ agenti, la lunghezza di questa formula cresce in modo
 \textbf{esponenziale} ($2^n$), rendendo la specifica di sistemi complessi
 o di meccanismi come il voto a maggioranza praticamente impossibile da
-gestire manualmente o computazionalmente \cite{83, 125}.
+gestire manualmente o computazionalmente .
 
 \section{Quantified Coalition Logic (QCL): Predicati di Coalizione}
 % SUGGERIMENTO DIDATTICO: Questa è la parte nuova della seconda fonte.
 % Spiega come usiamo sottoinsiemi, sovrainsiemi e cardinalità per descrivere gruppi (subseteq, geq) [15, 16].
 
 Per risolvere il limite della concisione riscontrato nella CL, la seconda fonte
-introduce la \textbf{Quantified Coalition Logic (QCL)} \cite{83}. L'innovazione
+introduce la \textbf{Quantified Coalition Logic (QCL)} . L'innovazione
 principale non risiede in un aumento del potere espressivo, ma nell'introduzione
 di un linguaggio formale per descrivere le proprietà delle coalizioni tramite
-\textbf{predicati} \cite{87, 96}.
+\textbf{predicati} .
 
 \subsection{Sintassi dei Predicati di Coalizione}
 
 Invece di elencare i membri di una coalizione $C$, utilizziamo un linguaggio di
 predicati $P$ valutati rispetto a una coalizione concreta $Co \subseteq Ag$
-\cite{97}. I predicati atomici fondamentali sono \cite{97, 98}:
+. I predicati atomici fondamentali sono :
 \begin{itemize}
 	\item \textbf{Inclusione ($subseteq(C)$):} $Co \models_{cp} subseteq(C)$
 	      se e solo se $Co \subseteq C$.
@@ -229,19 +334,19 @@ predicati $P$ valutati rispetto a una coalizione concreta $Co \subseteq Ag$
 Questi atomi possono essere combinati con i connettivi booleani classici
 ($\neg, \lor, \land$) per costruire descrizioni complesse, come il predicato
 \textbf{eq(C)} ($subseteq(C) \land supseteq(C)$) che identifica esattamente
-la coalizione $C$ \cite{99}.
+la coalizione $C$ .
 
 \subsection{Estensione alla Cardinalità: il predicato $geq(n)$}
 
 Una delle aggiunte più significative per la concisione è il predicato di
-\textbf{cardinalità} $geq(n)$ \cite{155}.
+\textbf{cardinalità} $geq(n)$ .
 \begin{equation}
 	Co \models_{cp} geq(n) \iff |Co| \geq n
 \end{equation}
 Sebbene $geq(n)$ sia teoricamente definibile in CL tramite una disgiunzione
 esponenziale di tutte le coalizioni di taglia $n$, la sua introduzione come
 predicato atomico in QCL permette di esprimere concetti come la
-\textbf{maggioranza} ($maj(n)$) in modo estremamente compatto \cite{156, 163}.
+\textbf{maggioranza} ($maj(n)$) in modo estremamente compatto .
 
 \subsection{Il Vantaggio della Concisione}
 
@@ -256,13 +361,13 @@ individui.
 
 L'innovazione semantica della QCL consiste nel sostituire l'operatore di abilità
 diretto $[[C]]$ con operatori quantificati parametrizzati dai predicati
-coalizionali $P$ \cite{87}. Questo permette di ragionare non più su gruppi
+coalizionali $P$ . Questo permette di ragionare non più su gruppi
 fissi, ma su classi di coalizioni che soddisfano determinate proprietà.
 
 \subsection{Sintassi e Semantica degli Operatori $\langle P \rangle$ e $[P]$}
 
 La QCL introduce due operatori modali fondamentali per la quantificazione
-\cite{105}:
+:
 \begin{itemize}
 	\item $\langle P \rangle \phi$: Esprime che \textbf{esiste almeno una}
 	      coalizione $C$ che soddisfa il predicato $P$ tale da poter forzare l'esito $\phi$.
@@ -270,7 +375,7 @@ La QCL introduce due operatori modali fondamentali per la quantificazione
 	      il predicato $P$ sono in grado di forzare l'esito $\phi$.
 \end{itemize}
 
-Le condizioni di verità sono definite come segue \cite{107}:
+Le condizioni di verità sono definite come segue :
 \begin{equation}
 	M, s \models \langle P \rangle \phi \iff \exists C \subseteq Ag : (C \models_{cp} P \text{ e } \phi^M \in E(C, s))
 \end{equation}
@@ -283,51 +388,159 @@ $\langle P \rangle$. Mentre il duale logico $\neg \langle P \rangle \neg \phi$
 seguirebbe uno schema di quantificatori $\forall \forall \exists$, l'operatore
 universale $[P]$ segue lo schema $\forall \exists \forall$ (per ogni gruppo,
 esiste una strategia, per ogni esito), che è quello richiesto per modellare
-correttamente l'abilità collettiva \cite{107, 108}.
+correttamente l'abilità collettiva .
 
 \subsection{La Concisione Esponenziale (Succinctness)}
 
-Il vantaggio cruciale di questi operatori è la loro \textbf{succinctness}.
-Secondo il \textbf{Teorema 5}, esiste una sequenza di formule QCL per le
-quali ogni formula CL equivalente è \textbf{esponenzialmente più lunga}
-\cite{125}.
+L'introduzione dei predicati coalizionali permette alla QCL di descrivere
+famiglie molto grandi di coalizioni mediante un'unica formula.
 
-Ad esempio, per descrivere un meccanismo di voto dove ``ogni maggioranza può
-determinare l'esito'', la CL richiederebbe di elencare ogni singola
-combinazione possibile di agenti che formano una maggioranza. In QCL,
-grazie alla combinazione di operatori universali e predicati di cardinalità,
-la stessa proprietà si esprime con la formula compatta $[maj(n)] \phi$ \cite{165}.
+Il principale risultato teorico di questa sezione è il seguente.
+
+\begin{theorem}[Succinctness della QCL]
+	Esiste una famiglia infinita di formule della Quantified Coalition Logic
+	tale che ogni formula equivalente espressa nella Coalition Logic classica
+	ha lunghezza almeno esponenziale.
+\end{theorem}
+
+In altre parole, CL e QCL hanno lo stesso potere espressivo, ma la QCL
+consente di descrivere molte proprietà utilizzando formule
+esponenzialmente più corte.
+
+\begin{proof}
+
+	L'idea della dimostrazione consiste nel confrontare il modo in cui le due
+	logiche descrivono una stessa proprietà delle coalizioni.
+
+	Consideriamo un sistema con $n$ agenti.
+
+	Supponiamo di voler esprimere la proprietà
+
+	\[
+		\textit{``esiste una coalizione di maggioranza che può forzare''} $\phi$.
+	\]
+
+	In QCL questa proprietà viene espressa con una sola formula
+
+	\[
+		\langle maj(n)\rangle \phi,
+	\]
+
+	dove il predicato $maj(n)$ identifica automaticamente tutte le coalizioni
+	la cui cardinalità supera la metà degli agenti.
+
+	La lunghezza della formula cresce soltanto con la descrizione del
+	predicato e non con il numero delle coalizioni.
+
+	Consideriamo ora la Coalition Logic classica.
+
+	Poiché CL non possiede alcun meccanismo di quantificazione sulle
+	coalizioni, l'unico modo di descrivere la stessa proprietà consiste
+	nell'elencare esplicitamente tutte le coalizioni di maggioranza.
+
+	La formula assume quindi la forma
+
+	\[
+		[[C_1]]\phi
+		\;\lor\;
+		[[C_2]]\phi
+		\;\lor\;
+		\cdots
+		\;\lor\;
+		[[C_k]]\phi,
+	\]
+
+	dove ciascun $C_i$ rappresenta una diversa coalizione di maggioranza.
+
+	Il numero di tali coalizioni è
+
+	\[
+		k
+		=
+		\sum_{i=\lfloor n/2\rfloor+1}^{n}
+		\binom{n}{i},
+	\]
+
+	che cresce esponenzialmente al crescere di $n$.
+
+	Di conseguenza anche la lunghezza della formula in CL cresce in modo
+	esponenziale.
+
+	Al contrario, nella QCL la dimensione della formula rimane
+	essenzialmente costante, poiché l'intera famiglia delle coalizioni viene
+	identificata dal solo predicato $maj(n)$.
+
+	Ne segue che qualunque formula di CL logicamente equivalente deve
+	necessariamente contenere un numero esponenziale di operatori
+	coalizionali.
+
+	Pertanto la QCL risulta esponenzialmente più concisa della Coalition
+	Logic.
+
+\end{proof}
+
+Il significato di questo risultato è molto importante.
+
+La QCL non permette di esprimere proprietà impossibili per la CL.
+Infatti le due logiche hanno la stessa espressività.
+
+La differenza riguarda esclusivamente la lunghezza delle formule.
+
+In CL bisogna elencare esplicitamente tutte le coalizioni che
+soddisfano una certa proprietà.
+
+In QCL, invece, basta descrivere la proprietà della coalizione mediante
+un predicato.
+
+Questo rende il linguaggio molto più leggibile e molto più adatto alla
+specifica di sistemi multi-agente di grandi dimensioni.
+
+Come esempio, la proprietà
+
+\[
+	\textit{"ogni maggioranza può determinare l'esito"}
+\]
+
+può essere scritta semplicemente come
+
+\[
+	[maj(n)]\,\phi,
+\]
+
+mentre in Coalition Logic sarebbe necessario costruire una lunga
+congiunzione contenente una formula distinta per ciascuna coalizione di
+maggioranza.
 \section{Metateoria: Complessità Computazionale}
 % SUGGERIMENTO DIDATTICO: Un punto fondamentale per il tuo pubblico sarà che,
 % nonostante la QCL sia più potente espressivamente, rimane PSPACE-completa come la CL [19, 20].
 Il problema della soddisfacibilità per la CL di Pauly è \textbf{PSPACE-completo}
-\cite{1, 5, 62}. Questa complessità è superiore a quella della logica
+. Questa complessità è superiore a quella della logica
 proposizionale classica (NP-completa) a causa dell'assioma di
-\textbf{superadditività} \cite{65}. Mentre in altri sistemi l'agente deve solo
+\textbf{superadditività} . Mentre in altri sistemi l'agente deve solo
 ragionare su fatti isolati, in CL il computer deve calcolare come le
 strategie degli agenti possono essere \textbf{combinate} quando formano
-una coalizione, rendendo il calcolo strutturalmente più complesso \cite{5, 65}.
+una coalizione, rendendo il calcolo strutturalmente più complesso .
 
 \subsection{QCL: Concisione senza Costi Aggiuntivi}
 
 Il risultato più sorprendente della seconda fonte riguarda il confronto tra
 CL e QCL. Nonostante la QCL permetta di ``comprimere'' formule
 esponenzialmente lunghe in specifiche molto brevi (succinctness), essa
-\textbf{non aumenta la complessità computazionale} del sistema \cite{83, 87}.
+\textbf{non aumenta la complessità computazionale} del sistema .
 
 \begin{itemize}
 	\item \textbf{Soddisfacibilità:} Determinare se una formula QCL ha un
 	      modello rimane un problema \textbf{PSPACE-completo}, esattamente come
-	      nella CL \cite{83, 145, 146}.
+	      nella CL .
 	\item \textbf{Model Checking:} Se il modello è fornito in modo esplicito,
-	      il controllo di verità rimane in tempo polinomiale \cite{139, 140}. Se invece
+	      il controllo di verità rimane in tempo polinomiale . Se invece
 	      usiamo rappresentazioni concise (come RML), il model checking per QCL
-	      resta \textbf{PSPACE-completo}, allineandosi ai risultati della CL \cite{141, 144}.
+	      resta \textbf{PSPACE-completo}, allineandosi ai risultati della CL .
 \end{itemize}
 
 In sintesi, la QCL offre un linguaggio molto più efficiente per l'essere
 umano (formule più brevi) senza diventare più difficile da gestire per
-la macchina \cite{83, 165}.
+la macchina .
 \section{Applicazioni: Meccanismi di Voto e Scelte Sociali}
 % SUGGERIMENTO DIDATTICO: Usa l'esempio del voto a maggioranza per mostrare
 % la bellezza della QCL rispetto alla CL [21, 22].
@@ -385,11 +598,11 @@ collettive.
 La principale conclusione teorica è che la \textbf{Coalition Logic (CL)} e la
 sua estensione quantificata (\textbf{QCL}) forniscono una visione
 unificante della logica modale attraverso la lente della teoria dei giochi
-\cite{1, 5}. Grazie al concetto di \textbf{funzione di effettività},
+. Grazie al concetto di \textbf{funzione di effettività},
 l'astrazione logica non perde il contatto con la realtà strategica: ogni
 formula $[[C]] \phi$ o $\langle P \rangle \phi$ è solidamente ancorata a un
 \textbf{game frame}, garantendo che ciò che dichiariamo possibile sia
-effettivamente realizzabile tramite una strategia comune \cite{32, 87}.
+effettivamente realizzabile tramite una strategia comune .
 
 \subsection{Dal Potere Teorico alla Pratica: il Ruolo della QCL}
 
@@ -398,17 +611,17 @@ rappresenta il passaggio fondamentale verso l'applicabilità pratica. La
 capacità della QCL di essere \textbf{esponenzialmente più concisa} della
 CL senza aumentarne la complessità computazionale (restando in
 \textbf{PSPACE}) dimostra che è possibile modellare sistemi sociali complessi
-e meccanismi di voto su larga scala in modo efficiente \cite{83, 125, 144}.
+e meccanismi di voto su larga scala in modo efficiente .
 
 \subsection{Riflessioni Finali}
 
 In conclusione, queste logiche non sono solo esercizi accademici, ma
 costituiscono il nucleo di quello che Marc Pauly definisce
-\textbf{``Social Software''} \cite{170}. Esse ci permettono di verificare
+\textbf{``Social Software''} . Esse ci permettono di verificare
 formalmente la robustezza delle nostre istituzioni (come i sistemi di voto)
 e di progettare sistemi multi-agente in cui la cooperazione non è solo
 auspicata, ma logicamente garantita e verificabile. Gli sviluppi futuri
 che integrano preferenze e conoscenze degli agenti aprono la strada a una
 comprensione ancora più profonda della formazione delle coalizioni e della
-razionalità collettiva \cite{79, 166}.
+razionalità collettiva .
 \end{document}
