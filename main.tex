@@ -6,6 +6,9 @@
 \usepackage{mathtools}
 \usepackage{enumitem}
 \usepackage{microtype}
+\usepackage{stmaryrd}
+
+\newcommand{\CL}[1]{\llbracket #1 \rrbracket}
 
 \newtheorem{theorem}{Teorema}[section]
 
@@ -110,21 +113,21 @@ che la nostra analisi logica sia sempre supportata da un modello di gioco
 concreto [4, 9].
 
 \section{Coalition Logic (CL): Sintassi e Semantica}
-% SUGGERIMENTO DIDATTICO: Introduciamo l'operatore [[C]]phi [2, 10].
+% SUGGERIMENTO DIDATTICO: Introduciamo l'operatore \CL{C}phi [2, 10].
 % È qui che parleremo del Teorema 3.2 (Caratterizzazione) che abbiamo visto prima [11].
 
 La Coalition Logic (CL) fornisce un linguaggio formale per ragionare sul potere
 che i gruppi di agenti possono esercitare simultaneamente in un gioco
 .
 
-\subsection{Sintassi: l'operatore $[[C]] \phi$}
+\subsection{Sintassi: l'operatore $\CL{C} \phi$}
 
 Dato un insieme di agenti $Ag$ e un insieme di proposizioni atomiche $\Phi$,
 la sintassi della CL è definita come segue :
 \begin{equation}
-	\phi ::= p \mid \neg \phi \mid \phi_1 \lor \phi_2 \mid [[C]] \phi
+	\phi ::= p \mid \neg \phi \mid \phi_1 \lor \phi_2 \mid \CL{C} \phi
 \end{equation}
-La formula $[[C]] \phi$ esprime intuitivamente che la coalizione $C$ ha una
+La formula $\CL{C} \phi$ esprime intuitivamente che la coalizione $C$ ha una
 strategia comune per \textbf{forzare} un esito che soddisfi $\phi$,
 indipendentemente dalle azioni degli agenti in $Ag \setminus C$ .
 
@@ -145,7 +148,7 @@ tra la struttura del mondo (Frame) e i fatti che vi accadono (Modello).
 
 La semantica dell'operatore coalizionale è data da :
 \begin{equation}
-	M, s \models [[C]] \phi \iff \phi^M \in E(s, C)
+	M, s \models \CL{C} \phi \iff \phi^M \in E(s, C)
 \end{equation}
 dove $\phi^M = \{t \in S \mid M, t \models \phi\}$. Una coalizione può forzare
 $\phi$ se l'insieme degli stati in cui $\phi$ è vera fa parte dei suoi
@@ -278,15 +281,15 @@ effettività .
 L'assiomatizzazione proposta da Pauly è completa rispetto alla classe dei
 modelli di coalizione e si basa sui seguenti schemi principali :
 \begin{itemize}
-	\item \textbf{Consistenza ($\bot$):} $\neg [[C]] \bot$. Nessuna coalizione
+	\item \textbf{Consistenza ($\bot$):} $\neg \CL{C} \bot$. Nessuna coalizione
 	      può forzare l'impossibile .
-	\item \textbf{Efficacia ($\top$):} $[[C]] \top$. Ogni coalizione può
+	\item \textbf{Efficacia ($\top$):} $\CL{C} \top$. Ogni coalizione può
 	      sempre forzare un esito che sia almeno banalmente vero .
-	\item \textbf{$Ag$-massimalità ($Ag$):} $\neg [[\emptyset]] \neg \phi \to [[Ag]] \phi$.
+	\item \textbf{$Ag$-massimalità ($Ag$):} $\neg \CL{\emptyset} \neg \phi \to \CL{Ag} \phi$.
 	      Ciò che non è forzato come inevitabile dalla coalizione vuota può essere
 	      ottenuto dalla coalizione di tutti gli agenti .
-	\item \textbf{Superadditività ($S$):} $([[C_1]] \phi_1 \land [[C_2]] \phi_2)
-		      \to [[C_1 \cup C_2]] (\phi_1 \land \phi_2)$ per $C_1 \cap C_2 = \emptyset$.
+	\item \textbf{Superadditività ($S$):} $(\CL{C_1} \phi_1 \land \CL{C_2} \phi_2)
+		      \to \CL{C_1 \cup C_2} (\phi_1 \land \phi_2)$ per $C_1 \cap C_2 = \emptyset$.
 	      Questo è l'assioma più critico: esprime la capacità degli agenti di
 	      \textbf{combinare le proprie strategie} per restringere l'esito finale
 	      .
@@ -297,13 +300,13 @@ modelli di coalizione e si basa sui seguenti schemi principali :
 Nonostante la sua solidità teorica, la CL soffre di un limite pratico noto
 come mancanza di \textbf{concisione} (\textit{succinctness}) .
 In CL, l'unico modo per riferirsi alle coalizioni è l'enumerazione esplicita
-dei loro membri all'interno dell'operatore $[[C]]$.
+dei loro membri all'interno dell'operatore $\CL{C}$.
 
 Se volessimo esprimere una proprietà generale, come ``esiste almeno una
 coalizione in grado di forzare $\phi$'', la CL ci imporrebbe di scrivere
 una disgiunzione di tutti i possibili sottoinsiemi di agenti :
 \begin{equation}
-	[[C_1]] \phi \lor [[C_2]] \phi \lor \dots \lor [[C_{2^n}]] \phi
+	\CL{C_1} \phi \lor \CL{C_2} \phi \lor \dots \lor \CL{C_{2^n}} \phi
 \end{equation}
 In un sistema con $n$ agenti, la lunghezza di questa formula cresce in modo
 \textbf{esponenziale} ($2^n$), rendendo la specifica di sistemi complessi
@@ -360,7 +363,7 @@ individui.
 % Mostra come questi operatori rendono la logica esponenzialmente più concisa [5].
 
 L'innovazione semantica della QCL consiste nel sostituire l'operatore di abilità
-diretto $[[C]]$ con operatori quantificati parametrizzati dai predicati
+diretto $\CL{C}$ con operatori quantificati parametrizzati dai predicati
 coalizionali $P$ . Questo permette di ragionare non più su gruppi
 fissi, ma su classi di coalizioni che soddisfano determinate proprietà.
 
@@ -417,7 +420,7 @@ esponenzialmente più corte.
 	Supponiamo di voler esprimere la proprietà
 
 	\[
-		\textit{``esiste una coalizione di maggioranza che può forzare''} $\phi$.
+		\textit{``esiste una coalizione di maggioranza che può forzare''} \phi.
 	\]
 
 	In QCL questa proprietà viene espressa con una sola formula
@@ -441,13 +444,13 @@ esponenzialmente più corte.
 	La formula assume quindi la forma
 
 	\[
-		[[C_1]]\phi
+		\CL{C_1}\phi
 		\;\lor\;
-		[[C_2]]\phi
+		\CL{C_2}\phi
 		\;\lor\;
 		\cdots
 		\;\lor\;
-		[[C_k]]\phi,
+		\CL{C_k}\phi,
 	\]
 
 	dove ciascun $C_i$ rappresenta una diversa coalizione di maggioranza.
@@ -600,7 +603,7 @@ sua estensione quantificata (\textbf{QCL}) forniscono una visione
 unificante della logica modale attraverso la lente della teoria dei giochi
 . Grazie al concetto di \textbf{funzione di effettività},
 l'astrazione logica non perde il contatto con la realtà strategica: ogni
-formula $[[C]] \phi$ o $\langle P \rangle \phi$ è solidamente ancorata a un
+formula $\CL{C} \phi$ o $\langle P \rangle \phi$ è solidamente ancorata a un
 \textbf{game frame}, garantendo che ciò che dichiariamo possibile sia
 effettivamente realizzabile tramite una strategia comune .
 
