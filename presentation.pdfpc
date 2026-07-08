@@ -1,0 +1,433 @@
+{"pdfpcFormat":2,"disableMarkdown":false,"duration":30,"lastMinutes":2,"noteFontSize":12,"pages":[{"idx":0,"label":"1","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":1,"label":"1","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ Welcome everyone. State your name and the topic. \n+ This presentation covers coalition logic and its quantified extension. \n+ The talk is structured in 8 parts, lasting about 30 minutes. \n+ You will use game-theoretic frameworks to reason about multi-agent systems. \n+ Timing: 0:00 to 0:30."},{"idx":2,"label":"2","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ Briefly walk through the 8 sections. \n+ Emphasize the logical progression: single-agent modal logic, multi-agent, coalition logic, quantified coalition logic. \n+ Mention that Section 7 (complexity) and Section 8 (voting applications) tie everything together. \n+ Timing: 0:30 to 1:00."},{"idx":3,"label":"3","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":4,"label":"4","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ Start with the familiar: Kripke models for single-agent modal logic. \n+ An agent at state s can move to state t if s R t. \n+ The modality ◇ φ expresses possibility: there exists an accessible state where φ holds. \n+ This is the foundation that we will generalize. \n+ Timing: 1:00 to 2:00."},{"idx":5,"label":"5","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":6,"label":"5","overlay":1,"forcedOverlay":true,"hidden":false},{"idx":7,"label":"6","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ This is the key motivation: standard multi-agent logics treat agents independently. \n+ But in reality, actions interact. If agent 1 moves left and agent 2 moves right, the result is a joint outcome. \n+ Game frames solve this by associating each state with a strategic game. \n+ The outcome function maps strategy profiles to states. \n+ This is the foundation of Coalition Logic. \n+ Timing: 2:00 to 4:00."},{"idx":8,"label":"7","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":9,"label":"8","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ Define the formal building block: a strategic game. \n+ N is the set of players,  the strategies, S the states. \n+ The outcome function o takes a strategy profile (one strategy per player) and returns a state. \n+ This is a game form with no preferences yet, just the mechanics. \n+ Timing: 4:00 to 5:00."},{"idx":10,"label":"9","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ A game frame is a transition system where transitions are strategic games. \n+ At each state s, the function γ gives the game that agents must play. \n+ The outcome of that game determines the next state. \n+ This is more general than Kripke frames: instead of a simple relation, we have a full game. \n+ Timing: 5:00 to 6:00."},{"idx":11,"label":"10","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ This is the central concept: effectivity functions. \n+ X ∈  means coalition C can force the outcome into set X. \n+ The quantifier structure is key: EXISTS a strategy for C, FOR ALL strategies of the opponents. \n+ This captures the idea of \"forcing\": the coalition has a winning strategy. \n+ The logic will reason about these effectivity functions directly. \n+ Timing: 6:00 to 8:00."},{"idx":12,"label":"11","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ These three properties ensure the effectivity function comes from a real game. \n+ Outcome-monotonicity: if you can guarantee winning, you can guarantee \"someone wins.\" \n+ Superadditivity: disjoint coalitions can combine their strategies, cooperation pays off. \n+ N-maximality: if nobody can prevent X, then everyone together can achieve it. \n+ These properties will be reflected as axioms in the logic. \n+ Timing: 8:00 to 9:00."},{"idx":13,"label":"12","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":14,"label":"13","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ Introduce the modal operator of Coalition Logic. \n+ The double angle brackets denote the coalition ability operator. \n+ It is read as \"C can achieve phi.\" \n+ We use this notation to avoid confusion with the universal quantifier [P]φ in QCL. \n+ Timing: 9:00 to 10:00."},{"idx":15,"label":"14","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":16,"label":"14","overlay":1,"forcedOverlay":true,"hidden":false,"note":"+ Frames give structure; models add truth values for propositions. \n+ The semantics is elegant: C can force φ iff the set of φ-states is in the effectivity of C at s. \n+ This directly connects the logic to the game-theoretic notion of effectivity. \n+ The formula  is the set of states where φ is true. \n+ Timing: 10:00 to 11:00."},{"idx":17,"label":"15","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ This is the most important theoretical result in CL. \n+ It bridges two worlds: the abstract algebraic world of effectivity functions, and the concrete world of strategic games. \n+ The forward direction is straightforward: every game induces a playable effectivity function. \n+ The reverse direction is the deep one: every playable function comes from some game. \n+ This justifies working directly with effectivity functions in the logic. \n+ Timing: 11:00 to 12:00."},{"idx":18,"label":"16","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":19,"label":"16","overlay":1,"forcedOverlay":true,"hidden":false,"note":"+ The forward direction is almost immediate from the definitions. \n+ For superadditivity: if  and  are disjoint, their strategies do not conflict, so they can be played simultaneously. \n+ For the reverse direction: the construction is non-trivial. You build a game where each coalition's \"power\" matches what E declares. \n+ The three playability properties are essential for the construction to be consistent. \n+ Timing: 12:00 to 14:00."},{"idx":20,"label":"17","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":21,"label":"18","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ These axioms mirror the playability properties. \n+ Consistency: nothing can force a contradiction. \n+ Efficacy: every coalition can always do something. \n+ g-maximality: what the empty coalition cannot make inevitable, the grand coalition can achieve. \n+ Superadditivity is the most critical: it captures the ability to combine strategies. \n+ This axiom is what makes satisfiability PSPACE-complete rather than NP-complete. \n+ Timing: 14:00 to 15:00."},{"idx":22,"label":"19","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ This is the key limitation that motivates QCL. \n+ In CL, you must enumerate every possible coalition explicitly. \n+ For n agents, there are  coalitions, exponential blowup. \n+ A simple property like \"some majority can force φ\" requires listing all majority coalitions. \n+ For n = 100 voters, this is astronomically large. \n+ Timing: 15:00 to 17:00."},{"idx":23,"label":"20","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":24,"label":"21","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":25,"label":"21","overlay":1,"forcedOverlay":true,"hidden":false},{"idx":26,"label":"22","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ QCL's innovation is not more expressive power, but more concise representation. \n+ Predicates describe properties of coalitions: is this coalition a subset of D? Does it contain D? \n+ The cardinality predicate is crucial: it identifies all coalitions of size at least n. \n+ Majority becomes a single predicate instead of an exponential disjunction. \n+ Timing: 17:00 to 19:00."},{"idx":27,"label":"23","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ The existential ⟨ P ⟩ φ: SOME coalition with property P can force φ. \n+ The universal [P] φ: ALL coalitions with property P can force φ. \n+ Important: [P] is NOT simply the dual of ⟨ P ⟩. The dual would be ∀ ∃, but [P] follows ∀ ∃ ∀, the correct quantifier pattern for collective ability. \n+ This subtlety is essential for modeling coalition power correctly. \n+ Timing: 19:00 to 21:00."},{"idx":28,"label":"23","overlay":1,"forcedOverlay":true,"hidden":false,"note":"+ The existential ⟨ P ⟩ φ: SOME coalition with property P can force φ. \n+ The universal [P] φ: ALL coalitions with property P can force φ. \n+ Important: [P] is NOT simply the dual of ⟨ P ⟩. The dual would be ∀ ∃, but [P] follows ∀ ∃ ∀, the correct quantifier pattern for collective ability. \n+ This subtlety is essential for modeling coalition power correctly. \n+ Timing: 19:00 to 21:00."},{"idx":29,"label":"24","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":30,"label":"24","overlay":1,"forcedOverlay":true,"hidden":false,"note":"+ This is the main theoretical result of the paper by Agotnes, van der Hoek, and Wooldridge. \n+ QCL and CL have the same expressive power: nothing new is expressible. \n+ But QCL is exponentially more succinct: the same property can be stated with much shorter formulas. \n+ The proof compares the length of formulas in both logics for the majority property. \n+ In CL, you must list all majority coalitions. In QCL, just one predicate. \n+ Timing: 21:00 to 23:00."},{"idx":31,"label":"25","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":32,"label":"26","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":33,"label":"26","overlay":1,"forcedOverlay":true,"hidden":false},{"idx":34,"label":"27","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ The superadditivity axiom is what makes CL harder than propositional logic. \n+ You cannot just check each coalition independently; you must consider how they combine. \n+ The surprise: despite being exponentially more succinct, QCL has the SAME complexity as CL. \n+ This means QCL is strictly better for humans (shorter formulas) without being worse for machines. \n+ This is a rare and desirable property in logic. \n+ Timing: 23:00 to 26:00."},{"idx":35,"label":"28","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":36,"label":"29","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":37,"label":"29","overlay":1,"forcedOverlay":true,"hidden":false,"note":"+ This is the crown jewel application: voting systems. \n+ In QCL, you can specify a complete majority voting system in 4 short formulas. \n+ The predicates capture the essence: \"any group of size > n/2 can determine the outcome.\" \n+ Compare this to CL, where each formula would need to list all majority coalitions explicitly. \n+ For n = 100, the CL version would be astronomically long. \n+ Timing: 26:00 to 28:00."},{"idx":38,"label":"30","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ Summary table comparing CL and QCL. \n+ Same expressive power, same complexity, but QCL is exponentially more succinct. \n+ This makes QCL the practical choice for specifying multi-agent systems. \n+ The theoretical foundation (effectivity functions, game frames) remains the same. \n+ Timing: 28:00 to 29:00."},{"idx":39,"label":"31","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":40,"label":"32","overlay":0,"forcedOverlay":false,"hidden":false},{"idx":41,"label":"32","overlay":1,"forcedOverlay":true,"hidden":false},{"idx":42,"label":"33","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ Conclude by emphasizing the unifying power of CL. \n+ Traditional modal logic is just the 1-player case of Coalition Logic. \n+ QCL bridges theory and practice: you can now specify and verify real systems. \n+ \"Social Software\" is Pauly's vision: using logic to design and verify social institutions. \n+ Thank the audience. Open for questions (10 minutes). \n+ Timing: 29:00 to 30:00."},{"idx":43,"label":"33","overlay":0,"forcedOverlay":false,"hidden":false,"note":"+ Thank the audience for their attention. \n+ Remind them of the 10-minute Q&A session. \n+ Be prepared to explain: \n  - Why superadditivity makes CL PSPACE-complete. \n  - The difference between [P]φ and ¬ ⟨ P ⟩ ¬ φ. \n  - How to read speaker notes with pdfpc."}]}
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:200:47
+    │
+200 │ $ phi ::= p | not phi | phi_1 or phi_2 | angle.l angle.r C angle.r angle.r phi $
+    │                                                ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:200:55
+    │
+200 │ $ phi ::= p | not phi | phi_1 or phi_2 | angle.l angle.r C angle.r angle.r phi $
+    │                                                        ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:200:65
+    │
+200 │ $ phi ::= p | not phi | phi_1 or phi_2 | angle.l angle.r C angle.r angle.r phi $
+    │                                                                  ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:200:73
+    │
+200 │ $ phi ::= p | not phi | phi_1 or phi_2 | angle.l angle.r C angle.r angle.r phi $
+    │                                                                          ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:202:9
+    │
+202 │ - $angle.l angle.r C angle.r angle.r phi$ means: "coalition $C$ has a joint strategy to *force* an outcome satisfying $phi$, regardless of the actions of $cal(A)g without C$."
+    │          ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:202:17
+    │
+202 │ - $angle.l angle.r C angle.r angle.r phi$ means: "coalition $C$ has a joint strategy to *force* an outcome satisfying $phi$, regardless of the actions of $cal(A)g without C$."
+    │                  ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:202:27
+    │
+202 │ - $angle.l angle.r C angle.r angle.r phi$ means: "coalition $C$ has a joint strategy to *force* an outcome satisfying $phi$, regardless of the actions of $cal(A)g without C$."
+    │                            ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:202:35
+    │
+202 │ - $angle.l angle.r C angle.r angle.r phi$ means: "coalition $C$ has a joint strategy to *force* an outcome satisfying $phi$, regardless of the actions of $cal(A)g without C$."
+    │                                    ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:224:25
+    │
+224 │ $ cal(M), s models angle.l angle.r C angle.r angle.r phi <=> phi^cal(M) in E(s, C) $
+    │                          ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:224:33
+    │
+224 │ $ cal(M), s models angle.l angle.r C angle.r angle.r phi <=> phi^cal(M) in E(s, C) $
+    │                                  ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:224:43
+    │
+224 │ $ cal(M), s models angle.l angle.r C angle.r angle.r phi <=> phi^cal(M) in E(s, C) $
+    │                                            ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:224:51
+    │
+224 │ $ cal(M), s models angle.l angle.r C angle.r angle.r phi <=> phi^cal(M) in E(s, C) $
+    │                                                    ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:289:34
+    │
+289 │ / Consistency ($bot$): $not angle.l angle.r C angle.r angle.r bot$ --- no coalition can force the impossible.
+    │                                   ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:289:42
+    │
+289 │ / Consistency ($bot$): $not angle.l angle.r C angle.r angle.r bot$ --- no coalition can force the impossible.
+    │                                           ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:289:52
+    │
+289 │ / Consistency ($bot$): $not angle.l angle.r C angle.r angle.r bot$ --- no coalition can force the impossible.
+    │                                                     ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:289:60
+    │
+289 │ / Consistency ($bot$): $not angle.l angle.r C angle.r angle.r bot$ --- no coalition can force the impossible.
+    │                                                             ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:290:27
+    │
+290 │ / Efficacy ($top$): $angle.l angle.r C angle.r angle.r top$ --- every coalition can always force something trivially true.
+    │                            ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:290:35
+    │
+290 │ / Efficacy ($top$): $angle.l angle.r C angle.r angle.r top$ --- every coalition can always force something trivially true.
+    │                                    ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:290:45
+    │
+290 │ / Efficacy ($top$): $angle.l angle.r C angle.r angle.r top$ --- every coalition can always force something trivially true.
+    │                                              ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:290:53
+    │
+290 │ / Efficacy ($top$): $angle.l angle.r C angle.r angle.r top$ --- every coalition can always force something trivially true.
+    │                                                      ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:291:35
+    │
+291 │ / $cal(A)g$-maximality: $not angle.l angle.r emptyset angle.r angle.r not phi -> angle.l angle.r cal(A)g angle.r angle.r phi$.
+    │                                    ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:291:43
+    │
+291 │ / $cal(A)g$-maximality: $not angle.l angle.r emptyset angle.r angle.r not phi -> angle.l angle.r cal(A)g angle.r angle.r phi$.
+    │                                            ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:291:60
+    │
+291 │ / $cal(A)g$-maximality: $not angle.l angle.r emptyset angle.r angle.r not phi -> angle.l angle.r cal(A)g angle.r angle.r phi$.
+    │                                                             ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:291:68
+    │
+291 │ / $cal(A)g$-maximality: $not angle.l angle.r emptyset angle.r angle.r not phi -> angle.l angle.r cal(A)g angle.r angle.r phi$.
+    │                                                                     ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:291:87
+    │
+291 │ / $cal(A)g$-maximality: $not angle.l angle.r emptyset angle.r angle.r not phi -> angle.l angle.r cal(A)g angle.r angle.r phi$.
+    │                                                                                        ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:291:95
+    │
+291 │ / $cal(A)g$-maximality: $not angle.l angle.r emptyset angle.r angle.r not phi -> angle.l angle.r cal(A)g angle.r angle.r phi$.
+    │                                                                                                ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:291:111
+    │
+291 │ / $cal(A)g$-maximality: $not angle.l angle.r emptyset angle.r angle.r not phi -> angle.l angle.r cal(A)g angle.r angle.r phi$.
+    │                                                                                                                ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:291:119
+    │
+291 │ / $cal(A)g$-maximality: $not angle.l angle.r emptyset angle.r angle.r not phi -> angle.l angle.r cal(A)g angle.r angle.r phi$.
+    │                                                                                                                        ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:292:33
+    │
+292 │ / Superadditivity ($S$): $(angle.l angle.r C_1 angle.r angle.r phi_1 and angle.l angle.r C_2 angle.r angle.r phi_2) -> angle.l angle.r C_1 union C_2 angle.r angle.r (phi_1 and phi_2)$ for $C_1 inter C_2 = emptyset$.
+    │                                  ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:292:41
+    │
+292 │ / Superadditivity ($S$): $(angle.l angle.r C_1 angle.r angle.r phi_1 and angle.l angle.r C_2 angle.r angle.r phi_2) -> angle.l angle.r C_1 union C_2 angle.r angle.r (phi_1 and phi_2)$ for $C_1 inter C_2 = emptyset$.
+    │                                          ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:292:53
+    │
+292 │ / Superadditivity ($S$): $(angle.l angle.r C_1 angle.r angle.r phi_1 and angle.l angle.r C_2 angle.r angle.r phi_2) -> angle.l angle.r C_1 union C_2 angle.r angle.r (phi_1 and phi_2)$ for $C_1 inter C_2 = emptyset$.
+    │                                                      ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:292:61
+    │
+292 │ / Superadditivity ($S$): $(angle.l angle.r C_1 angle.r angle.r phi_1 and angle.l angle.r C_2 angle.r angle.r phi_2) -> angle.l angle.r C_1 union C_2 angle.r angle.r (phi_1 and phi_2)$ for $C_1 inter C_2 = emptyset$.
+    │                                                              ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:292:79
+    │
+292 │ / Superadditivity ($S$): $(angle.l angle.r C_1 angle.r angle.r phi_1 and angle.l angle.r C_2 angle.r angle.r phi_2) -> angle.l angle.r C_1 union C_2 angle.r angle.r (phi_1 and phi_2)$ for $C_1 inter C_2 = emptyset$.
+    │                                                                                ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:292:87
+    │
+292 │ / Superadditivity ($S$): $(angle.l angle.r C_1 angle.r angle.r phi_1 and angle.l angle.r C_2 angle.r angle.r phi_2) -> angle.l angle.r C_1 union C_2 angle.r angle.r (phi_1 and phi_2)$ for $C_1 inter C_2 = emptyset$.
+    │                                                                                        ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:292:99
+    │
+292 │ / Superadditivity ($S$): $(angle.l angle.r C_1 angle.r angle.r phi_1 and angle.l angle.r C_2 angle.r angle.r phi_2) -> angle.l angle.r C_1 union C_2 angle.r angle.r (phi_1 and phi_2)$ for $C_1 inter C_2 = emptyset$.
+    │                                                                                                    ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:292:107
+    │
+292 │ / Superadditivity ($S$): $(angle.l angle.r C_1 angle.r angle.r phi_1 and angle.l angle.r C_2 angle.r angle.r phi_2) -> angle.l angle.r C_1 union C_2 angle.r angle.r (phi_1 and phi_2)$ for $C_1 inter C_2 = emptyset$.
+    │                                                                                                            ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:292:125
+    │
+292 │ / Superadditivity ($S$): $(angle.l angle.r C_1 angle.r angle.r phi_1 and angle.l angle.r C_2 angle.r angle.r phi_2) -> angle.l angle.r C_1 union C_2 angle.r angle.r (phi_1 and phi_2)$ for $C_1 inter C_2 = emptyset$.
+    │                                                                                                                              ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:292:133
+    │
+292 │ / Superadditivity ($S$): $(angle.l angle.r C_1 angle.r angle.r phi_1 and angle.l angle.r C_2 angle.r angle.r phi_2) -> angle.l angle.r C_1 union C_2 angle.r angle.r (phi_1 and phi_2)$ for $C_1 inter C_2 = emptyset$.
+    │                                                                                                                                      ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:292:155
+    │
+292 │ / Superadditivity ($S$): $(angle.l angle.r C_1 angle.r angle.r phi_1 and angle.l angle.r C_2 angle.r angle.r phi_2) -> angle.l angle.r C_1 union C_2 angle.r angle.r (phi_1 and phi_2)$ for $C_1 inter C_2 = emptyset$.
+    │                                                                                                                                                            ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:292:163
+    │
+292 │ / Superadditivity ($S$): $(angle.l angle.r C_1 angle.r angle.r phi_1 and angle.l angle.r C_2 angle.r angle.r phi_2) -> angle.l angle.r C_1 union C_2 angle.r angle.r (phi_1 and phi_2)$ for $C_1 inter C_2 = emptyset$.
+    │                                                                                                                                                                    ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:311:8
+    │
+311 │ $ angle.l angle.r C_1 angle.r angle.r phi or angle.l angle.r C_2 angle.r angle.r phi or dots or angle.l angle.r C_(2^n) angle.r angle.r phi $
+    │         ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:311:16
+    │
+311 │ $ angle.l angle.r C_1 angle.r angle.r phi or angle.l angle.r C_2 angle.r angle.r phi or dots or angle.l angle.r C_(2^n) angle.r angle.r phi $
+    │                 ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:311:28
+    │
+311 │ $ angle.l angle.r C_1 angle.r angle.r phi or angle.l angle.r C_2 angle.r angle.r phi or dots or angle.l angle.r C_(2^n) angle.r angle.r phi $
+    │                             ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:311:36
+    │
+311 │ $ angle.l angle.r C_1 angle.r angle.r phi or angle.l angle.r C_2 angle.r angle.r phi or dots or angle.l angle.r C_(2^n) angle.r angle.r phi $
+    │                                     ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:311:51
+    │
+311 │ $ angle.l angle.r C_1 angle.r angle.r phi or angle.l angle.r C_2 angle.r angle.r phi or dots or angle.l angle.r C_(2^n) angle.r angle.r phi $
+    │                                                    ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:311:59
+    │
+311 │ $ angle.l angle.r C_1 angle.r angle.r phi or angle.l angle.r C_2 angle.r angle.r phi or dots or angle.l angle.r C_(2^n) angle.r angle.r phi $
+    │                                                            ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:311:71
+    │
+311 │ $ angle.l angle.r C_1 angle.r angle.r phi or angle.l angle.r C_2 angle.r angle.r phi or dots or angle.l angle.r C_(2^n) angle.r angle.r phi $
+    │                                                                        ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:311:79
+    │
+311 │ $ angle.l angle.r C_1 angle.r angle.r phi or angle.l angle.r C_2 angle.r angle.r phi or dots or angle.l angle.r C_(2^n) angle.r angle.r phi $
+    │                                                                                ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:311:102
+    │
+311 │ $ angle.l angle.r C_1 angle.r angle.r phi or angle.l angle.r C_2 angle.r angle.r phi or dots or angle.l angle.r C_(2^n) angle.r angle.r phi $
+    │                                                                                                       ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:311:110
+    │
+311 │ $ angle.l angle.r C_1 angle.r angle.r phi or angle.l angle.r C_2 angle.r angle.r phi or dots or angle.l angle.r C_(2^n) angle.r angle.r phi $
+    │                                                                                                               ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:311:126
+    │
+311 │ $ angle.l angle.r C_1 angle.r angle.r phi or angle.l angle.r C_2 angle.r angle.r phi or dots or angle.l angle.r C_(2^n) angle.r angle.r phi $
+    │                                                                                                                               ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:311:134
+    │
+311 │ $ angle.l angle.r C_1 angle.r angle.r phi or angle.l angle.r C_2 angle.r angle.r phi or dots or angle.l angle.r C_(2^n) angle.r angle.r phi $
+    │                                                                                                                                       ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:356:32
+    │
+356 │ == Quantified Operators: $angle.l P angle.r$ and $[P]$
+    │                                 ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:356:42
+    │
+356 │ == Quantified Operators: $angle.l P angle.r$ and $[P]$
+    │                                           ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:381:27
+    │
+381 │   + The existential $angle.l P angle.r phi$: SOME coalition with property $P$ can force $phi$.
+    │                            ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:381:37
+    │
+381 │   + The existential $angle.l P angle.r phi$: SOME coalition with property $P$ can force $phi$.
+    │                                      ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:383:54
+    │
+383 │   + Important: $[P]$ is NOT simply the dual of $angle.l P angle.r$. The dual would be $forall exists$, but $[P]$ follows $forall exists forall$, the correct quantifier pattern for collective ability.
+    │                                                       ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:383:64
+    │
+383 │   + Important: $[P]$ is NOT simply the dual of $angle.l P angle.r$. The dual would be $forall exists$, but $[P]$ follows $forall exists forall$, the correct quantifier pattern for collective ability.
+    │                                                                 ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:402:19
+    │
+402 │ - *In QCL:* $angle.l "majority" angle.r phi$ --- one formula, constant size.
+    │                    ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:402:38
+    │
+402 │ - *In QCL:* $angle.l "majority" angle.r phi$ --- one formula, constant size.
+    │                                       ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:454:36
+    │
+454 │ - Minority restriction: $(not angle.l "non-majority" angle.r omega_1) and (not angle.l "non-majority" angle.r omega_2)$
+    │                                     ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:454:59
+    │
+454 │ - Minority restriction: $(not angle.l "non-majority" angle.r omega_1) and (not angle.l "non-majority" angle.r omega_2)$
+    │                                                            ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:454:85
+    │
+454 │ - Minority restriction: $(not angle.l "non-majority" angle.r omega_1) and (not angle.l "non-majority" angle.r omega_2)$
+    │                                                                                      ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:454:108
+    │
+454 │ - Minority restriction: $(not angle.l "non-majority" angle.r omega_1) and (not angle.l "non-majority" angle.r omega_2)$
+    │                                                                                                             ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:455:29
+    │
+455 │ - Guaranteed outcome: $angle.l "any" angle.r (omega_1 or omega_2)$
+    │                              ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:455:43
+    │
+455 │ - Guaranteed outcome: $angle.l "any" angle.r (omega_1 or omega_2)$
+    │                                            ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:456:26
+    │
+456 │ - Incompatibility: $angle.l "any" angle.r not (omega_1 and omega_2)$
+    │                           ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:456:40
+    │
+456 │ - Incompatibility: $angle.l "any" angle.r not (omega_1 and omega_2)$
+    │                                         ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:530:53
+    │
+530 │     - The difference between $[P]phi$ and $not angle.l P angle.r not phi$.
+    │                                                      ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:530:63
+    │
+530 │     - The difference between $[P]phi$ and $not angle.l P angle.r not phi$.
+    │                                                                ^
+
+warning: `angle.l` is deprecated, use `chevron.l` instead
+    ┌─ presentation.typ:364:28
+    │
+364 │       *Existential:* $angle.l P angle.r phi$ --- there exists a coalition $C$ satisfying $P$ that can force $phi$.
+    │                             ^
+
+warning: `angle.r` is deprecated, use `chevron.r` instead
+    ┌─ presentation.typ:364:38
+    │
+364 │       *Existential:* $angle.l P angle.r phi$ --- there exists a coalition $C$ satisfying $P$ that can force $phi$.
+    │                                       ^
+
