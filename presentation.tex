@@ -24,32 +24,40 @@
 % SLIDE 1 — Title
 % ============================================================
 \begin{frame}
-  \titlepage
+	\titlepage
 \end{frame}
 
 \note{
-Good morning everyone, I am Luca Sforza and today I will present my work on Coalition Logic and its quantified extension. The path I will take you through starts from classical modal logic and arrives at Quantified Coalition Logic, passing through the foundations of Pauly's Coalition Logic. The presentation is structured in eight parts and will last about thirty minutes, plus time for questions. The goal is to show how logic can model coalitional power in multi-agent systems.
+	Good morning everyone, I am Luca Sforza and today I will present my work on Coalition Logic and its quantified extension.
+	The path I will take you through starts from classical modal logic and arrives at Quantified Coalition Logic,
+	passing through the foundations of Pauly's Coalition Logic.
+	The goal is to show how logic can model coalitional power in multi-agent systems.
 }
 
 % ============================================================
 % SLIDE 2 — Outline
 % ============================================================
 \begin{frame}{Outline}
-  \begin{enumerate}
-    \item Introduction: From Kripke Models to Game Frames
-    \item The Concept of Coalitional Power
-    \item Coalition Logic (CL): Syntax and Semantics
-    \item Axiomatization and Limits of CL
-    \item Quantified Coalition Logic (QCL)
-    \item Quantified Operators
-    \item Metatheory: Computational Complexity
-    \item Applications: Voting and Social Choice
-    \item Conclusions and Reflections
-  \end{enumerate}
+	\begin{enumerate}
+		\item Introduction: From Kripke Models to Game Frames
+		\item The Concept of Coalitional Power
+		\item Coalition Logic (CL): Syntax and Semantics
+		\item Axiomatization and Limits of CL
+		\item Quantified Coalition Logic (QCL)
+		\item Quantified Operators
+		\item Metatheory: Computational Complexity
+		\item Applications: Voting and Social Choice
+		\item Conclusions and Reflections
+	\end{enumerate}
 \end{frame}
 
 \note{
-Here is the structure of the presentation. We will start with an introduction that takes us from Kripke models to game frames, then focus on the concept of coalitional power and Coalition Logic. After examining the limitations of this logic, we will introduce Quantified Coalition Logic which solves the succinctness problem. Finally, we will analyze computational complexity, see a practical application to majority voting, and close with conclusions.
+	Here is the structure of the presentation.
+	We will start with an introduction that takes us from Kripke models to game frames,
+	then focus on the concept of coalitional power and Coalition Logic.
+	After examining the limitations of this logic,
+	we will introduce Quantified Coalition Logic which solves the succinctness problem.
+	Finally, we will analyze computational complexity, see a practical application to majority voting, and close with conclusions.
 }
 
 % ============================================================
@@ -58,39 +66,53 @@ Here is the structure of the presentation. We will start with an introduction th
 \section{Introduction: From Kripke Models to Game Frames}
 
 \begin{frame}{Single-Agent Modal Logic}
-  \begin{itemize}
-    \item In the simplest case, we have \textbf{one agent} who can choose between actions.
-    \item A \textbf{Kripke model} uses an accessibility relation $R$ that associates to every state all reachable states.
-    \item A modal formula $\Diamond \varphi$ means: ``the agent can act so that $\varphi$ will be true.''
-  \end{itemize}
+	\begin{itemize}
+		\item In the simplest case, we have \textbf{one agent} who can choose between actions.
+		\item A \textbf{Kripke model} uses an accessibility relation $R$ that associates to every state all reachable states.
+		\item A modal formula $\Diamond \varphi$ means: ``the agent can act so that $\varphi$ will be true.''
+	\end{itemize}
 \end{frame}
 
 \note{
-Let us start from the basics. In classical modal logic we have a single agent operating in a world described by a Kripke model. In this model, every state is connected to other states through an accessibility relation R. When we write that diamond phi is true at a state, we are saying that the agent can perform an action such that phi holds at the next state. This is our starting point: a single agent choosing its actions independently.
+	Let us start from the basics.
+	In classical modal logic we have a single agent operating in a world described by a Kripke model.
+	In this model, every state is connected to other states through an accessibility relation R.
+	When we write that diamond phi is true at a state
+	we are saying that the agent can perform an action such that phi holds at the next state.
+	This is our starting point: a single agent choosing its actions independently.
 }
 
 \begin{frame}{The Multi-Agent Problem}
-  \begin{itemize}
-    \item Extending to multiple agents with individual accessibility relations $R_i$ considers agents \textbf{in isolation}.
-    \item But agents' actions \textbf{interact}: what happens when agent 1 and agent 2 act \textbf{simultaneously}?
-    \item The outcome depends on the \textbf{combination} of all participants' choices.
-  \end{itemize}
+	\begin{itemize}
+		\item Extending to multiple agents with individual accessibility relations $R_i$ considers agents \textbf{in isolation}.
+		\item But agents' actions \textbf{interact}: what happens when agent 1 and agent 2 act \textbf{simultaneously}?
+		\item The outcome depends on the \textbf{combination} of all participants' choices.
+	\end{itemize}
 \end{frame}
 
 \note{
-The problem arises when we try to extend this approach to multiple agents. If we consider a standard multi-agent model where each agent has its own accessibility relation, we get a system that treats agents in isolation. But in reality, agents' actions interact. If agent one moves left and agent two moves right, the result depends on the combination of their choices. Standard multi-agent logics fail to capture this simultaneous interaction.
+	The problem arises when we try to extend this approach to multiple agents.
+	If we consider a standard multi-agent model where each agent has its own accessibility relation,
+	we get a system that treats agents in isolation. But in reality, agents' actions interact.
+	If agent one moves left and agent two moves right, the result depends on the combination of their choices.
+	Standard multi-agent logics fail to capture this simultaneous interaction.
 }
 
 \begin{frame}{The Solution: Game Frames}
-  \begin{itemize}
-    \item Marc Pauly introduces \textbf{game frames} (2002).
-    \item Each state is associated with a \textbf{strategic game} among the agents.
-    \item Outcomes of the game are states of the model, leading to \textbf{Coalition Logic} (CL).
-  \end{itemize}
+	\begin{itemize}
+		\item Marc Pauly introduces \textbf{game frames} (2002).
+		\item Each state is associated with a \textbf{strategic game} among the agents.
+		\item Outcomes of the game are states of the model, leading to \textbf{Coalition Logic} (CL).
+	\end{itemize}
 \end{frame}
 
 \note{
-The solution comes from Marc Pauly in 2002 with the introduction of game frames. The idea is to associate with every state of the model a strategic game that the agents must play. The outcomes of this game are other states of the model, creating a transitional system where agents' interactions are explicitly modeled. From this structure, Coalition Logic is born, allowing us to reason about the power that groups of agents can exercise collectively.
+	The solution comes from Marc Pauly with the introduction of game frames.
+	The idea is to associate with every state of the model a strategic game that the agents must play.
+	The outcomes of this game are other states of the model, creating a transitional system where agents' interactions
+	are explicitly modeled.
+	From this structure, Coalition Logic is born, allowing us to reason about the power that groups of agents can exercise
+	collectively.
 }
 
 % ============================================================
@@ -99,62 +121,69 @@ The solution comes from Marc Pauly in 2002 with the introduction of game frames.
 \section{The Concept of Coalitional Power}
 
 \begin{frame}{Strategic Games}
-  A strategic game $G = (N, \{\Sigma_i \mid i \in N\}, o, S)$ consists of:
-  \begin{itemize}
-    \item $N$: finite set of agents (players)
-    \item $\Sigma_i$: set of strategies for agent $i$
-    \item $S$: set of outcome states
-    \item $o: \prod_{i \in N} \Sigma_i \rightarrow S$: outcome function
-  \end{itemize}
+	A strategic game $G = (N, \{\Sigma_i \mid i \in N\}, o, S)$ consists of:
+	\begin{itemize}
+		\item $N$: finite set of agents (players)
+		\item $\Sigma_i$: set of strategies for agent $i$
+		\item $S$: set of outcome states
+		\item $o: \prod_{i \in N} \Sigma_i \rightarrow S$: outcome function
+	\end{itemize}
 \end{frame}
 
 \note{
-Let us now formalize the concept of a strategic game. A strategic game G is defined by a finite set of agents N, a set of strategies for each agent, a set of possible states S, and an outcome function o that takes a strategy profile, meaning one strategy per player, and returns a state. Notice that we do not yet have preferences here: we are only modeling the mechanics of the game, not what the players prefer.
+	Let us now formalize the concept of a strategic game.
+	A strategic game G is defined by a finite set of agents N, a set of strategies for each agent, a set of possible states S,
+	and an outcome function that takes a strategy profile, meaning one strategy per player, and returns a state.
+	Notice that we do not yet have preferences here: we are only modeling the mechanics of the game, not what the players prefer.
 }
 
 \begin{frame}{Game Frames}
-  \begin{block}{Definition}
-    Let $\Gamma^N_S$ be the set of all strategic games over agents $N$ and states $S$.
-    A \emph{game frame} is a pair $(S, \gamma)$ where $\gamma: S \rightarrow \Gamma^N_S$ assigns a strategic game to each state.
-  \end{block}
+	\begin{block}{Definition}
+		Let $\Gamma^N_S$ be the set of all strategic games over agents $N$ and states $S$.
+		A \emph{game frame} is a pair $(S, \gamma)$ where $\gamma: S \rightarrow \Gamma^N_S$ assigns a strategic game to each state.
+	\end{block}
 
-  \begin{itemize}
-    \item Game frames are essentially \textbf{extensive games with simultaneous moves}.
-    \item At every state, agents play a game; the outcome leads to a new state (and a new game).
-  \end{itemize}
+	\begin{itemize}
+		\item Game frames are essentially \textbf{extensive games with simultaneous moves}.
+		\item At every state, agents play a game; the outcome leads to a new state (and a new game).
+	\end{itemize}
 \end{frame}
 
 \note{
-A game frame is a pair consisting of the set of states S and a function gamma that assigns a strategic game to each state. In other words, when we are at state s, the function gamma tells us which game the agents must play at that state. The outcome of that game determines the next state, and so on. This structure is more general than Kripke frames: instead of a simple accessibility relation, we have a full strategic game at every step.
+	A game frame is a pair consisting of the set of states S and a function gamma that assigns a strategic game to each state.
+	In other words, when we are at state s, the function gamma tells us which game the agents must play at that state.
+	The outcome of that game determines the next state, and so on.
+	This structure is more general than Kripke frames:
+	instead of a simple accessibility relation, we have a full strategic game at every step.
 }
 
 \begin{frame}{From Strategy to Power: Effectivity Functions}
-  \begin{block}{Definition}
-    The \emph{effectivity function} $E_G: \mathcal{P}(N) \rightarrow \mathcal{P}(\mathcal{P}(S))$ derived from game $G$ is defined as:
-    \[ X \in E_G(C) \iff \exists \sigma_C \forall \sigma_{N \setminus C}: o(\sigma_C, \sigma_{N \setminus C}) \in X \]
-  \end{block}
+	\begin{block}{Definition}
+		The \emph{effectivity function} $E_G: \mathcal{P}(N) \rightarrow \mathcal{P}(\mathcal{P}(S))$ derived from game $G$ is defined as:
+		\[ X \in E_G(C) \iff \exists \sigma_C \forall \sigma_{N \setminus C}: o(\sigma_C, \sigma_{N \setminus C}) \in X \]
+	\end{block}
 
-  \begin{itemize}
-    \item Coalition $C$ is \textbf{effective} for $X$ if $C$ has a joint strategy that \textbf{forces} the outcome into $X$, regardless of what the others do.
-  \end{itemize}
+	\begin{itemize}
+		\item Coalition $C$ is \textbf{effective} for $X$ if $C$ has a joint strategy that \textbf{forces} the outcome into $X$, regardless of what the others do.
+	\end{itemize}
 \end{frame}
 
 \note{
-Here we arrive at the central concept: the effectivity function. Given a coalition C, that is a subset of agents, we say that C is effective for a set of outcomes X if there exists a shared strategy for C such that, regardless of what the external agents do, the outcome of the game belongs to X. The quantifier structure is key: there exists a strategy for C, for all strategies of the opponents. This captures exactly the idea of forcing an outcome: the coalition has a winning strategy.
+	Here we arrive at the central concept: the effectivity function. Given a coalition C, that is a subset of agents, we say that C is effective for a set of outcomes X if there exists a shared strategy for C such that, regardless of what the external agents do, the outcome of the game belongs to X. The quantifier structure is key: there exists a strategy for C, for all strategies of the opponents. This captures exactly the idea of forcing an outcome: the coalition has a winning strategy.
 }
 
 \begin{frame}{Playability Properties}
-  Not every function can represent a real game. An effectivity function must be \textbf{playable}:
+	Not every function can represent a real game. An effectivity function must be \textbf{playable}:
 
-  \begin{description}
-    \item[Outcome-monotonicity] If $C$ can force $X$, it can force any $Y \supseteq X$.
-    \item[Superadditivity] If disjoint $C_1, C_2$ force $X_1, X_2$ respectively, then $C_1 \cup C_2$ can force $X_1 \cap X_2$.
-    \item[$N$-maximality] The grand coalition can force $X$ iff the empty coalition cannot force $S \setminus X$.
-  \end{description}
+	\begin{description}
+		\item[Outcome-monotonicity] If $C$ can force $X$, it can force any $Y \supseteq X$.
+		\item[Superadditivity] If disjoint $C_1, C_2$ force $X_1, X_2$ respectively, then $C_1 \cup C_2$ can force $X_1 \cap X_2$.
+		\item[$N$-maximality] The grand coalition can force $X$ iff the empty coalition cannot force $S \setminus X$.
+	\end{description}
 \end{frame}
 
 \note{
-Not every mathematical function can represent a real game. An effectivity function must be playable, meaning it must satisfy three fundamental properties. The first is outcome-monotonicity: if a coalition can force X, it can also force every larger set Y. If I can guarantee victory, I can also guarantee that someone will win. The second is superadditivity: if two disjoint coalitions can force X1 and X2 respectively, then by joining forces they can force the intersection. This expresses the advantage of cooperation. The third is N-maximality: the coalition of all agents can force an outcome if and only if the empty coalition cannot force the opposite.
+	Not every mathematical function can represent a real game. An effectivity function must be playable, meaning it must satisfy three fundamental properties. The first is outcome-monotonicity: if a coalition can force X, it can also force every larger set Y. If I can guarantee victory, I can also guarantee that someone will win. The second is superadditivity: if two disjoint coalitions can force X1 and X2 respectively, then by joining forces they can force the intersection. This expresses the advantage of cooperation. The third is N-maximality: the coalition of all agents can force an outcome if and only if the empty coalition cannot force the opposite.
 }
 
 % ============================================================
@@ -163,63 +192,63 @@ Not every mathematical function can represent a real game. An effectivity functi
 \section{Coalition Logic (CL): Syntax and Semantics}
 
 \begin{frame}{Syntax: The Coalition Operator}
-  Given agents $\mathcal{A}g$ and atomic propositions $\Phi$:
-  \[ \varphi ::= p \mid \neg \varphi \mid \varphi_1 \lor \varphi_2 \mid \langle\!\langle C \rangle\!\rangle \varphi \]
+	Given agents $\mathcal{A}g$ and atomic propositions $\Phi$:
+	\[ \varphi ::= p \mid \neg \varphi \mid \varphi_1 \lor \varphi_2 \mid \langle\!\langle C \rangle\!\rangle \varphi \]
 
-  \begin{itemize}
-    \item $\langle\!\langle C \rangle\!\rangle \varphi$ means: ``coalition $C$ has a joint strategy to \textbf{force} an outcome satisfying $\varphi$, regardless of the actions of $\mathcal{A}g \setminus C$.''
-  \end{itemize}
+	\begin{itemize}
+		\item $\langle\!\langle C \rangle\!\rangle \varphi$ means: ``coalition $C$ has a joint strategy to \textbf{force} an outcome satisfying $\varphi$, regardless of the actions of $\mathcal{A}g \setminus C$.''
+	\end{itemize}
 \end{frame}
 
 \note{
-Let us now look at the syntax of Coalition Logic. We have a classical propositional language with atoms, negation, and disjunction, to which we add a modal operator indexed by coalitions. The formula with double angle brackets expresses that coalition C has a common strategy to force an outcome satisfying phi, regardless of the actions of the remaining agents. We use the double angle bracket notation to clearly distinguish this operator from the universal quantifier we will introduce later in QCL.
+	Let us now look at the syntax of Coalition Logic. We have a classical propositional language with atoms, negation, and disjunction, to which we add a modal operator indexed by coalitions. The formula with double angle brackets expresses that coalition C has a common strategy to force an outcome satisfying phi, regardless of the actions of the remaining agents. We use the double angle bracket notation to clearly distinguish this operator from the universal quantifier we will introduce later in QCL.
 }
 
 \begin{frame}{From Coalition Frames to Models}
-  \begin{description}
-    \item[Coalition Frame] A pair $\mathcal{F} = (S, E)$ where $E$ assigns a playable effectivity function to each state.
-    \item[Coalition Model] A triple $\mathcal{M} = (S, E, \pi)$ adding a valuation $\pi$.
-  \end{description}
+	\begin{description}
+		\item[Coalition Frame] A pair $\mathcal{F} = (S, E)$ where $E$ assigns a playable effectivity function to each state.
+		\item[Coalition Model] A triple $\mathcal{M} = (S, E, \pi)$ adding a valuation $\pi$.
+	\end{description}
 
-  \vspace{0.5em}
-  The semantics:
-  \[ \mathcal{M}, s \models \langle\!\langle C \rangle\!\rangle \varphi \iff \varphi^{\mathcal{M}} \in E(s, C) \]
-  where $\varphi^{\mathcal{M}} = \{t \in S \mid \mathcal{M}, t \models \varphi\}$.
+	\vspace{0.5em}
+	The semantics:
+	\[ \mathcal{M}, s \models \langle\!\langle C \rangle\!\rangle \varphi \iff \varphi^{\mathcal{M}} \in E(s, C) \]
+	where $\varphi^{\mathcal{M}} = \{t \in S \mid \mathcal{M}, t \models \varphi\}$.
 \end{frame}
 
 \note{
-To define the truth of formulas, we distinguish between frames and models. A coalition frame is a pair consisting of the set of states and an effectivity structure that assigns to each state a playable effectivity function. A coalition model adds a valuation function pi that determines which atomic propositions are true at each state. The semantics of the coalitional operator is elegant: coalition C can force phi if and only if the set of states where phi is true belongs to the effectivity function of C at state s. This directly connects the logic to the game-theoretic notion of effectivity.
+	To define the truth of formulas, we distinguish between frames and models. A coalition frame is a pair consisting of the set of states and an effectivity structure that assigns to each state a playable effectivity function. A coalition model adds a valuation function pi that determines which atomic propositions are true at each state. The semantics of the coalitional operator is elegant: coalition C can force phi if and only if the set of states where phi is true belongs to the effectivity function of C at state s. This directly connects the logic to the game-theoretic notion of effectivity.
 }
 
 \begin{frame}{The Characterization Theorem (Theorem 3.2)}
-  \begin{block}{Theorem (Characterization)}
-    An effectivity function $E$ is playable if and only if there exists a strategic game $G$ such that the effectivity function induced by $G$ coincides with $E$.
-  \end{block}
+	\begin{block}{Theorem (Characterization)}
+		An effectivity function $E$ is playable if and only if there exists a strategic game $G$ such that the effectivity function induced by $G$ coincides with $E$.
+	\end{block}
 \end{frame}
 
 \note{
-The most important theoretical result of Coalition Logic is the Characterization Theorem. This theorem states that an effectivity function is playable if and only if there exists a strategic game such that the effectivity function induced by that game coincides with our function. In other words, the theorem establishes a correspondence between two different viewpoints: on one side we have the abstract description of coalition power through an effectivity function, on the other we have a real strategic game. The theorem proves that these two representations are equivalent.
+	The most important theoretical result of Coalition Logic is the Characterization Theorem. This theorem states that an effectivity function is playable if and only if there exists a strategic game such that the effectivity function induced by that game coincides with our function. In other words, the theorem establishes a correspondence between two different viewpoints: on one side we have the abstract description of coalition power through an effectivity function, on the other we have a real strategic game. The theorem proves that these two representations are equivalent.
 }
 
 \begin{frame}{Proof Sketch}
-  $(\Rightarrow)$: If $E$ is induced by a game $G$:
-  \begin{itemize}
-    \item Outcome-monotonicity: same strategy works for supersets.
-    \item Superadditivity: disjoint strategies do not interfere.
-    \item $N$-maximality: the grand coalition controls everything.
-  \end{itemize}
+	$(\Rightarrow)$: If $E$ is induced by a game $G$:
+	\begin{itemize}
+		\item Outcome-monotonicity: same strategy works for supersets.
+		\item Superadditivity: disjoint strategies do not interfere.
+		\item $N$-maximality: the grand coalition controls everything.
+	\end{itemize}
 
-  \vspace{0.5em}
-  $(\Leftarrow)$: If $E$ is playable, construct an artificial game:
-  \begin{itemize}
-    \item Introduce strategies representing guaranteed choices from $E$.
-    \item Define outcomes so that a winning strategy produces exactly the declared set.
-    \item Playability properties ensure consistency.
-  \end{itemize}
+	\vspace{0.5em}
+	$(\Leftarrow)$: If $E$ is playable, construct an artificial game:
+	\begin{itemize}
+		\item Introduce strategies representing guaranteed choices from $E$.
+		\item Define outcomes so that a winning strategy produces exactly the declared set.
+		\item Playability properties ensure consistency.
+	\end{itemize}
 \end{frame}
 
 \note{
-The proof consists of two implications. The forward direction is almost immediate: if E is the effectivity function of a game, then it automatically satisfies all playability properties. Monotonicity follows from the fact that the same strategy works for larger sets. Superadditivity derives from the independence of disjoint coalitions' strategies: since they are disjoint, the strategies do not interfere. The reverse direction is deeper: if E is playable, we must construct an artificial game. The idea is to introduce strategies representing the guaranteed choices from the effectivity function and define outcomes so that when a coalition selects a winning strategy, the resulting outcome belongs exactly to the set declared by E. The playability properties ensure that this construction is consistent and produces no contradictions between different strategies.
+	The proof consists of two implications. The forward direction is almost immediate: if E is the effectivity function of a game, then it automatically satisfies all playability properties. Monotonicity follows from the fact that the same strategy works for larger sets. Superadditivity derives from the independence of disjoint coalitions' strategies: since they are disjoint, the strategies do not interfere. The reverse direction is deeper: if E is playable, we must construct an artificial game. The idea is to introduce strategies representing the guaranteed choices from the effectivity function and define outcomes so that when a coalition selects a winning strategy, the resulting outcome belongs exactly to the set declared by E. The playability properties ensure that this construction is consistent and produces no contradictions between different strategies.
 }
 
 % ============================================================
@@ -228,32 +257,32 @@ The proof consists of two implications. The forward direction is almost immediat
 \section{Axiomatization and Limits of CL}
 
 \begin{frame}{Axiom System}
-  The axiomatization by Pauly (complete for weak playability models):
+	The axiomatization by Pauly (complete for weak playability models):
 
-  \begin{description}
-    \item[Consistency ($\bot$)] $\neg \langle\!\langle C \rangle\!\rangle \bot$ --- no coalition can force the impossible.
-    \item[Efficacy ($\top$)] $\langle\!\langle C \rangle\!\rangle \top$ --- every coalition can always force something trivially true.
-    \item[$\mathcal{A}g$-maximality] $\neg \langle\!\langle \emptyset \rangle\!\rangle \neg \varphi \to \langle\!\langle \mathcal{A}g \rangle\!\rangle \varphi$.
-    \item[Superadditivity ($S$)] $(\langle\!\langle C_1 \rangle\!\rangle \varphi_1 \land \langle\!\langle C_2 \rangle\!\rangle \varphi_2) \to \langle\!\langle C_1 \cup C_2 \rangle\!\rangle (\varphi_1 \land \varphi_2)$ for $C_1 \cap C_2 = \emptyset$.
-  \end{description}
+	\begin{description}
+		\item[Consistency ($\bot$)] $\neg \langle\!\langle C \rangle\!\rangle \bot$ --- no coalition can force the impossible.
+		\item[Efficacy ($\top$)] $\langle\!\langle C \rangle\!\rangle \top$ --- every coalition can always force something trivially true.
+		\item[$\mathcal{A}g$-maximality] $\neg \langle\!\langle \emptyset \rangle\!\rangle \neg \varphi \to \langle\!\langle \mathcal{A}g \rangle\!\rangle \varphi$.
+		\item[Superadditivity ($S$)] $(\langle\!\langle C_1 \rangle\!\rangle \varphi_1 \land \langle\!\langle C_2 \rangle\!\rangle \varphi_2) \to \langle\!\langle C_1 \cup C_2 \rangle\!\rangle (\varphi_1 \land \varphi_2)$ for $C_1 \cap C_2 = \emptyset$.
+	\end{description}
 \end{frame}
 
 \note{
-The formal system of Coalition Logic is based on four main axiom schemas. The consistency axiom states that no coalition can force the impossible, that is, a contradiction. The efficacy axiom says that every coalition can always force something trivially true. The maximality axiom establishes that what the empty coalition cannot make inevitable can be achieved by the coalition of all agents. But the most critical axiom is superadditivity: if two disjoint coalitions can force phi1 and phi2 respectively, then their union can force phi1 and phi2 together. This axiom is responsible for the PSPACE-completeness of satisfiability, because it forces the computer to reason about how strategies combine when coalitions merge.
+	The formal system of Coalition Logic is based on four main axiom schemas. The consistency axiom states that no coalition can force the impossible, that is, a contradiction. The efficacy axiom says that every coalition can always force something trivially true. The maximality axiom establishes that what the empty coalition cannot make inevitable can be achieved by the coalition of all agents. But the most critical axiom is superadditivity: if two disjoint coalitions can force phi1 and phi2 respectively, then their union can force phi1 and phi2 together. This axiom is responsible for the PSPACE-completeness of satisfiability, because it forces the computer to reason about how strategies combine when coalitions merge.
 }
 
 \begin{frame}{The Succinctness Problem}
-  To express ``some coalition can force $\varphi$'' in CL:
-  \[ \langle\!\langle C_1 \rangle\!\rangle \varphi \lor \langle\!\langle C_2 \rangle\!\rangle \varphi \lor \dots \lor \langle\!\langle C_{2^n} \rangle\!\rangle \varphi \]
+	To express ``some coalition can force $\varphi$'' in CL:
+	\[ \langle\!\langle C_1 \rangle\!\rangle \varphi \lor \langle\!\langle C_2 \rangle\!\rangle \varphi \lor \dots \lor \langle\!\langle C_{2^n} \rangle\!\rangle \varphi \]
 
-  \begin{itemize}
-    \item With $n$ agents, this formula grows \textbf{exponentially} ($2^n$ disjuncts).
-    \item Expressing general properties like ``a majority can win'' is \textbf{practically impossible} in CL.
-  \end{itemize}
+	\begin{itemize}
+		\item With $n$ agents, this formula grows \textbf{exponentially} ($2^n$ disjuncts).
+		\item Expressing general properties like ``a majority can win'' is \textbf{practically impossible} in CL.
+	\end{itemize}
 \end{frame}
 
 \note{
-Despite its theoretical solidity, Coalition Logic suffers from a very important practical limitation: the lack of succinctness. If we wanted to express a general property like there exists a coalition able to force phi, CL would force us to write a disjunction listing every possible subset of agents. With n agents, this means 2 to the power of n terms, an exponential growth. To express that a majority coalition can win, we would have to explicitly enumerate all possible majority coalitions. With one hundred voters, the number of possible coalitions is astronomical, making the specification practically impossible to handle.
+	Despite its theoretical solidity, Coalition Logic suffers from a very important practical limitation: the lack of succinctness. If we wanted to express a general property like there exists a coalition able to force phi, CL would force us to write a disjunction listing every possible subset of agents. With n agents, this means 2 to the power of n terms, an exponential growth. To express that a majority coalition can win, we would have to explicitly enumerate all possible majority coalitions. With one hundred voters, the number of possible coalitions is astronomical, making the specification practically impossible to handle.
 }
 
 % ============================================================
@@ -262,59 +291,59 @@ Despite its theoretical solidity, Coalition Logic suffers from a very important 
 \section{Quantified Coalition Logic (QCL): Coalition Predicates}
 
 \begin{frame}{The Innovation: Predicates over Coalitions}
-  Instead of enumerating members, describe coalitions via \textbf{predicates} $P$:
-  \begin{itemize}
-    \item \textbf{Inclusion:} Coalition $C$ is a subset of $D$.
-    \item \textbf{Containment:} Coalition $C$ contains $D$.
-    \item Combined with Boolean connectives.
-  \end{itemize}
+	Instead of enumerating members, describe coalitions via \textbf{predicates} $P$:
+	\begin{itemize}
+		\item \textbf{Inclusion:} Coalition $C$ is a subset of $D$.
+		\item \textbf{Containment:} Coalition $C$ contains $D$.
+		\item Combined with Boolean connectives.
+	\end{itemize}
 
-  \vspace{0.5em}
-  \textbf{The Cardinality Predicate:}
-  \begin{itemize}
-    \item A predicate that identifies coalitions of size at least $n$.
-    \item Written as $|C| \geq n$.
-  \end{itemize}
+	\vspace{0.5em}
+	\textbf{The Cardinality Predicate:}
+	\begin{itemize}
+		\item A predicate that identifies coalitions of size at least $n$.
+		\item Written as $|C| \geq n$.
+	\end{itemize}
 \end{frame}
 
 \note{
-Quantified Coalition Logic solves the succinctness problem by introducing a quantification mechanism over coalitions. Instead of enumerating the members of a coalition, we describe coalitions through predicates. We have inclusion predicates that check whether a coalition is a subset of another, containment predicates, and we can combine them with classical Boolean connectives. But the most significant addition is the cardinality predicate, which identifies all coalitions whose size is at least n. This allows us to express concepts like majority in an extremely compact way.
+	Quantified Coalition Logic solves the succinctness problem by introducing a quantification mechanism over coalitions. Instead of enumerating the members of a coalition, we describe coalitions through predicates. We have inclusion predicates that check whether a coalition is a subset of another, containment predicates, and we can combine them with classical Boolean connectives. But the most significant addition is the cardinality predicate, which identifies all coalitions whose size is at least n. This allows us to express concepts like majority in an extremely compact way.
 }
 
 \begin{frame}{Quantified Operators: $\langle P \rangle$ and $[P]$}
-  \begin{block}{Existential}
-    $\langle P \rangle \varphi$ --- there exists a coalition $C$ satisfying $P$ that can force $\varphi$.
-  \end{block}
+	\begin{block}{Existential}
+		$\langle P \rangle \varphi$ --- there exists a coalition $C$ satisfying $P$ that can force $\varphi$.
+	\end{block}
 
-  \begin{block}{Universal}
-    $[P] \varphi$ --- all coalitions satisfying $P$ can force $\varphi$.
-  \end{block}
+	\begin{block}{Universal}
+		$[P] \varphi$ --- all coalitions satisfying $P$ can force $\varphi$.
+	\end{block}
 
-  \vspace{0.5em}
-  Semantics:
-  \[ \mathcal{M}, s \models [P] \varphi \iff \forall C \subseteq \mathcal{A}g: (C \models P \implies \varphi^{\mathcal{M}} \in E(C, s)) \]
+	\vspace{0.5em}
+	Semantics:
+	\[ \mathcal{M}, s \models [P] \varphi \iff \forall C \subseteq \mathcal{A}g: (C \models P \implies \varphi^{\mathcal{M}} \in E(C, s)) \]
 \end{frame}
 
 \note{
-QCL introduces two fundamental modal operators. The existential operator with angle brackets P angle brackets phi expresses that there exists at least one coalition C satisfying predicate P that can force phi. The universal operator with square brackets P square brackets phi expresses that all coalitions satisfying P are able to force phi. Important: the universal operator is not simply the dual of the existential one. The logical dual would follow an for-all-exists pattern, but the universal operator follows for-all-exists-for-all, which is the correct quantifier pattern for collective ability. This subtlety is essential for correctly modeling coalition power.
+	QCL introduces two fundamental modal operators. The existential operator with angle brackets P angle brackets phi expresses that there exists at least one coalition C satisfying predicate P that can force phi. The universal operator with square brackets P square brackets phi expresses that all coalitions satisfying P are able to force phi. Important: the universal operator is not simply the dual of the existential one. The logical dual would follow an for-all-exists pattern, but the universal operator follows for-all-exists-for-all, which is the correct quantifier pattern for collective ability. This subtlety is essential for correctly modeling coalition power.
 }
 
 \begin{frame}{Exponential Succinctness of QCL}
-  \begin{block}{Theorem (Succinctness)}
-    There exists an infinite family of QCL formulas such that any equivalent CL formula has exponential length.
-  \end{block}
+	\begin{block}{Theorem (Succinctness)}
+		There exists an infinite family of QCL formulas such that any equivalent CL formula has exponential length.
+	\end{block}
 
-  \vspace{0.5em}
-  Example: ``some majority can force $\varphi$''
+	\vspace{0.5em}
+	Example: ``some majority can force $\varphi$''
 
-  \begin{itemize}
-    \item \textbf{In QCL:} $\langle \text{majority} \rangle \varphi$ --- one formula, constant size.
-    \item \textbf{In CL:} exponential disjunction of all majority coalitions.
-  \end{itemize}
+	\begin{itemize}
+		\item \textbf{In QCL:} $\langle \text{majority} \rangle \varphi$ --- one formula, constant size.
+		\item \textbf{In CL:} exponential disjunction of all majority coalitions.
+	\end{itemize}
 \end{frame}
 
 \note{
-The main theoretical result is that QCL is exponentially more succinct than CL. Consider the example of there exists a majority coalition that can force phi. In QCL, this property is expressed with a single formula: angle brackets majority angle brackets phi, where the majority predicate automatically identifies all coalitions whose cardinality exceeds half the agents. In CL, however, we would have to explicitly list every possible majority coalition, obtaining a formula whose length grows exponentially with the number of agents. This demonstrates that QCL and CL have the same expressive power, but QCL allows describing many properties using exponentially shorter formulas.
+	The main theoretical result is that QCL is exponentially more succinct than CL. Consider the example of there exists a majority coalition that can force phi. In QCL, this property is expressed with a single formula: angle brackets majority angle brackets phi, where the majority predicate automatically identifies all coalitions whose cardinality exceeds half the agents. In CL, however, we would have to explicitly list every possible majority coalition, obtaining a formula whose length grows exponentially with the number of agents. This demonstrates that QCL and CL have the same expressive power, but QCL allows describing many properties using exponentially shorter formulas.
 }
 
 % ============================================================
@@ -323,29 +352,29 @@ The main theoretical result is that QCL is exponentially more succinct than CL. 
 \section{Metatheory: Computational Complexity}
 
 \begin{frame}{CL is PSPACE-complete}
-  \begin{itemize}
-    \item Satisfiability for CL is \textbf{PSPACE-complete} (Pauly 2002).
-    \item This is harder than propositional logic (NP-complete) because of the \textbf{superadditivity axiom}.
-    \item The computer must reason about how strategies \textbf{combine} when coalitions form.
-  \end{itemize}
+	\begin{itemize}
+		\item Satisfiability for CL is \textbf{PSPACE-complete} (Pauly 2002).
+		\item This is harder than propositional logic (NP-complete) because of the \textbf{superadditivity axiom}.
+		\item The computer must reason about how strategies \textbf{combine} when coalitions form.
+	\end{itemize}
 \end{frame}
 
 \note{
-Let us now turn to computational complexity. The satisfiability problem for Coalition Logic is PSPACE-complete, as proved by Pauly in 2002. This complexity is higher than that of classical propositional logic, which is NP-complete, due to the superadditivity axiom. While in other systems the computer only needs to reason about isolated facts, in CL it must calculate how agents' strategies combine when they form coalitions. This makes the computation structurally more complex.
+	Let us now turn to computational complexity. The satisfiability problem for Coalition Logic is PSPACE-complete, as proved by Pauly in 2002. This complexity is higher than that of classical propositional logic, which is NP-complete, due to the superadditivity axiom. While in other systems the computer only needs to reason about isolated facts, in CL it must calculate how agents' strategies combine when they form coalitions. This makes the computation structurally more complex.
 }
 
 \begin{frame}{QCL: No Additional Cost}
-  \begin{itemize}
-    \item \textbf{Satisfiability:} PSPACE-complete, same as CL.
-    \item \textbf{Model checking:} polynomial time (explicit models), PSPACE-complete (concise representations like RML).
-  \end{itemize}
+	\begin{itemize}
+		\item \textbf{Satisfiability:} PSPACE-complete, same as CL.
+		\item \textbf{Model checking:} polynomial time (explicit models), PSPACE-complete (concise representations like RML).
+	\end{itemize}
 
-  \vspace{0.5em}
-  Despite being exponentially more succinct, QCL has the \textbf{same} complexity as CL.
+	\vspace{0.5em}
+	Despite being exponentially more succinct, QCL has the \textbf{same} complexity as CL.
 \end{frame}
 
 \note{
-The most surprising result concerns the comparison between CL and QCL. Despite allowing us to compress exponentially long formulas into very short specifications, QCL does not increase computational complexity. Satisfiability remains PSPACE-complete, exactly as in CL. Model checking, if the model is provided explicitly, remains polynomial time. If we use concise representations, model checking for QCL remains PSPACE-complete, aligning with CL results. In short, QCL offers a much more efficient language for humans without becoming harder for machines to handle. This is a rare and highly desirable property in logic.
+	The most surprising result concerns the comparison between CL and QCL. Despite allowing us to compress exponentially long formulas into very short specifications, QCL does not increase computational complexity. Satisfiability remains PSPACE-complete, exactly as in CL. Model checking, if the model is provided explicitly, remains polynomial time. If we use concise representations, model checking for QCL remains PSPACE-complete, aligning with CL results. In short, QCL offers a much more efficient language for humans without becoming harder for machines to handle. This is a rare and highly desirable property in logic.
 }
 
 % ============================================================
@@ -354,40 +383,40 @@ The most surprising result concerns the comparison between CL and QCL. Despite a
 \section{Applications: Voting and Social Choice Mechanisms}
 
 \begin{frame}{Majority Voting: CL vs QCL}
-  Consider $n$ agents choosing between outcomes $\omega_1$ and $\omega_2$.
+	Consider $n$ agents choosing between outcomes $\omega_1$ and $\omega_2$.
 
-  \vspace{0.5em}
-  \textbf{In QCL, compact specification:}
-  \begin{itemize}
-    \item Majority power: $[\text{majority}] \omega_1 \land [\text{majority}] \omega_2$
-    \item Minority restriction: $(\neg \langle \text{non-majority} \rangle \omega_1) \land (\neg \langle \text{non-majority} \rangle \omega_2)$
-    \item Guaranteed outcome: $\langle \text{any} \rangle (\omega_1 \lor \omega_2)$
-    \item Incompatibility: $\langle \text{any} \rangle \neg (\omega_1 \land \omega_2)$
-  \end{itemize}
+	\vspace{0.5em}
+	\textbf{In QCL, compact specification:}
+	\begin{itemize}
+		\item Majority power: $[\text{majority}] \omega_1 \land [\text{majority}] \omega_2$
+		\item Minority restriction: $(\neg \langle \text{non-majority} \rangle \omega_1) \land (\neg \langle \text{non-majority} \rangle \omega_2)$
+		\item Guaranteed outcome: $\langle \text{any} \rangle (\omega_1 \lor \omega_2)$
+		\item Incompatibility: $\langle \text{any} \rangle \neg (\omega_1 \land \omega_2)$
+	\end{itemize}
 \end{frame}
 
 \note{
-Let us now see a practical application: majority voting. Consider n agents who must choose between two possible outcomes, omega1 and omega2. In QCL, we can specify a complete majority voting system with just four short formulas. The first expresses that every majority can determine omega1 or omega2. The second guarantees that no coalition that is not a majority can force an outcome. The third ensures that the outcome is always determined, and the fourth guarantees that both outcomes cannot be chosen simultaneously. Compare this concise specification with what would be needed in CL: we would have to explicitly list every majority coalition, obtaining formulas of astronomical length.
+	Let us now see a practical application: majority voting. Consider n agents who must choose between two possible outcomes, omega1 and omega2. In QCL, we can specify a complete majority voting system with just four short formulas. The first expresses that every majority can determine omega1 or omega2. The second guarantees that no coalition that is not a majority can force an outcome. The third ensures that the outcome is always determined, and the fourth guarantees that both outcomes cannot be chosen simultaneously. Compare this concise specification with what would be needed in CL: we would have to explicitly list every majority coalition, obtaining formulas of astronomical length.
 }
 
 \begin{frame}{Why This Matters}
-  \begin{table}
-    \centering
-    \begin{tabular}{lcc}
-      \toprule
-      \textbf{Property} & \textbf{CL} & \textbf{QCL} \\
-      \midrule
-      Expressive power & Full & Same as CL \\
-      Formula length & Exponential & Polynomial \\
-      Satisfiability & PSPACE-complete & PSPACE-complete \\
-      Model checking & P / PSPACE & P / PSPACE \\
-      \bottomrule
-    \end{tabular}
-  \end{table}
+	\begin{table}
+		\centering
+		\begin{tabular}{lcc}
+			\toprule
+			\textbf{Property} & \textbf{CL}     & \textbf{QCL}    \\
+			\midrule
+			Expressive power  & Full            & Same as CL      \\
+			Formula length    & Exponential     & Polynomial      \\
+			Satisfiability    & PSPACE-complete & PSPACE-complete \\
+			Model checking    & P / PSPACE      & P / PSPACE      \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
 \end{frame}
 
 \note{
-To summarize with this table: Coalition Logic and QCL have the same expressive power, but QCL is exponentially more succinct. Formula length goes from exponential to polynomial. Satisfiability remains PSPACE-complete in both cases, and model checking follows the same complexity patterns. This makes QCL the practical choice for specifying complex multi-agent systems, without sacrificing computational efficiency.
+	To summarize with this table: Coalition Logic and QCL have the same expressive power, but QCL is exponentially more succinct. Formula length goes from exponential to polynomial. Satisfiability remains PSPACE-complete in both cases, and model checking follows the same complexity patterns. This makes QCL the practical choice for specifying complex multi-agent systems, without sacrificing computational efficiency.
 }
 
 % ============================================================
@@ -396,36 +425,36 @@ To summarize with this table: Coalition Logic and QCL have the same expressive p
 \section{Conclusions and Reflections}
 
 \begin{frame}{The Unifying Vision}
-  \begin{itemize}
-    \item Coalition Logic provides a \textbf{unifying game-theoretic view} of modal logic.
-    \item Normal and non-normal modal logics emerge as 1- and 2-player versions of CL.
-    \item Every formula is anchored to a concrete game frame.
-  \end{itemize}
+	\begin{itemize}
+		\item Coalition Logic provides a \textbf{unifying game-theoretic view} of modal logic.
+		\item Normal and non-normal modal logics emerge as 1- and 2-player versions of CL.
+		\item Every formula is anchored to a concrete game frame.
+	\end{itemize}
 \end{frame}
 
 \note{
-To conclude, I want to emphasize the unifying vision of Coalition Logic. This logic provides a unifying game-theoretic perspective of modal logic. Normal and non-normal modal logics emerge as one-player and two-player versions of Coalition Logic respectively. Every formula is solidly anchored to a concrete game frame, guaranteeing that what we declare possible is effectively realizable through a common strategy.
+	To conclude, I want to emphasize the unifying vision of Coalition Logic. This logic provides a unifying game-theoretic perspective of modal logic. Normal and non-normal modal logics emerge as one-player and two-player versions of Coalition Logic respectively. Every formula is solidly anchored to a concrete game frame, guaranteeing that what we declare possible is effectively realizable through a common strategy.
 }
 
 \begin{frame}{From Theory to Practice}
-  \begin{itemize}
-    \item QCL makes complex social mechanisms (voting, cooperation) \textbf{specifiable and verifiable}.
-    \item Marc Pauly's ``Social Software'': formally verifying the robustness of institutions.
-    \item Future work: integrating preferences and knowledge for deeper understanding of coalition formation.
-  \end{itemize}
+	\begin{itemize}
+		\item QCL makes complex social mechanisms (voting, cooperation) \textbf{specifiable and verifiable}.
+		\item Marc Pauly's ``Social Software'': formally verifying the robustness of institutions.
+		\item Future work: integrating preferences and knowledge for deeper understanding of coalition formation.
+	\end{itemize}
 \end{frame}
 
 \note{
-While Pauly's CL lays the semantic foundations, QCL represents the fundamental step toward practical applicability. QCL's ability to be exponentially more succinct than CL without increasing computational complexity demonstrates that we can model complex social systems and large-scale voting mechanisms efficiently. As Pauly says, these logics constitute the core of Social Software: tools that allow us to formally verify the robustness of our institutions and design multi-agent systems where cooperation is not merely hoped for, but logically guaranteed and verifiable. Future developments that integrate agent preferences and knowledge open the way to an even deeper understanding of coalition formation and collective rationality.
+	While Pauly's CL lays the semantic foundations, QCL represents the fundamental step toward practical applicability. QCL's ability to be exponentially more succinct than CL without increasing computational complexity demonstrates that we can model complex social systems and large-scale voting mechanisms efficiently. As Pauly says, these logics constitute the core of Social Software: tools that allow us to formally verify the robustness of our institutions and design multi-agent systems where cooperation is not merely hoped for, but logically guaranteed and verifiable. Future developments that integrate agent preferences and knowledge open the way to an even deeper understanding of coalition formation and collective rationality.
 }
 
 \begin{frame}
-  \centering
-  \Huge \textit{Questions?}
+	\centering
+	\Huge \textit{Questions?}
 \end{frame}
 
 \note{
-Thank you for your attention. I am now available for questions. If you like, I can go deeper into why the superadditivity axiom makes CL PSPACE-complete, the difference between the universal operator and the dual of the existential one, or any other aspect of the presentation. We have about ten minutes for the Q and A session.
+	Thank you for your attention. I am now available for questions. If you like, I can go deeper into why the superadditivity axiom makes CL PSPACE-complete, the difference between the universal operator and the dual of the existential one, or any other aspect of the presentation. We have about ten minutes for the Q and A session.
 }
 
 \end{document}
