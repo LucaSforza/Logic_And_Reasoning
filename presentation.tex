@@ -289,30 +289,33 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 	the internal structure of the game, retaining only what coalitions can achieve.
 }
 
-\begin{frame}{Axiom System (Pauly 2002)}
-	The complete axiomatization for weak playability models:
+\begin{frame}{CL Axiomatization (Ågotnes et al. 2008, Table 1)}
+	Sound and complete for weak playability models:
 
 	\begin{description}
-		\item[Consistency ($\bot$)] $\neg \langle\!\langle C \rangle\!\rangle \bot$
-		\item[Efficacy ($\top$)] $\langle\!\langle C \rangle\!\rangle \top$
-		\item[Coalition monotonicity] $\langle\!\langle C \rangle\!\rangle \varphi \to \langle\!\langle C' \rangle\!\rangle \varphi$ for $C \subseteq C'$
-		\item[$\mathcal{A}g$-maximality] $\neg \langle\!\langle \emptyset \rangle\!\rangle \neg \varphi \to \langle\!\langle \mathcal{A}g \rangle\!\rangle \varphi$
-		\item[Superadditivity ($S$)] $(\langle\!\langle C_1 \rangle\!\rangle \varphi_1 \land \langle\!\langle C_2 \rangle\!\rangle \varphi_2) \to \langle\!\langle C_1 \cup C_2 \rangle\!\rangle (\varphi_1 \land \varphi_2)$, $C_1 \cap C_2 = \emptyset$
+		\item[$\mathbf{Ag\bot}$] $\neg \langle\!\langle \mathcal{A}g \rangle\!\rangle \bot$
+		\item[$\mathbf{\top}$] $\neg \langle\!\langle \emptyset \rangle\!\rangle \bot \to \langle\!\langle C \rangle\!\rangle \top$
+		\item[$\mathbf{\bot}$] $\langle\!\langle C \rangle\!\rangle \bot \to \langle\!\langle C' \rangle\!\rangle \bot$ \quad ($C' \subseteq C$)
+		\item[$\mathbf{Ag}$] $\neg \langle\!\langle \emptyset \rangle\!\rangle \neg \varphi \to \langle\!\langle \mathcal{A}g \rangle\!\rangle \varphi$
+		\item[$\mathbf{S}$] $(\langle\!\langle C_1 \rangle\!\rangle \varphi_1 \land \langle\!\langle C_2 \rangle\!\rangle \varphi_2) \to \langle\!\langle C_1 \cup C_2 \rangle\!\rangle (\varphi_1 \land \varphi_2)$ \quad ($C_1 \cap C_2 = \emptyset$)
 	\end{description}
 
-	\vspace{0.5em}
-	Rules: Modus Ponens (MP) and Distribution (Distr): $\vdash \varphi \to \psi \Rightarrow \vdash \langle\!\langle C \rangle\!\rangle \varphi \to \langle\!\langle C \rangle\!\rangle \psi$.
+	\vspace{0.3em}
+	\rule{\textwidth}{0.4pt}
+	\vspace{0.3em}
+
+	\textbf{Rules:} Modus Ponens (MP) and Distribution:
+	\[ \vdash \varphi \to \psi \;\Rightarrow\; \vdash \langle\!\langle C \rangle\!\rangle \varphi \to \langle\!\langle C \rangle\!\rangle \psi \]
+	plus all propositional tautologies (Prop).
 \end{frame}
 
 \note{
-	Pauly's axiomatization is sound and complete for playability models.
-	The axioms mirror the playability properties at the logical level:
-	consistency and efficacy are base cases, coalition monotonicity lifts abilities to supersets,
-	and Ag-maximality links the grand coalition to the empty one.
-	Superadditivity is the key axiom: it captures how coalitions combine abilities,
-	and is precisely what makes satisfiability PSPACE-complete rather than NP-complete.
-	The distribution rule is the standard modal axiom that ensures the modality
-	interacts properly with propositional consequence.
+	The axiomatization of CL is sound and complete for weak playability models.
+	Each axiom encodes one of the semantic playability properties at the logical level.
+	The rules are standard: Modus Ponens and Distribution, which is the usual modal
+	axiom ensuring the modality distributes over implication.
+	The most important axiom for complexity is superadditivity: it is precisely what makes
+	satisfiability PSPACE-complete rather than NP-complete.
 }
 
 % ============================================================
