@@ -58,7 +58,7 @@
 	After examining the characterization theorem and the limitations of this logic,
 	we will introduce Quantified Coalition Logic which solves the succinctness problem.
 	Finally, we will analyze computational complexity, see a practical application to majority voting,
-	and close with conclusions. The entire presentation should take approximately thirty minutes.
+	and close with conclusions.
 }
 
 % ============================================================
@@ -128,7 +128,7 @@
 	This structure is more general than Kripke frames:
 	instead of a simple accessibility relation, we have a full strategic game at every step.
 	As Pauly shows, this generalization is powerful: normal modal logic corresponds to 1-player CL,
-	and non-normal modal logic corresponds to 2-player CL.
+	and non-normal modal logic corresponds to 2-player CL. % Cos'`e non normal modal logic?
 	From this structure, Coalition Logic is born, allowing us to reason about the power that groups of agents can exercise collectively.
 }
 
@@ -155,8 +155,6 @@
 	A strategic game G is defined by a finite set of agents N, a set of strategies for each agent,
 	a set of possible states S, and an outcome function that takes a strategy profile,
 	meaning one strategy per player, and returns a state.
-	Notice that we do not yet have preferences here: we are only modeling the mechanics of the game,
-	not what the players prefer. This is what Pauly calls a game form.
 	The outcome function maps every combination of strategies to a unique state.
 	This is the foundation upon which we build the concept of coalitional power.
 }
@@ -174,8 +172,10 @@
 \end{frame}
 
 \note{
-	A game frame is a pair consisting of the set of states S and a function gamma that assigns a strategic game to each state.
-	In other words, when we are at state s, the function gamma tells us which game the agents must play at that state.
+	A game frame is a pair consisting of the set of states S and a function gamma that assigns a
+	strategic game to each state.
+	In other words, when we are at state s, the function gamma tells us which game the agents must play
+	at that state.
 	The outcome of that game determines the next state, and so on.
 	This structure is more general than Kripke frames:
 	instead of a simple accessibility relation, we have a full strategic game at every step.
@@ -197,12 +197,15 @@
 \end{frame}
 
 \note{
-	Here we arrive at the central concept: the effectivity function. Given a coalition C, that is a subset of agents,
-	we say that C is effective for a set of outcomes X if there exists a shared strategy for C such that,
+	Here we arrive at the central concept: the effectivity function.
+	Given a coalition C, that is a subset of agents,
+	we say that C is effective for a set of outcomes X if there exists a shared strategy for C
+	such that,
 	regardless of what the external agents do, the outcome of the game belongs to X.
 	The quantifier structure is key: there exists a strategy for C, for all strategies of the opponents.
 	This captures exactly the idea of forcing an outcome: the coalition has a winning strategy.
-	Note that C cannot determine which specific member of X will occur, only that the outcome will be some member of X.
+	Note that C cannot determine which specific member of X will occur,
+	only that the outcome will be some member of X.
 	This is a crucial distinction from deterministic control.
 }
 
@@ -220,10 +223,11 @@
 \end{frame}
 
 \note{
-	Not every mathematical function can represent a real game. An effectivity function must be playable,
+	Not every mathematical function can represent a real game.
+	An effectivity function must be playable,
 	meaning it must satisfy three fundamental properties.
-	The first is outcome-monotonicity: if a coalition can force X, it can also force every larger set Y.
-	If I can guarantee victory, I can also guarantee that someone will win.
+	The first is outcome-monotonicity: if a coalition can force X,
+	it can also force every larger set Y.
 	The second is superadditivity: if two disjoint coalitions can force X1 and X2 respectively,
 	then by joining forces they can force the intersection X1 intersect X2.
 	This expresses the advantage of cooperation: disjoint strategies do not interfere.
@@ -250,14 +254,12 @@
 \end{frame}
 
 \note{
-	Let us now look at the syntax of Coalition Logic. We have a classical propositional language
-	with atoms, negation, and disjunction, to which we add a modal operator indexed by coalitions.
-	The formula with double angle brackets expresses that coalition C has a common strategy
-	to force an outcome satisfying phi, regardless of the actions of the remaining agents.
-	We use the double angle bracket notation, as introduced by Agotnes and colleagues,
-	to clearly distinguish this operator from the universal quantifier we will introduce later in QCL.
-	This notation follows the convention in the original QCL paper, where Pauly's [C] notation
-	is replaced with double angle brackets to avoid confusion with the box modality.
+Let us now look at the syntax of Coalition Logic. We have a classical propositional language
+with atoms, negation, and disjunction, to which we add a modal operator indexed by coalitions.
+The formula with double angle brackets expresses that coalition C has a common strategy
+to force an outcome satisfying phi, regardless of the actions of the remaining agents.
+This notation follows the convention in the original QCL paper, where Pauly's [C] notation
+is replaced with double angle brackets to avoid confusion with the box modality.
 }
 
 \begin{frame}{From Coalition Frames to Models}
@@ -276,9 +278,9 @@
 	To define the truth of formulas, we distinguish between frames and models.
 	A coalition frame is a pair consisting of the set of states and an effectivity structure
 	that assigns to each state a playable effectivity function.
-	A coalition model adds a valuation function pi that determines which atomic propositions are true at each state.
-	The semantics of the coalitional operator is elegant:
-	coalition C can force phi if and only if the set of states where phi is true belongs to the effectivity function of C at state s.
+	A coalition model adds a valuation function pi that determines which atomic propositions are true
+	at each state.
+	So, a coalition C can force phi if and only if the set of states where phi is true belongs to the effectivity function of C at state s.
 	This directly connects the logic to the game-theoretic notion of effectivity.
 	There is no need to reason about strategies explicitly: the effectivity function abstracts away
 	the internal structure of the game, retaining only what coalitions can achieve.
@@ -440,6 +442,8 @@
 \section{Quantified Coalition Logic (QCL): Predicates and Operators}
 
 \begin{frame}{The Innovation: Predicates over Coalitions}
+	% TODO: introdurre i predicati sulle coalizioni mostrando la grammatica dei predicati e come comporli. Questa
+	%è la chiava per la succinst pag. 5 quantified coalition logic
 	Instead of enumerating members, describe coalitions via \textbf{predicates} $P$:
 
 	\begin{description}
@@ -513,8 +517,8 @@
 	\vspace{0.5em}
 	Semantics:
 	\begin{align*}
-		\mathcal{M}, s \models \langle P \rangle \varphi &\iff \exists C \subseteq \mathcal{A}g: C \models P \text{ and } \varphi^{\mathcal{M}} \in E(C, s) \\
-		\mathcal{M}, s \models [P] \varphi &\iff \forall C \subseteq \mathcal{A}g: C \models P \implies \varphi^{\mathcal{M}} \in E(C, s)
+		\mathcal{M}, s \models \langle P \rangle \varphi & \iff \exists C \subseteq \mathcal{A}g: C \models P \text{ and } \varphi^{\mathcal{M}} \in E(C, s) \\
+		\mathcal{M}, s \models [P] \varphi               & \iff \forall C \subseteq \mathcal{A}g: C \models P \implies \varphi^{\mathcal{M}} \in E(C, s)
 	\end{align*}
 \end{frame}
 
@@ -538,12 +542,12 @@
 		\centering
 		\begin{tabular}{lc}
 			\toprule
-			\textbf{Modality} & \textbf{Interpretation} \\
+			\textbf{Modality}                                                                        & \textbf{Interpretation}                                     \\
 			\midrule
-			$\langle P \rangle \varphi$ & Some coalition satisfying $P$ can enforce $\varphi$ \\
-			$[P] \varphi$ & All coalitions satisfying $P$ can enforce $\varphi$ \\
-			$\langle\!\langle P \rangle\!\rangle \varphi \equiv \neg \langle P \rangle \neg \varphi$ & No coalition satisfying $P$ can enforce $\neg \varphi$ \\
-			$[\![ P ]\!] \varphi \equiv \neg [P] \neg \varphi$ & Some coalition satisfying $P$ cannot enforce $\neg \varphi$ \\
+			$\langle P \rangle \varphi$                                                              & Some coalition satisfying $P$ can enforce $\varphi$         \\
+			$[P] \varphi$                                                                            & All coalitions satisfying $P$ can enforce $\varphi$         \\
+			$\langle\!\langle P \rangle\!\rangle \varphi \equiv \neg \langle P \rangle \neg \varphi$ & No coalition satisfying $P$ can enforce $\neg \varphi$      \\
+			$[\![ P ]\!] \varphi \equiv \neg [P] \neg \varphi$                                       & Some coalition satisfying $P$ cannot enforce $\neg \varphi$ \\
 			\bottomrule
 		\end{tabular}
 	\end{table}
@@ -596,11 +600,11 @@
 	\begin{block}{Definition}
 		The translation $\tau$ from QCL to CL:
 		\begin{align*}
-			\tau(p) &= p \\
-			\tau(\neg \varphi) &= \neg \tau(\varphi) \\
-			\tau(\varphi_1 \lor \varphi_2) &= \tau(\varphi_1) \lor \tau(\varphi_2) \\
-			\tau(\langle P \rangle \varphi) &= \bigvee_{C \models P} \langle\!\langle C \rangle\!\rangle \tau(\varphi) \\
-			\tau([P] \varphi) &= \bigwedge_{C \models P} \langle\!\langle C \rangle\!\rangle \tau(\varphi)
+			\tau(p)                         & = p                                                                         \\
+			\tau(\neg \varphi)              & = \neg \tau(\varphi)                                                        \\
+			\tau(\varphi_1 \lor \varphi_2)  & = \tau(\varphi_1) \lor \tau(\varphi_2)                                      \\
+			\tau(\langle P \rangle \varphi) & = \bigvee_{C \models P} \langle\!\langle C \rangle\!\rangle \tau(\varphi)   \\
+			\tau([P] \varphi)               & = \bigwedge_{C \models P} \langle\!\langle C \rangle\!\rangle \tau(\varphi)
 		\end{align*}
 	\end{block}
 
