@@ -316,6 +316,8 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 	axiom ensuring the modality distributes over implication.
 	The most important axiom for complexity is superadditivity: it is precisely what makes
 	satisfiability PSPACE-complete rather than NP-complete.
+	(Without it, each $\langle\!\langle C \rangle\!\rangle \varphi$ requires just one recursive check; with it, any subset of modal
+	formulas can be combined, forcing $2^n$ recursive calls.)
 }
 
 % ============================================================
@@ -338,7 +340,7 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 
 \note{
 	The most important theoretical result of Coalition Logic is the Characterization Theorem,
-	Numbered as Theorem 3.2 in Pauly's dissertation.
+	Numbered as Theorem 3.2 in Pauly's paper.
 	This theorem states that an effectivity function is playable if and only if
 	there exists a strategic game such that the effectivity function induced by that game
 	coincides with our function.
@@ -350,41 +352,48 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 	without losing any essential information about the underlying game.
 }
 
-\begin{frame}{Proof Sketch}
-	$(\Rightarrow)$: If $E$ is induced by a game $G$:
-	\begin{itemize}
-		\item Outcome-monotonicity: same strategy works for supersets.
-		\item Superadditivity: disjoint strategies do not interfere.
-		\item $N$-maximality: the grand coalition controls everything.
-	\end{itemize}
+\begin{frame}{Proof of Theorem 3.2}
+	$(\Rightarrow)$ Immediate: any $E_G$ satisfies the five playability properties.
 
 	\vspace{0.5em}
-	$(\Leftarrow)$: If $E$ is playable, construct an artificial game:
+	$(\Leftarrow)$ Given playable $E$, construct game $G = (N, \{\Sigma_i\}, o, S)$:
 	\begin{itemize}
-		\item Introduce strategies representing guaranteed choices from $E$.
-		\item Define outcomes so that a winning strategy produces exactly the declared set.
-		\item Playability properties ensure consistency.
+		\item $\Omega_i = \{C \subseteq N \mid i \in C\}$ (coalitions containing $i$)
+		\item $\Sigma_i$ contains pairs $(f_i, t_i)$ where:
+		      \begin{itemize}
+			      \item $f_i: \Omega_i \to \mathcal{P}(S)$ with $f_i(C) \in E(C)$ (chooses what $C$ can force)
+			      \item $t_i: \mathcal{P}(S)\setminus\{\emptyset\} \to S$ with $t_i(X) \in X$ (tie-breaking)
+		      \end{itemize}
 	\end{itemize}
+
+	\vspace{0.3em}
+	Given profile $(f_1, t_1), \dots, (f_n, t_n)$:
+	\begin{enumerate}
+		\item Partition $N$ into maximal coalitions where all members agree on $f_i(C)$.
+		\item Let $X = \bigcap_{C \in \pi} f_i(C)$ (the intersection of all forced sets).
+		\item Outcome: $o(\sigma_1, \dots, \sigma_n) = t_1(X)$.
+	\end{enumerate}
+	One then verifies that $E_G(C) = E(C)$ for all $C \subseteq N$.
 \end{frame}
 
 \note{
-	The proof consists of two implications.
-	The forward direction is almost immediate: if E is the effectivity function of a game,
-	then it automatically satisfies all playability properties.
-	Monotonicity follows from the fact that the same strategy works for larger sets.
-	Superadditivity derives from the independence of disjoint coalitions' strategies:
-	since they are disjoint, the strategies do not interfere, and the resulting outcome
-	belongs to the intersection of the two target sets.
-	N-maximality follows from the fact that the grand coalition controls all choices.
-	The reverse direction is deeper: if E is playable, we must construct an artificial game.
-	The idea is to introduce strategies representing the guaranteed choices from the effectivity function
-	and define outcomes so that when a coalition selects a winning strategy,
-	the resulting outcome belongs exactly to the set declared by E.
-	The playability properties ensure that this construction is consistent
-	and produces no contradictions between different strategies.
-	This theorem justifies the entire Coalition Logic:
-	the logic can work directly on effectivity functions, avoiding the need to describe
-	explicitly all strategies of the game.
+	The proof of the characterization theorem has two directions.
+	The forward direction is straightforward: if E comes from a game,
+	the five playability properties are easy to verify.
+	The reverse direction is the actual construction. Given a playable effectivity function E,
+	we build a strategic game whose effectivity function matches E exactly.
+	Each player's strategy encodes two things: for every coalition they might belong to,
+	what set that coalition can force, and a tie-breaking function to pick a specific outcome
+	from any non-empty set. When all players choose their strategies,
+	the outcome is determined by first grouping the players into maximal coalitions where all
+	members agree on the set they want to force, then taking the intersection of all the forced sets.
+	Because of the playability properties, this intersection is non-empty.
+	The tie-breaking function of the first player then selects the actual state.
+	The key idea is that the playability properties, especially superadditivity,
+	guarantee that this construction is consistent. Once the game is built,
+	we can prove that the effectivity function it induces is exactly the original E we started with.
+	This is why we can work directly with effectivity functions in Coalition Logic without
+	describing the underlying game strategies explicitly.
 }
 
 % ============================================================
@@ -638,6 +647,8 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 	\begin{itemize}
 		\item Satisfiability for CL is \textbf{PSPACE-complete} (Pauly 2002).
 		\item Harder than propositional logic (NP-complete) because of the \textbf{superadditivity axiom}.
+		\item Without superadditivity: $\langle\!\langle C \rangle\!\rangle \varphi$ needs one recursive check $\rightarrow$ NP.
+		\item With superadditivity: ANY subset of $\langle\!\langle C_i \rangle\!\rangle \varphi_i$ can combine $\rightarrow$ PSPACE.
 		\item The computer must reason about how strategies \textbf{combine} when coalitions form.
 	\end{itemize}
 
@@ -648,13 +659,10 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 \note{
 	Let us now turn to computational complexity.
 	The satisfiability problem for Coalition Logic is PSPACE-complete, as proved by Pauly in 2002.
-	This complexity is higher than that of classical propositional logic, which is NP-complete,
-	due to the superadditivity axiom. While in other systems the computer only needs to reason
-	about isolated facts, in CL it must calculate how agents' strategies combine when they form coalitions.
-	This makes the computation structurally more complex.
-	It is worth noting that for restricted classes of models, such as dictatorial frames
-	where only one agent moves at each state, the complexity drops to NP-complete,
-	because the interaction between agents disappears.
+	This is due to the superadditivity axiom.
+	(Without superadditivity, satisfiability is NP-complete: each $\langle\!\langle C \rangle\!\rangle \varphi$ needs just one recursive check of $\varphi$, so recursive calls are at most $|sub(\varphi)|$. With superadditivity, if $C_1$ forces $\varphi_1$ and $C_2$ forces $\varphi_2$, then $C_1 \cup C_2$ forces $\varphi_1 \land \varphi_2$. In the satisfiability algorithm, ANY subset of $\langle\!\langle C_i \rangle\!\rangle \varphi_i$ formulas could be combined, requiring up to $2^{|sub(\varphi)|}$ recursive calls. This exponential branching places the problem in PSPACE.)
+	For restricted classes, such as dictatorial frames where only one agent moves at each
+	state and superadditivity imposes no constraints, complexity drops back to NP-complete.
 }
 
 \begin{frame}{QCL: No Additional Cost}
