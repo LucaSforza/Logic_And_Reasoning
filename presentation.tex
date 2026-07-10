@@ -209,31 +209,34 @@
 	This is a crucial distinction from deterministic control.
 }
 
-\begin{frame}{Playability Properties}
-	Not every function can represent a real game. An effectivity function must be \textbf{playable}:
+\begin{frame}{Weak Playability Models (Pauly 2002)}
+	Not every function can represent a real game. An effectivity function must be \textbf{weakly playable}:
 
 	\begin{description}
-		\item[Outcome-monotonicity] If $C$ can force $X$, it can force any $Y \supseteq X$.
-		\item[Superadditivity] If disjoint $C_1, C_2$ force $X_1, X_2$ respectively, then $C_1 \cup C_2$ can force $X_1 \cap X_2$.
-		\item[$N$-maximality] The grand coalition can force $X$ iff the empty coalition cannot force $S \setminus X$.
+		\item[Outcome-monotonicity] $X \in E(C, s)$ and $X \subseteq X' \Rightarrow X' \in E(C, s)$.
+		\item[No grand impossibility] $\emptyset \notin E(\mathcal{A}g, s)$.
+		\item[Downward monotonicity] $C' \subseteq C$: $\emptyset \in E(C, s) \Rightarrow \emptyset \in E(C', s)$.
+		\item[Something achievable] $\emptyset \notin E(\emptyset, s) \Rightarrow S \in E(C, s)$.
+		\item[$\mathcal{A}g$-maximality] $(S \setminus X) \notin E(\emptyset, s) \Rightarrow X \in E(\mathcal{A}g, s)$.
+		\item[Superadditivity] $C_1 \cap C_2 = \emptyset$: $X_1 \in E(C_1)$, $X_2 \in E(C_2) \Rightarrow X_1 \cap X_2 \in E(C_1 \cup C_2)$.
 	\end{description}
 
 	\vspace{0.5em}
-	These properties ensure that the function corresponds to a \emph{realizable} game.
+	These six properties characterize the models for which Pauly's axiomatization is complete.
 \end{frame}
 
 \note{
 	Not every mathematical function can represent a real game.
-	An effectivity function must be playable,
-	meaning it must satisfy three fundamental properties.
-	The first is outcome-monotonicity: if a coalition can force X,
-	it can also force every larger set Y.
-	The second is superadditivity: if two disjoint coalitions can force X1 and X2 respectively,
-	then by joining forces they can force the intersection X1 intersect X2.
-	This expresses the advantage of cooperation: disjoint strategies do not interfere.
-	The third is N-maximality: the coalition of all agents can force an outcome if and only if
-	the empty coalition cannot force the opposite.
-	These three properties are necessary and sufficient, as the characterization theorem will show.
+	Pauly defines weak playability models as the standard semantic class for CL.
+	An effectivity function is weakly playable if it satisfies six properties.
+	Outcome-monotonicity means larger sets are easier to force.
+	No grand impossibility ensures the full coalition cannot achieve a contradiction.
+	Downward monotonicity says that if a large coalition can force the impossible, so can any subcoalition.
+	Something achievable guarantees that every coalition can always force at least one outcome.
+	Ag-maximality links the grand coalition to the empty one: if the empty coalition cannot prevent X, the grand coalition can achieve it.
+	And superadditivity captures the advantage of cooperation.
+	These six properties together characterize the models for which Pauly's axiomatization is complete.
+	The characterization theorem then shows that every weakly playable function corresponds to a real strategic game.
 }
 
 % ============================================================
@@ -302,18 +305,14 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 \end{frame}
 
 \note{
-	The formal system of Coalition Logic is based on five axiom schemas and two inference rules.
-	The consistency axiom states that no coalition can force the impossible, that is, a contradiction.
-	The efficacy axiom says that every coalition can always force something trivially true.
-	Coalition monotonicity establishes that a larger coalition can do at least what a smaller coalition can.
-	The maximality axiom establishes that what the empty coalition cannot make inevitable
-	can be achieved by the coalition of all agents.
-	But the most critical axiom is superadditivity: if two disjoint coalitions can force phi1 and phi2 respectively,
-	then their union can force phi1 and phi2 together.
-	This axiom is responsible for the PSPACE-completeness of satisfiability,
-	because it forces the computer to reason about how strategies combine when coalitions merge.
-	The distribution rule ensures that the modality distributes over implications,
-	which is essential for the deduction theorem.
+	Pauly's axiomatization is sound and complete for weak playability models.
+	The axioms mirror the playability properties at the logical level:
+	consistency and efficacy are base cases, coalition monotonicity lifts abilities to supersets,
+	and Ag-maximality links the grand coalition to the empty one.
+	Superadditivity is the key axiom: it captures how coalitions combine abilities,
+	and is precisely what makes satisfiability PSPACE-complete rather than NP-complete.
+	The distribution rule is the standard modal axiom that ensures the modality
+	interacts properly with propositional consequence.
 }
 
 % ============================================================
