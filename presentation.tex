@@ -412,7 +412,8 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 \end{frame}
 
 \note{
-	Despite its theoretical solidity, Coalition Logic suffers from a very important practical limitation:
+	Despite its theoretical solidity, Coalition Logic suffers from a very important practical
+	limitation:
 	the lack of succinctness. If we wanted to express a general property like
 	there exists a coalition able to force phi, CL would force us to write a disjunction
 	listing every possible subset of agents. With n agents, this means 2 to the power of n terms,
@@ -421,30 +422,6 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 	the number of possible coalitions is astronomical, making the specification
 	practically impossible to handle either by humans or by computers.
 	This is the fundamental motivation for Quantified Coalition Logic.
-}
-
-\begin{frame}{A Concrete Example}
-	Consider $n = 100$ voters. To say ``some majority can force $\omega_1$'':
-
-	\vspace{0.5em}
-	\textbf{In CL:}
-	\[ \bigvee_{\substack{C \subseteq \mathcal{A}g \\ |C| > 50}} \langle\!\langle C \rangle\!\rangle \omega_1 \]
-	Number of terms: $\sum_{i=51}^{100} \binom{100}{i} \approx 10^{29}$.
-
-	\vspace{0.5em}
-	\textbf{In QCL:} $\langle \text{maj}(100) \rangle \omega_1$ --- one formula.
-\end{frame}
-
-\note{
-	Let me give you a concrete example to illustrate the severity of this problem.
-	Consider one hundred voters who must choose between two outcomes.
-	To say that some majority coalition can force outcome omega one, in CL we would need
-	a disjunction with approximately 10 to the 29th power terms.
-	This is larger than the number of atoms in the observable universe.
-	No human could write such a formula, and no computer could process it efficiently.
-	But in QCL, we simply write: angle brackets majority of 100 angle brackets omega one.
-	A single formula, constant size, regardless of the number of voters.
-	This dramatic compression is the core contribution of QCL.
 }
 
 % ============================================================
@@ -474,7 +451,8 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 
 \note{
 	Quantified Coalition Logic solves the succinctness problem by introducing a quantification mechanism
-	over coalitions. Instead of enumerating the members of a coalition, we describe coalitions through predicates.
+	over coalitions. Instead of enumerating the members of a coalition, we describe coalitions through
+	redicates.
 	The two atomic predicates are inclusion and containment: subsetof D checks whether the coalition
 	is a subset of D, and supersetof D checks whether it contains D.
 	From these, we can derive useful predicates: eq D for exact equality, incl i to check
@@ -535,17 +513,10 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 
 \note{
 	QCL introduces two fundamental modal operators parameterized by coalition predicates.
-	The existential operator with angle brackets P angle brackets phi expresses that
+	The existential operator that
 	there exists at least one coalition C satisfying predicate P that can force phi.
-	The universal operator with square brackets P square brackets phi expresses that
+	The universal operator  expresses that
 	all coalitions satisfying P are able to force phi.
-	Important: the universal operator is not simply the dual of the existential one.
-	The logical dual would follow a for-all-exists-for-all pattern,
-	but the existential operator follows exists-exists-for-all,
-	and the universal follows forall-exists-for-all.
-	This subtlety is essential for correctly modeling collective ability.
-	The reason is that in the existential case, we fix one coalition and one strategy,
-	while in the universal case, each coalition may need a different strategy.
 }
 
 \begin{frame}{The Four QCL Modalities}
@@ -568,7 +539,6 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 \end{frame}
 
 \note{
-	Agotnes and colleagues identify four distinct modalities in QCL.
 	The existential modality says some coalition satisfying P can enforce phi.
 	The universal modality says all coalitions satisfying P can enforce phi.
 	The double angle bracket modality, defined as the negation of the existential with negated phi,
@@ -596,6 +566,7 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 
 \note{
 	The main theoretical result is that QCL is exponentially more succinct than CL.
+	The most significant addition for succinctness is the cardinality predicate geq of n.
 	Theorem 5 states that there exists an infinite family of QCL formulas such that
 	any equivalent CL formula has exponential length.
 	The proof constructs a sequence of formulas: phi zero is simply p,
@@ -604,7 +575,6 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 	To show exponential lower bound, the proof defines a set of paths over two agents a and b,
 	and shows that any equivalent CL formula must encode all these paths.
 	Since the number of such paths grows exponentially, the CL formula must be exponentially long.
-	This demonstrates that the succinctness advantage of QCL is not accidental but fundamental.
 }
 
 \begin{frame}{Translation $\tau$: QCL $\rightarrow$ CL}
@@ -686,7 +656,7 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 	The most surprising result concerns the comparison between CL and QCL.
 	Theorem 6 shows that explicit state model checking for QCL is in polynomial time.
 	The naive approach would be to enumerate all coalitions, giving exponential time,
-	but since the model explicitly lists the effectivity function for all coalitions,
+	but since the model explicitly lists the effectivity function for all coalitions, % TODO: cosa intendi per modello che descrive le effectivity functions?
 	the running time is polynomial in the input size.
 	Theorem 7 considers the more realistic case of symbolic representations like Reactive Modules.
 	Here, model checking for QCL remains PSPACE-complete, exactly as for CL.
@@ -694,9 +664,6 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 	and this loop can be implemented in polynomial space.
 	Theorem 8 shows that satisfiability for QCL is also PSPACE-complete,
 	proved via a translation to a quantified variant called CLQ.
-	In short, QCL offers a much more efficient language for humans
-	without becoming harder for machines to handle.
-	This is a rare and highly desirable property in logic.
 }
 
 \begin{frame}{The CLQ Translation}
