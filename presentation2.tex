@@ -1,0 +1,177 @@
+\documentclass[aspectratio=169, 12pt]{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{mathtools}
+\usepackage{booktabs}
+
+\newcommand{\CL}[1]{\llbracket #1 \rrbracket}
+
+\title{Coalition Logic and Quantification}
+\subtitle{From Modal Logic to Quantified Coalition Logic}
+\author{Luca Sforza}
+\date{\today}
+\institute{Logic and Reasoning 2025/2026}
+
+\begin{document}
+
+% ============================================================
+% SLIDE 1 — Title
+% ============================================================
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\note{
+	Good morning everyone, I am Luca Sforza and today I will present my work on Coalition Logic and its quantified extension.
+	The path I will take you through starts from classical modal logic and arrives at Quantified Coalition Logic,
+	passing through the foundations of Pauly's Coalition Logic.
+	The goal is to show how logic can model coalitional power in multi-agent systems.
+}
+
+\section{Introduction: From Kripke Models to Game Frames}
+
+\begin{frame}{Single-Agent Modal Logic}
+	\begin{itemize}
+		\item In the simplest case, we have \textbf{one agent} who can choose between actions. (Normal Model Logic models that) % TODO: migliorare spiegazione
+		\item A \textbf{Kripke model} $(S, R)$ uses an accessibility relation $R$ that associates to every state all reachable states.
+		\item A modal formula $\Diamond \varphi$ means: ``the agent can act so that $\varphi$ will be true.''
+	\end{itemize}
+
+	\vspace{0.5em}
+	Formally: $M, s \models \Diamond \varphi \iff \exists t \in S: sRt \text{ and } M, t \models \varphi$.
+\end{frame}
+
+\begin{frame}{The Multi-Agent Problem}
+	\begin{itemize}
+		\item Extending to multiple agents with individual accessibility relations $R_i$ considers agents \textbf{in isolation}.
+		\item But agents' actions \textbf{interact}: what happens when agent 1 and agent 2 act \textbf{simultaneously}?
+		\item The outcome depends on the \textbf{combination} of all participants' choices.
+	\end{itemize}
+
+	\vspace{0.5em}
+	Standard multi-agent modal logic \textbf{cannot} capture this interaction.
+\end{frame}
+
+\begin{frame}{The Solution: Game Frames (Pauly 2002)}
+	\begin{block}{Definition (Game Frame)}
+		Marc Pauly introduces \textbf{game frames}: at every state, a \textbf{strategic game} is played among the agents.
+		Outcomes of the game are states of the model.
+	\end{block}
+
+	\begin{itemize}
+		\item Game frames are essentially \textbf{extensive games with simultaneous moves}.
+		\item They generalize both Kripke models (1-player case) and non-normal modal logics (2-player case).
+	\end{itemize}
+\end{frame}
+
+%TODO: scrivere: Prima di introdurre formalmente un game frame, prima dobbiamo specificare cos'e` un gioco strategico
+\begin{frame}{Strategic Games}
+	A strategic game $G = (N, \{\Sigma_i \mid i \in N\}, o, S)$ consists of:
+	\begin{itemize}
+		\item $N$: finite set of agents (players)
+		\item $\Sigma_i$: set of strategies for agent $i$
+		\item $S$: set of outcome states
+		\item $o: \prod_{i \in N} \Sigma_i \rightarrow S$: outcome function
+	\end{itemize}
+
+	\vspace{0.5em}
+	We consider \emph{game forms} only: no preference relations are assumed.
+\end{frame}
+
+\begin{frame}{Game Frames}
+	\begin{block}{Definition}
+		Let $\Gamma^N_S$ be the set of all strategic games over agents $N$ and states $S$.
+		A \emph{game frame} is a pair $(S, \gamma)$ where $\gamma: S \rightarrow \Gamma^N_S$ assigns a strategic game to each state.
+	\end{block}
+
+	\begin{itemize}
+		\item At every state, agents play a game; the outcome leads to a new state (and a new game).
+		\item This is a \textbf{total function}: every state has an associated game.
+	\end{itemize}
+\end{frame}
+
+% TODO: come introduziamo le effective function? come lo collegao con la teoria vista a lezione? (riferito alle 2 slide successive a questo TODO)
+\begin{frame}{From Strategy to Power: Effectivity Functions}
+	\begin{block}{Definition}
+		The \emph{effectivity function} $E_G: \mathcal{P}(N) \rightarrow \mathcal{P}(\mathcal{P}(S))$ derived from game $G$:
+		\[ X \in E_G(C) \iff \exists \sigma_C \forall \sigma_{N \setminus C}: o(\sigma_C, \sigma_{N \setminus C}) \in X \]
+	\end{block}
+
+	\begin{itemize}
+		\item Coalition $C$ is \textbf{effective} for $X$ if $C$ has a joint strategy that \textbf{forces} the outcome into $X$, regardless of what the others do.
+		\item Quantifier structure: $\exists$ for coalition, $\forall$ for opponents.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Weak Playability Models (Pauly 2002)}
+	Not every function can represent a real game. An effectivity function must be \textbf{weakly playable}:
+
+	\begin{description}
+		\item[Outcome-monotonicity] $X \in E(C, s)$ and $X \subseteq X' \Rightarrow X' \in E(C, s)$.
+		\item[No grand impossibility] $\emptyset \notin E(\mathcal{A}g, s)$.
+		\item[Downward monotonicity] $C' \subseteq C$: $\emptyset \in E(C, s) \Rightarrow \emptyset \in E(C', s)$.
+		\item[Something achievable] $\emptyset \notin E(\emptyset, s) \Rightarrow S \in E(C, s)$.
+		\item[$\mathcal{A}g$-maximality] $(S \setminus X) \notin E(\emptyset, s) \Rightarrow X \in E(\mathcal{A}g, s)$.
+		\item[Superadditivity] $C_1 \cap C_2 = \emptyset$: $X_1 \in E(C_1)$, $X_2 \in E(C_2) \Rightarrow X_1 \cap X_2 \in E(C_1 \cup C_2)$.
+	\end{description}
+
+	\vspace{0.5em}
+	These six properties characterize the models for which Pauly's axiomatization is complete.
+\end{frame}
+
+
+\begin{frame}{From Coalition Frames to Models}
+	\begin{description}
+		\item[Coalition Frame] A pair $\mathcal{F} = (S, E)$ where $E$ assigns a playable effectivity function to each state.
+		\item[Coalition Model] A triple $\mathcal{M} = (S, E, \pi)$ adding a valuation $\pi$.
+	\end{description}
+
+	\vspace{0.5em}
+	The semantics:
+	\[ \mathcal{M}, s \models \langle\!\langle C \rangle\!\rangle \varphi \iff \varphi^{\mathcal{M}} \in E(s, C) \]
+	where $\varphi^{\mathcal{M}} = \{t \in S \mid \mathcal{M}, t \models \varphi\}$.
+\end{frame}
+\end{document}
+
+\begin{frame}{CL Axiomatization (Ågotnes et al. 2008, Table 1)}
+	Sound and complete for weak playability models:
+
+	\begin{description}
+		\item[$\mathbf{Ag\bot}$] $\neg \langle\!\langle \mathcal{A}g \rangle\!\rangle \bot$
+		\item[$\mathbf{\top}$] $\neg \langle\!\langle \emptyset \rangle\!\rangle \bot \to \langle\!\langle C \rangle\!\rangle \top$
+		\item[$\mathbf{\bot}$] $\langle\!\langle C \rangle\!\rangle \bot \to \langle\!\langle C' \rangle\!\rangle \bot$ \quad ($C' \subseteq C$)
+		\item[$\mathbf{Ag}$] $\neg \langle\!\langle \emptyset \rangle\!\rangle \neg \varphi \to \langle\!\langle \mathcal{A}g \rangle\!\rangle \varphi$
+		\item[$\mathbf{S}$] $(\langle\!\langle C_1 \rangle\!\rangle \varphi_1 \land \langle\!\langle C_2 \rangle\!\rangle \varphi_2) \to \langle\!\langle C_1 \cup C_2 \rangle\!\rangle (\varphi_1 \land \varphi_2)$ \quad ($C_1 \cap C_2 = \emptyset$)
+	\end{description}
+
+	\vspace{0.3em}
+	\rule{\textwidth}{0.4pt}
+	\vspace{0.3em}
+
+	\textbf{Rules:} Modus Ponens (MP) and Distribution:
+	\[ \vdash \varphi \to \psi \;\Rightarrow\; \vdash \langle\!\langle C \rangle\!\rangle \varphi \to \langle\!\langle C \rangle\!\rangle \psi \]
+	plus all propositional tautologies (Prop).
+\end{frame}
+
+\note{
+	The axiomatization of CL is sound and complete for weak playability models.
+	Each axiom encodes one of the semantic playability properties at the logical level.
+	The rules are standard: Modus Ponens and Distribution, which is the usual modal
+	axiom ensuring the modality distributes over implication.
+	The most important axiom for complexity is superadditivity: it is precisely what makes
+	satisfiability PSPACE-complete rather than NP-complete.
+	(Without it, each $\langle\!\langle C \rangle\!\rangle \varphi$ requires just one recursive check; with it, any subset of modal
+	formulas can be combined, forcing $2^n$ recursive calls.)
+}
+
+% TODO: come introduciamo il characterizion theorem? Come posso riuscire a spiegarlo correttamente e limpidamente alla commissione d'esame?
+
+% TODO: poi dobbiamo mostrare il problema della coincisione e dopo queste slide dobbiamo introdurre la QCL partendo dal problema della coincisione
+
+% TODO: poi serve che dimostramo che QCL e` espressibile quanto la logica CL , ma che `e esponenzialmente piu` succinto.
