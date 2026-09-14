@@ -105,7 +105,6 @@
 
 	\begin{itemize}
 		\item Coalition $C$ is \textbf{effective} for $X$ if $C$ has a joint strategy that \textbf{forces} the outcome into $X$, regardless of what the others do.
-		\item Quantifier structure: $\exists$ for coalition, $\forall$ for opponents.
 	\end{itemize}
 \end{frame}
 
@@ -125,9 +124,10 @@
 	These six properties characterize the models for which Pauly's axiomatization is complete.
 \end{frame}
 
+% TODO: characterization theorem
 
 \begin{frame}{From Coalition Frames to Models}
-	\begin{description}
+	\begin{description} % TODO: formalize E
 		\item[Coalition Frame] A pair $\mathcal{F} = (S, E)$ where $E$ assigns a playable effectivity function to each state.
 		\item[Coalition Model] A triple $\mathcal{M} = (S, E, \pi)$ adding a valuation $\pi$.
 	\end{description}
@@ -137,7 +137,10 @@
 	\[ \mathcal{M}, s \models \langle\!\langle C \rangle\!\rangle \varphi \iff \varphi^{\mathcal{M}} \in E(s, C) \]
 	where $\varphi^{\mathcal{M}} = \{t \in S \mid \mathcal{M}, t \models \varphi\}$.
 \end{frame}
-\end{document}
+
+\note{
+	characterization theorem assure that Coalition Frames are just Game frames.
+}
 
 \begin{frame}{CL Axiomatization (Ågotnes et al. 2008, Table 1)}
 	Sound and complete for weak playability models:
@@ -170,8 +173,137 @@
 	formulas can be combined, forcing $2^n$ recursive calls.)
 }
 
-% TODO: come introduciamo il characterizion theorem? Come posso riuscire a spiegarlo correttamente e limpidamente alla commissione d'esame?
 
 % TODO: poi dobbiamo mostrare il problema della coincisione e dopo queste slide dobbiamo introdurre la QCL partendo dal problema della coincisione
 
-% TODO: poi serve che dimostramo che QCL e` espressibile quanto la logica CL , ma che `e esponenzialmente piu` succinto.
+
+\begin{frame}{The Succinctness Problem}
+	To express ``some coalition can force $\varphi$'' in CL:
+	\[ \bigvee_{C \subseteq \mathcal{A}g} \langle\!\langle C \rangle\!\rangle \varphi \]
+
+	\begin{itemize}
+		\item With $n$ agents, this formula grows \textbf{exponentially} ($2^n$ disjuncts).
+		\item Expressing general properties like ``a majority can win'' is \textbf{practically impossible} in CL.
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{The Innovation: Predicates over Coalitions}
+	Instead of enumerating members, describe coalitions via \textbf{predicates} $P$:
+
+	\[
+		P ::= \text{subseteq}(C) \mid \text{supseteq}(C) \mid \neg P \mid P \lor P
+	\]
+
+	\begin{description}
+		\item[$\text{subseteq}(D)$] $C \models \text{subseteq}(D) \iff C \subseteq D$
+		\item[$\text{supseteq}(D)$] $C \models \text{supseteq}(D) \iff C \supseteq D$
+	\end{description}
+
+	\vspace{0.5em}
+	Derived predicates:
+	\begin{itemize}
+		\item $\text{eq}(D) \equiv \text{subseteq}(D) \land \text{supseteq}(D)$ --- exact equality
+		\item $\text{incl}(i) \equiv \text{supseteq}(\{i\})$ --- agent $i$ is a member
+		\item $\text{excl}(i) \equiv \neg \text{incl}(i)$ --- agent $i$ is not a member
+		\item $\text{any} \equiv \text{supseteq}(\emptyset)$ --- any coalition
+	\end{itemize}
+\end{frame}
+
+\note{
+	Quantified Coalition Logic solves the succinctness problem by introducing a quantification mechanism
+	over coalitions. Instead of enumerating the members of a coalition, we describe coalitions through
+	predicates.
+	The two atomic predicates are inclusion and containment: subsetof D checks whether the coalition
+	is a subset of D, and supersetof D checks whether it contains D.
+	From these, we can derive useful predicates: eq D for exact equality, incl i to check
+	if agent i is a member, excl i for the opposite, and any which is satisfied by all coalitions.
+	Note that subsetof and supersetof are mutually definable due to the finiteness of the agent set, but defining supseteq starting from subseteq
+	requires an exponentially long formula, so we need both as primitivies.
+}
+
+\begin{frame}{Syntax of QCL}
+
+	\[
+		\boxed{
+			\varphi ::= \top
+			\mid p
+			\mid \neg\varphi
+			\mid \varphi\lor\varphi
+			\mid \langle P\rangle\varphi
+			\mid [P]\varphi
+		}
+	\]
+
+	\vspace{1em}
+
+	\begin{itemize}
+		\item $\langle P\rangle\varphi$: \textbf{some} coalition satisfying $P$
+		      can force $\varphi$.
+		\item $[P]\varphi$: \textbf{every} coalition satisfying $P$
+		      can force $\varphi$.
+	\end{itemize}
+
+\end{frame}
+
+% TODO: i duali?
+
+\begin{frame}{Semantics of QCL}
+
+	\small
+
+	\begin{block}{Propositional cases}
+		\[
+			\begin{aligned}
+				\mathcal M,s \models_{\mathrm{QCL}} \top
+				 &                                                      \\[0.2em]
+				\mathcal M,s \models_{\mathrm{QCL}} p
+				 & \iff p \in \pi(s)                                    \\[0.2em]
+				\mathcal M,s \models_{\mathrm{QCL}} \neg\varphi
+				 & \iff \mathcal M,s \not\models_{\mathrm{QCL}} \varphi \\[0.2em]
+				\mathcal M,s \models_{\mathrm{QCL}} \varphi\lor\psi
+				 & \iff
+				\mathcal M,s\models_{\mathrm{QCL}}\varphi
+				\text{ or }
+				\mathcal M,s\models_{\mathrm{QCL}}\psi
+			\end{aligned}
+		\]
+	\end{block}
+
+	\begin{block}{Coalition modalities}
+		\[
+			\begin{aligned}
+				\mathcal M,s\models_{\mathrm{QCL}}\langle P\rangle\varphi
+				\iff {} &
+				\exists C\subseteq\mathcal{A}g:
+				C\models_{\mathrm{cp}}P
+				\ \land\
+				\exists S\in E(C,s): \\
+				        & \qquad
+				\forall s'\in S,\;
+				\mathcal M,s'\models_{\mathrm{QCL}}\varphi
+			\end{aligned}
+		\]
+
+		\[
+			\begin{aligned}
+				\mathcal M,s\models_{\mathrm{QCL}}[P]\varphi
+				\iff {} &
+				\forall C\subseteq\mathcal{A}g:
+				C\models_{\mathrm{cp}}P
+				\ \Longrightarrow\
+				\exists S\in E(C,s): \\
+				        & \qquad
+				\forall s'\in S,\;
+				\mathcal M,s'\models_{\mathrm{QCL}}\varphi
+			\end{aligned}
+		\]
+	\end{block}
+
+\end{frame}
+
+% TODO: dimostrare equivalenza tra QCL e CL
+
+% TODO: dimostrare la succinctness
+
+\end{document}

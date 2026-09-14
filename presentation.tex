@@ -16,7 +16,7 @@
 \subtitle{From Modal Logic to Quantified Coalition Logic}
 \author{Luca Sforza}
 \date{\today}
-\institute{Logic Course --- Final Presentation}
+\institute{Logic and Reasoning 2025/2026}
 
 \begin{document}
 
@@ -57,8 +57,7 @@
 	then focus on the concept of coalitional power and Coalition Logic.
 	After examining the characterization theorem and the limitations of this logic,
 	we will introduce Quantified Coalition Logic which solves the succinctness problem.
-	Finally, we will analyze computational complexity, see a practical application to majority voting,
-	and close with conclusions.
+	Finally, we will analyze computational complexity and see a practical application to majority voting.
 }
 
 % ============================================================
@@ -128,7 +127,7 @@
 	This structure is more general than Kripke frames:
 	instead of a simple accessibility relation, we have a full strategic game at every step.
 	As Pauly shows, this generalization is powerful: normal modal logic corresponds to 1-player CL,
-	and non-normal modal logic corresponds to 2-player CL. % Cos'`e non normal modal logic?
+	and non-normal modal logic corresponds to 2-player CL. % TODO: Cos'`e non normal modal logic?
 	From this structure, Coalition Logic is born, allowing us to reason about the power that groups of agents can exercise collectively.
 }
 
@@ -177,8 +176,6 @@
 	In other words, when we are at state s, the function gamma tells us which game the agents must play
 	at that state.
 	The outcome of that game determines the next state, and so on.
-	This structure is more general than Kripke frames:
-	instead of a simple accessibility relation, we have a full strategic game at every step.
 	The assumption that gamma is total means that every state has an associated game,
 	which allows for a smoother comparison with traditional modal logics.
 	Terminal positions can always be equipped with a dummy game if needed.
@@ -202,7 +199,6 @@
 	we say that C is effective for a set of outcomes X if there exists a shared strategy for C
 	such that,
 	regardless of what the external agents do, the outcome of the game belongs to X.
-	The quantifier structure is key: there exists a strategy for C, for all strategies of the opponents.
 	This captures exactly the idea of forcing an outcome: the coalition has a winning strategy.
 	Note that C cannot determine which specific member of X will occur,
 	only that the outcome will be some member of X.
@@ -234,7 +230,7 @@
 	Downward monotonicity says that if a large coalition can force the impossible, so can any subcoalition.
 	Something achievable guarantees that every coalition can always force at least one outcome.
 	Ag-maximality links the grand coalition to the empty one: if the empty coalition cannot prevent X, the grand coalition can achieve it.
-	Superadditivity captures the advantage of cooperation.
+	Superadditivity captures the advantage of cooperation. % TODO: spiegare formalemten i concetti, non solo il loro "marketing"
 	These six properties are exactly those used by Agotnes and colleagues for QCL,
 	and they include the five properties of Pauly's playable functions plus downward monotonicity.
 }
@@ -257,12 +253,12 @@
 \end{frame}
 
 \note{
-Let us now look at the syntax of Coalition Logic. We have a classical propositional language
-with atoms, negation, and disjunction, to which we add a modal operator indexed by coalitions.
-The formula with double angle brackets expresses that coalition C has a common strategy
-to force an outcome satisfying phi, regardless of the actions of the remaining agents.
-This notation follows the convention in the original QCL paper, where Pauly's [C] notation
-is replaced with double angle brackets to avoid confusion with the box modality.
+	Let us now look at the syntax of Coalition Logic. We have a classical propositional language
+	with atoms, negation, and disjunction, to which we add a modal operator indexed by coalitions.
+	The formula with double angle brackets expresses that coalition C has a common strategy
+	to force an outcome satisfying phi, regardless of the actions of the remaining agents.
+	This notation follows the convention in the original QCL paper, where Pauly's notation
+	is replaced with double angle brackets to avoid confusion with the box modality.
 }
 
 \begin{frame}{From Coalition Frames to Models}
@@ -452,7 +448,7 @@ is replaced with double angle brackets to avoid confusion with the box modality.
 \note{
 	Quantified Coalition Logic solves the succinctness problem by introducing a quantification mechanism
 	over coalitions. Instead of enumerating the members of a coalition, we describe coalitions through
-	redicates.
+	predicates.
 	The two atomic predicates are inclusion and containment: subsetof D checks whether the coalition
 	is a subset of D, and supersetof D checks whether it contains D.
 	From these, we can derive useful predicates: eq D for exact equality, incl i to check
