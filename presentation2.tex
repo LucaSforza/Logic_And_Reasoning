@@ -147,7 +147,7 @@
 	An effectivity function is \textbf{playable} if:
 
 	\begin{description}
-		\item $\forall C \subseteq N$ $\emptyset$ \notin $E(C)$
+		\item $\forall C \subseteq N$ $\emptyset \notin E(C)$
 		\item $\forall C \subseteq N$ $S \in E(C)$
 		\item $E$ is $N$-maximal
 		\item $E$ is outcome-monotonic
@@ -158,24 +158,27 @@
 
 \begin{frame}{Characterization Theorem (Pauly 2002)}
 	\begin{theorem}
-		$E$ is playable $\iff$ $\exists G$ such that $G$ is a strategic game and $E_G = E$
-		\begin{displaymath}
-
-		\end{displaymath}
-
-	\end{theorem} % TODO: dimostrazione
-
-
+		$E$ is playable $\iff$ there exists a strategic game $G$
+		such that $E_G = E$.
+	\end{theorem}
 \end{frame}
 
 \begin{frame}{From Coalition Frames to Models}
-	Let $E$ be $E: S \rightarrow \mathcal{P}(N) -> \mathcal{P}(\mathcal{P}(S))$. % associate every state to a playable effectivity function
+	Let $E$ be $E: S \rightarrow \mathcal{P}(N) \rightarrow \mathcal{P}(\mathcal{P}(S))$. % associate every state to a playable effectivity function
 
 	\begin{description}
 		\item[Coalition Frame] A pair $\mathcal{F} = (S, E)$ where $E$ assigns a playable effectivity function to each state.
 		\item[Coalition Model] A triple $\mathcal{M} = (S, E, \pi)$ adding a valuation $\pi$.
 	\end{description}
-
+	\[
+		\boxed{
+			\varphi ::= \top
+			\mid p
+			\mid \neg\varphi
+			\mid \varphi\lor\varphi
+			\mid \langle\!\langle C \rangle\!\rangle \varphi
+			\mid [P]\varphi
+		} \]
 	\vspace{0.5em}
 	The semantics:
 	\[ \mathcal{M}, s \models \langle\!\langle C \rangle\!\rangle \varphi \iff \varphi^{\mathcal{M}} \in E(s, C) \]
