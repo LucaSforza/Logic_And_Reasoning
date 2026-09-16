@@ -34,11 +34,24 @@
 	The goal is to show how logic can model coalitional power in multi-agent systems.
 }
 
+\begin{frame}{Outline}
+	\begin{enumerate}
+		\item Introduction: From Kripke Models to Game Frames
+		\item The Concept of Coalitional Power
+		\item Coalition Logic (CL): Syntax, Semantics, Axiomatization
+		\item The Characterization Theorem
+		\item The Succinctness Problem
+		\item Quantified Coalition Logic (QCL): Predicates and Operators
+		\item Applications: Voting and Social Choice
+		\item Conclusions and Reflections
+	\end{enumerate}
+\end{frame}
+
 \section{Introduction: From Kripke Models to Game Frames}
 
 \begin{frame}{Single-Agent Modal Logic}
 	\begin{itemize}
-		\item In the simplest case, we have \textbf{one agent} who can choose between actions. (Normal Model Logic models that) % TODO: migliorare spiegazione
+		\item In the simplest case, we have \textbf{one agent} who can choose between actions. (Normal Model Logic models) % TODO: migliorare spiegazione
 		\item A \textbf{Kripke model} $(S, R)$ uses an accessibility relation $R$ that associates to every state all reachable states.
 		\item A modal formula $\Diamond \varphi$ means: ``the agent can act so that $\varphi$ will be true.''
 	\end{itemize}
@@ -105,29 +118,60 @@
 
 	\begin{itemize}
 		\item Coalition $C$ is \textbf{effective} for $X$ if $C$ has a joint strategy that \textbf{forces} the outcome into $X$, regardless of what the others do.
+		\item The notion of effectiveness can also be investigated more generally. For a set of agents $N$ and a set of outcomes $S$, we call any
+		      function $E: \mathcal{P}(N) \rightarrow \mathcal{P}(\mathcal{P}(S))$ an effectivity function.
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Weak Playability Models (Pauly 2002)}
-	Not every function can represent a real game. An effectivity function must be \textbf{weakly playable}:
+\begin{frame}{Playability (Pauly 2002)}
+	It is natural to require them to
+	satisfy certain properties and which properties we require will depend on the exact situation
+	we want to model. % TODO: grammatica
 
 	\begin{description}
 		\item[Outcome-monotonicity] $X \in E(C, s)$ and $X \subseteq X' \Rightarrow X' \in E(C, s)$.
-		\item[No grand impossibility] $\emptyset \notin E(\mathcal{A}g, s)$.
-		\item[Downward monotonicity] $C' \subseteq C$: $\emptyset \in E(C, s) \Rightarrow \emptyset \in E(C', s)$.
-		\item[Something achievable] $\emptyset \notin E(\emptyset, s) \Rightarrow S \in E(C, s)$.
-		\item[$\mathcal{A}g$-maximality] $(S \setminus X) \notin E(\emptyset, s) \Rightarrow X \in E(\mathcal{A}g, s)$.
+		\item[Coalition-monotonicity] for $C \subseteq C' \subseteq N$, $E(C) \subseteq E(C')$
+		\item[$C$-Regular] $\forall X$ if $X \in E(C) \implies \overline{X} \notin E(\overline{C})$
+		\item[$C$-Maximal] $\forall X$ if $\overline{X} \notin E(\overline{C}) \implies X \in E(C)$
+		\item[Regular (Maximal)] if $\forall C \subseteq N$ $E$ is $C$-Regular (Maximal)
 		\item[Superadditivity] $C_1 \cap C_2 = \emptyset$: $X_1 \in E(C_1)$, $X_2 \in E(C_2) \Rightarrow X_1 \cap X_2 \in E(C_1 \cup C_2)$.
 	\end{description}
 
-	\vspace{0.5em}
-	These six properties characterize the models for which Pauly's axiomatization is complete.
 \end{frame}
 
-% TODO: characterization theorem
+\begin{frame}{Playability (Pauly 2002)} % TODO: grammatica
+	The choice of these properties is based on the situation we want to model.
+	In our case the question to be examined is which effectivity functions are effectivity functions of
+	some strategic game.
+
+	An effectivity function is \textbf{playable} if:
+
+	\begin{description}
+		\item $\forall C \subseteq N$ $\emptyset$ \notin $E(C)$
+		\item $\forall C \subseteq N$ $S \in E(C)$
+		\item $E$ is $N$-maximal
+		\item $E$ is outcome-monotonic
+		\item $E$ is superadditive
+	\end{description}
+
+\end{frame}
+
+\begin{frame}{Characterization Theorem (Pauly 2002)}
+	\begin{theorem}
+		$E$ is playable $\iff$ $\exists G$ such that $G$ is a strategic game and $E_G = E$
+		\begin{displaymath}
+
+		\end{displaymath}
+
+	\end{theorem} % TODO: dimostrazione
+
+
+\end{frame}
 
 \begin{frame}{From Coalition Frames to Models}
-	\begin{description} % TODO: formalize E
+	Let $E$ be $E: S \rightarrow \mathcal{P}(N) -> \mathcal{P}(\mathcal{P}(S))$. % associate every state to a playable effectivity function
+
+	\begin{description}
 		\item[Coalition Frame] A pair $\mathcal{F} = (S, E)$ where $E$ assigns a playable effectivity function to each state.
 		\item[Coalition Model] A triple $\mathcal{M} = (S, E, \pi)$ adding a valuation $\pi$.
 	\end{description}
