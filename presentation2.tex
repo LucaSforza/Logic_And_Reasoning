@@ -1,38 +1,88 @@
-\documentclass[aspectratio=169, 12pt]{beamer}
+\documentclass[aspectratio=169,12pt]{beamer}
+
+% ============================================================
+% Theme and visual style
+% ============================================================
 
 \usetheme{Madrid}
 \usecolortheme{whale}
+\usefonttheme{professionalfonts}
+
+\definecolor{MainBlue}{RGB}{45,55,155}
+\definecolor{SoftBlue}{RGB}{238,241,250}
+\definecolor{DarkText}{RGB}{35,35,40}
+
+\setbeamercolor{structure}{fg=MainBlue}
+\setbeamercolor{frametitle}{fg=white,bg=MainBlue}
+\setbeamercolor{title}{fg=white}
+\setbeamercolor{block title}{fg=white,bg=MainBlue}
+\setbeamercolor{block body}{fg=DarkText,bg=SoftBlue}
+
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamertemplate{itemize item}{\small\raise0.2ex\hbox{$\bullet$}}
+\setbeamertemplate{itemize subitem}{\scriptsize\raise0.2ex\hbox{$\circ$}}
+
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamerfont{block title}{series=\bfseries}
+
+% ============================================================
+% Packages
+% ============================================================
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[italian]{babel}
+
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{mathtools}
 \usepackage{booktabs}
 
+% ============================================================
+% Commands
+% ============================================================
+
 \newcommand{\CL}[1]{\llbracket #1 \rrbracket}
+\newcommand{\Ag}{\mathcal{A}g}
+
+% ============================================================
+% Metadata
+% ============================================================
 
 \title{Coalition Logic and Quantification}
 \subtitle{From Modal Logic to Quantified Coalition Logic}
 \author{Luca Sforza}
-\date{\today}
 \institute{Logic and Reasoning 2025/2026}
+\date{\today}
+
+% ============================================================
+% Document
+% ============================================================
 
 \begin{document}
 
 % ============================================================
-% SLIDE 1 — Title
+% Title
 % ============================================================
+
 \begin{frame}
 	\titlepage
 \end{frame}
 
 \note{
-	Good morning everyone, I am Luca Sforza and today I will present my work on Coalition Logic and its quantified extension.
-	The path I will take you through starts from classical modal logic and arrives at Quantified Coalition Logic,
-	passing through the foundations of Pauly's Coalition Logic.
-	The goal is to show how logic can model coalitional power in multi-agent systems.
+	Good morning everyone. I am Luca Sforza, and today I will present
+	my work on Coalition Logic and its quantified extension.
+
+	We will start from classical modal logic, move through the foundations
+	of Pauly's Coalition Logic, and finally arrive at Quantified Coalition Logic.
+
+	The goal is to show how logic can be used to model coalitional power
+	in multi-agent systems.
 }
+
+% ============================================================
+% Outline
+% ============================================================
 
 \begin{frame}{Outline}
 	\begin{enumerate}
@@ -47,233 +97,651 @@
 	\end{enumerate}
 \end{frame}
 
+% ============================================================
 \section{Introduction: From Kripke Models to Game Frames}
+% ============================================================
 
 \begin{frame}{Single-Agent Modal Logic}
+
 	\begin{itemize}
-		\item In the simplest case, we have \textbf{one agent} who can choose between actions. (Normal Model Logic models) % TODO: migliorare spiegazione
-		\item A \textbf{Kripke model} $(S, R)$ uses an accessibility relation $R$ that associates to every state all reachable states.
-		\item A modal formula $\Diamond \varphi$ means: ``the agent can act so that $\varphi$ will be true.''
+		\item
+		      In the simplest setting, we consider \textbf{one agent}
+		      choosing among different actions.
+
+		\item
+		      A \textbf{Kripke model} $(S,R)$ uses an accessibility relation
+		      $R$ that associates each state with the states reachable from it.
+
+		\item
+		      The modal formula
+		      \[
+			      \Diamond\varphi
+		      \]
+		      means that the agent can act in such a way that
+		      $\varphi$ becomes true.
 	\end{itemize}
 
 	\vspace{0.5em}
-	Formally: $M, s \models \Diamond \varphi \iff \exists t \in S: sRt \text{ and } M, t \models \varphi$.
+
+	\begin{block}{Semantics}
+		\[
+			M,s\models\Diamond\varphi
+			\iff
+			\exists t\in S:
+			\; sRt
+			\text{ and }
+			M,t\models\varphi.
+		\]
+	\end{block}
+
 \end{frame}
+
+% ============================================================
 
 \begin{frame}{The Multi-Agent Problem}
+
 	\begin{itemize}
-		\item Extending to multiple agents with individual accessibility relations $R_i$ considers agents \textbf{in isolation}.
-		\item But agents' actions \textbf{interact}: what happens when agent 1 and agent 2 act \textbf{simultaneously}?
-		\item The outcome depends on the \textbf{combination} of all participants' choices.
+
+		\item
+		      Extending the model with individual accessibility relations
+		      $R_i$ still considers agents largely \textbf{in isolation}.
+
+		\item
+		      In a multi-agent setting, however, agents' actions
+		      \textbf{interact}.
+
+		\item
+		      What happens when agent $1$ and agent $2$ act
+		      \textbf{simultaneously}?
+
+		\item
+		      The resulting outcome depends on the
+		      \textbf{combination of all participants' choices}.
 	\end{itemize}
 
-	\vspace{0.5em}
-	Standard multi-agent modal logic \textbf{cannot} capture this interaction.
+	\vspace{0.7em}
+
+	\begin{alertblock}{Problem}
+		Standard multi-agent modal logic cannot capture this interaction.
+	\end{alertblock}
+
 \end{frame}
+
+% ============================================================
 
 \begin{frame}{The Solution: Game Frames (Pauly 2002)}
-	\begin{block}{Definition (Game Frame)}
-		Marc Pauly introduces \textbf{game frames}: at every state, a \textbf{strategic game} is played among the agents.
-		Outcomes of the game are states of the model.
+
+	\begin{block}{Definition --- Game Frame}
+		Marc Pauly introduces \textbf{game frames}:
+		at every state, a \textbf{strategic game} is played among the agents,
+		and the outcomes of the game are states of the model.
 	\end{block}
-
-	\begin{itemize}
-		\item Game frames are essentially \textbf{extensive games with simultaneous moves}.
-		\item They generalize both Kripke models (1-player case) and non-normal modal logics (2-player case).
-	\end{itemize}
-\end{frame}
-
-%TODO: scrivere: Prima di introdurre formalmente un game frame, prima dobbiamo specificare cos'e` un gioco strategico
-\begin{frame}{Strategic Games}
-	A strategic game $G = (N, \{\Sigma_i \mid i \in N\}, o, S)$ consists of:
-	\begin{itemize}
-		\item $N$: finite set of agents (players)
-		\item $\Sigma_i$: set of strategies for agent $i$
-		\item $S$: set of outcome states
-		\item $o: \prod_{i \in N} \Sigma_i \rightarrow S$: outcome function
-	\end{itemize}
 
 	\vspace{0.5em}
-	We consider \emph{game forms} only: no preference relations are assumed.
+
+	\begin{itemize}
+		\item
+		      Game frames are essentially
+		      \textbf{extensive games with simultaneous moves}.
+
+		\item
+		      They generalize both Kripke models
+		      (the one-player case)
+		      and non-normal modal logics
+		      (the two-player case).
+	\end{itemize}
+
 \end{frame}
+
+% ============================================================
+
+\begin{frame}{Strategic Games}
+
+	Before defining game frames formally, we first introduce
+	the strategic games associated with their states.
+
+	\vspace{0.6em}
+
+	A strategic game
+	\[
+		G=(N,\{\Sigma_i\mid i\in N\},o,S)
+	\]
+	consists of:
+
+	\begin{description}
+		\item[$N$]
+		      a finite set of agents (players);
+
+		\item[$\Sigma_i$]
+		      the set of strategies available to agent $i$;
+
+		\item[$S$]
+		      the set of possible outcome states;
+
+		\item[$o$]
+		      an outcome function
+		      \[
+			      o:\prod_{i\in N}\Sigma_i\longrightarrow S.
+		      \]
+	\end{description}
+
+	\vspace{0.4em}
+
+	We consider \emph{game forms} only:
+	no preference relations are assumed.
+
+\end{frame}
+
+% ============================================================
 
 \begin{frame}{Game Frames}
+
 	\begin{block}{Definition}
-		Let $\Gamma^N_S$ be the set of all strategic games over agents $N$ and states $S$.
-		A \emph{game frame} is a pair $(S, \gamma)$ where $\gamma: S \rightarrow \Gamma^N_S$ assigns a strategic game to each state.
+		Let $\Gamma^N_S$ denote the set of all strategic games
+		over agents $N$ and states $S$.
+
+		A \emph{game frame} is a pair
+		\[
+			(S,\gamma),
+		\]
+		where
+		\[
+			\gamma:S\longrightarrow\Gamma^N_S
+		\]
+		assigns a strategic game to each state.
 	\end{block}
 
+	\vspace{0.5em}
+
 	\begin{itemize}
-		\item At every state, agents play a game; the outcome leads to a new state (and a new game).
-		\item This is a \textbf{total function}: every state has an associated game.
+		\item
+		      At every state, the agents play a game.
+
+		\item
+		      The outcome leads to a new state,
+		      where another game is associated with that state.
+
+		\item
+		      $\gamma$ is a \textbf{total function}:
+		      every state has an associated game.
 	\end{itemize}
+
 \end{frame}
 
-% TODO: come introduziamo le effective function? come lo collegao con la teoria vista a lezione? (riferito alle 2 slide successive a questo TODO)
+% ============================================================
+\section{Coalitional Power}
+% ============================================================
+
 \begin{frame}{From Strategy to Power: Effectivity Functions}
+
 	\begin{block}{Definition}
-		The \emph{effectivity function} $E_G: \mathcal{P}(N) \rightarrow \mathcal{P}(\mathcal{P}(S))$ derived from game $G$:
-		\[ X \in E_G(C) \iff \exists \sigma_C \forall \sigma_{N \setminus C}: o(\sigma_C, \sigma_{N \setminus C}) \in X \]
+		The \emph{effectivity function}
+		\[
+			E_G:\mathcal{P}(N)\longrightarrow
+			\mathcal{P}(\mathcal{P}(S))
+		\]
+		derived from a game $G$ is defined by
+		\[
+			X\in E_G(C)
+			\iff
+			\exists\sigma_C\,
+			\forall\sigma_{N\setminus C}:
+			\;
+			o(\sigma_C,\sigma_{N\setminus C})\in X.
+		\]
 	\end{block}
 
 	\begin{itemize}
-		\item Coalition $C$ is \textbf{effective} for $X$ if $C$ has a joint strategy that \textbf{forces} the outcome into $X$, regardless of what the others do.
-		\item The notion of effectiveness can also be investigated more generally. For a set of agents $N$ and a set of outcomes $S$, we call any
-		      function $E: \mathcal{P}(N) \rightarrow \mathcal{P}(\mathcal{P}(S))$ an effectivity function.
+		\item
+		      Coalition $C$ is \textbf{effective for $X$}
+		      if it has a joint strategy that forces the outcome into $X$,
+		      regardless of what the other agents do.
+
+		\item
+		      More generally, for a set of agents $N$ and outcomes $S$,
+		      any function
+		      \[
+			      E:\mathcal{P}(N)\longrightarrow
+			      \mathcal{P}(\mathcal{P}(S))
+		      \]
+		      is called an \emph{effectivity function}.
 	\end{itemize}
+
 \end{frame}
+
+% ============================================================
 
 \begin{frame}{Playability (Pauly 2002)}
-	It is natural to require them to
-	satisfy certain properties and which properties we require will depend on the exact situation
-	we want to model. % TODO: grammatica
+
+	Effectivity functions may be required to satisfy different properties,
+	depending on the situation we want to model.
+
+	\vspace{0.6em}
+
+	\small
 
 	\begin{description}
-		\item[Outcome-monotonicity] $X \in E(C, s)$ and $X \subseteq X' \Rightarrow X' \in E(C, s)$.
-		\item[Coalition-monotonicity] for $C \subseteq C' \subseteq N$, $E(C) \subseteq E(C')$
-		\item[$C$-Regular] $\forall X$ if $X \in E(C) \implies \overline{X} \notin E(\overline{C})$
-		\item[$C$-Maximal] $\forall X$ if $\overline{X} \notin E(\overline{C}) \implies X \in E(C)$
-		\item[Regular (Maximal)] if $\forall C \subseteq N$ $E$ is $C$-Regular (Maximal)
-		\item[Superadditivity] $C_1 \cap C_2 = \emptyset$: $X_1 \in E(C_1)$, $X_2 \in E(C_2) \Rightarrow X_1 \cap X_2 \in E(C_1 \cup C_2)$.
+
+		\item[Outcome monotonicity]
+		      \[
+			      X\in E(C,s),\;
+			      X\subseteq X'
+			      \;\Rightarrow\;
+			      X'\in E(C,s).
+		      \]
+
+		\item[Coalition monotonicity]
+		      \[
+			      C\subseteq C'\subseteq N
+			      \;\Rightarrow\;
+			      E(C)\subseteq E(C').
+		      \]
+
+		\item[$C$-regularity]
+		      \[
+			      X\in E(C)
+			      \;\Rightarrow\;
+			      \overline{X}\notin E(\overline{C}).
+		      \]
+
+		\item[$C$-maximality]
+		      \[
+			      \overline{X}\notin E(\overline{C})
+			      \;\Rightarrow\;
+			      X\in E(C).
+		      \]
+
+		\item[Regularity / maximality]
+		      $E$ is regular (maximal) if it is
+		      $C$-regular ($C$-maximal) for every $C\subseteq N$.
+
+		\item[Superadditivity]
+		      If $C_1\cap C_2=\emptyset$, then
+		      \[
+			      X_1\in E(C_1),\;
+			      X_2\in E(C_2)
+			      \Rightarrow
+			      X_1\cap X_2\in E(C_1\cup C_2).
+		      \]
+
 	\end{description}
 
 \end{frame}
 
-\begin{frame}{Playability (Pauly 2002)} % TODO: grammatica
-	The choice of these properties is based on the situation we want to model.
-	In our case the question to be examined is which effectivity functions are effectivity functions of
-	some strategic game.
+% ============================================================
 
-	An effectivity function is \textbf{playable} if:
+\begin{frame}{Playability (Pauly 2002)}
 
-	\begin{description}
-		\item $\forall C \subseteq N$ $\emptyset \notin E(C)$
-		\item $\forall C \subseteq N$ $S \in E(C)$
-		\item $E$ is $N$-maximal
-		\item $E$ is outcome-monotonic
-		\item $E$ is superadditive
-	\end{description}
+	The relevant properties depend on the situation we want to model.
+
+	In our setting, the central question is:
+
+	\begin{center}
+		\emph{Which effectivity functions arise from some strategic game?}
+	\end{center}
+
+	\vspace{0.5em}
+
+	An effectivity function $E$ is \textbf{playable} if:
+
+	\begin{enumerate}
+		\item
+		      $\forall C\subseteq N,\;
+			      \emptyset\notin E(C)$;
+
+		\item
+		      $\forall C\subseteq N,\;
+			      S\in E(C)$;
+
+		\item
+		      $E$ is $N$-maximal;
+
+		\item
+		      $E$ is outcome-monotonic;
+
+		\item
+		      $E$ is superadditive.
+	\end{enumerate}
 
 \end{frame}
+
+% ============================================================
 
 \begin{frame}{Characterization Theorem (Pauly 2002)}
+
+	\vfill
+
 	\begin{theorem}
-		$E$ is playable $\iff$ there exists a strategic game $G$
-		such that $E_G = E$.
+		An effectivity function $E$ is playable if and only if
+		there exists a strategic game $G$ such that
+		\[
+			E_G=E.
+		\]
 	\end{theorem}
+
+	\vfill
+
 \end{frame}
 
+% ============================================================
+
 \begin{frame}{From Coalition Frames to Models}
-	Let $E$ be $E: S \rightarrow \mathcal{P}(N) \rightarrow \mathcal{P}(\mathcal{P}(S))$. % associate every state to a playable effectivity function
+
+	Let
+	\[
+		E:
+		S
+		\longrightarrow
+		\mathcal{P}(N)
+		\longrightarrow
+		\mathcal{P}(\mathcal{P}(S)).
+	\]
 
 	\begin{description}
-		\item[Coalition Frame] A pair $\mathcal{F} = (S, E)$ where $E$ assigns a playable effectivity function to each state.
-		\item[Coalition Model] A triple $\mathcal{M} = (S, E, \pi)$ adding a valuation $\pi$.
+
+		\item[Coalition Frame]
+		      A pair
+		      \[
+			      \mathcal{F}=(S,E)
+		      \]
+		      where $E$ assigns a playable effectivity function
+		      to each state.
+
+		\item[Coalition Model]
+		      A triple
+		      \[
+			      \mathcal{M}=(S,E,\pi)
+		      \]
+		      obtained by adding a valuation $\pi$.
+
 	\end{description}
+
+	\vspace{0.3em}
+
 	\[
 		\boxed{
-			\varphi ::= \top
+			\varphi ::=
+			\top
 			\mid p
 			\mid \neg\varphi
 			\mid \varphi\lor\varphi
-			\mid \langle\!\langle C \rangle\!\rangle \varphi
+			\mid \langle\!\langle C\rangle\!\rangle\varphi
 			\mid [P]\varphi
-		} \]
-	\vspace{0.5em}
-	The semantics:
-	\[ \mathcal{M}, s \models \langle\!\langle C \rangle\!\rangle \varphi \iff \varphi^{\mathcal{M}} \in E(s, C) \]
-	where $\varphi^{\mathcal{M}} = \{t \in S \mid \mathcal{M}, t \models \varphi\}$.
+		}
+	\]
+
+	\vspace{0.3em}
+
+	The semantics of the coalition modality is
+
+	\[
+		\mathcal{M},s
+		\models
+		\langle\!\langle C\rangle\!\rangle\varphi
+		\iff
+		\varphi^{\mathcal{M}}
+		\in E(s,C),
+	\]
+
+	where
+
+	\[
+		\varphi^{\mathcal{M}}
+		=
+		\{t\in S\mid\mathcal{M},t\models\varphi\}.
+	\]
+
 \end{frame}
 
 \note{
-	characterization theorem assure that Coalition Frames are just Game frames.
+	The characterization theorem ensures that coalition frames correspond
+	precisely to game frames.
 }
 
-\begin{frame}{CL Axiomatization (Ågotnes et al. 2008, Table 1)}
-	Sound and complete for weak playability models:
+% ============================================================
+\section{Coalition Logic}
+% ============================================================
+
+\begin{frame}{CL Axiomatization}
+
+	\small
+
+	\textbf{Sound and complete for weak playability models}
+	\hfill
+	{\scriptsize Ågotnes et al.\ (2008), Table 1}
+
+	\vspace{0.7em}
 
 	\begin{description}
-		\item[$\mathbf{Ag\bot}$] $\neg \langle\!\langle \mathcal{A}g \rangle\!\rangle \bot$
-		\item[$\mathbf{\top}$] $\neg \langle\!\langle \emptyset \rangle\!\rangle \bot \to \langle\!\langle C \rangle\!\rangle \top$
-		\item[$\mathbf{\bot}$] $\langle\!\langle C \rangle\!\rangle \bot \to \langle\!\langle C' \rangle\!\rangle \bot$ \quad ($C' \subseteq C$)
-		\item[$\mathbf{Ag}$] $\neg \langle\!\langle \emptyset \rangle\!\rangle \neg \varphi \to \langle\!\langle \mathcal{A}g \rangle\!\rangle \varphi$
-		\item[$\mathbf{S}$] $(\langle\!\langle C_1 \rangle\!\rangle \varphi_1 \land \langle\!\langle C_2 \rangle\!\rangle \varphi_2) \to \langle\!\langle C_1 \cup C_2 \rangle\!\rangle (\varphi_1 \land \varphi_2)$ \quad ($C_1 \cap C_2 = \emptyset$)
+
+		\item[$\mathbf{Ag\bot}$]
+		      \[
+			      \neg
+			      \langle\!\langle\Ag\rangle\!\rangle
+			      \bot
+		      \]
+
+		\item[$\mathbf{\top}$]
+		      \[
+			      \neg
+			      \langle\!\langle\emptyset\rangle\!\rangle
+			      \bot
+			      \to
+			      \langle\!\langle C\rangle\!\rangle
+			      \top
+		      \]
+
+		\item[$\mathbf{\bot}$]
+		      \[
+			      \langle\!\langle C\rangle\!\rangle\bot
+			      \to
+			      \langle\!\langle C'\rangle\!\rangle\bot
+			      \qquad
+			      (C'\subseteq C)
+		      \]
+
+		\item[$\mathbf{Ag}$]
+		      \[
+			      \neg
+			      \langle\!\langle\emptyset\rangle\!\rangle
+			      \neg\varphi
+			      \to
+			      \langle\!\langle\Ag\rangle\!\rangle
+			      \varphi
+		      \]
+
+		\item[$\mathbf{S}$]
+		      \[
+			      \begin{aligned}
+				       &
+				      \bigl(
+				      \langle\!\langle C_1\rangle\!\rangle\varphi_1
+				      \land
+				      \langle\!\langle C_2\rangle\!\rangle\varphi_2
+				      \bigr)
+				      \\
+				       & \qquad\to
+				      \langle\!\langle C_1\cup C_2\rangle\!\rangle
+				      (\varphi_1\land\varphi_2),
+				      \qquad
+				      C_1\cap C_2=\emptyset.
+			      \end{aligned}
+		      \]
+
 	\end{description}
 
-	\vspace{0.3em}
-	\rule{\textwidth}{0.4pt}
-	\vspace{0.3em}
+	\vspace{0.2em}
+	\hrule
+	\vspace{0.4em}
 
-	\textbf{Rules:} Modus Ponens (MP) and Distribution:
-	\[ \vdash \varphi \to \psi \;\Rightarrow\; \vdash \langle\!\langle C \rangle\!\rangle \varphi \to \langle\!\langle C \rangle\!\rangle \psi \]
-	plus all propositional tautologies (Prop).
+	\textbf{Rules:}
+	Modus Ponens (MP), all propositional tautologies (Prop), and Distribution:
+
+	\[
+		\vdash\varphi\to\psi
+		\quad\Rightarrow\quad
+		\vdash
+		\langle\!\langle C\rangle\!\rangle\varphi
+		\to
+		\langle\!\langle C\rangle\!\rangle\psi.
+	\]
+
 \end{frame}
 
 \note{
 	The axiomatization of CL is sound and complete for weak playability models.
-	Each axiom encodes one of the semantic playability properties at the logical level.
-	The rules are standard: Modus Ponens and Distribution, which is the usual modal
-	axiom ensuring the modality distributes over implication.
-	The most important axiom for complexity is superadditivity: it is precisely what makes
-	satisfiability PSPACE-complete rather than NP-complete.
-	(Without it, each $\langle\!\langle C \rangle\!\rangle \varphi$ requires just one recursive check; with it, any subset of modal
-	formulas can be combined, forcing $2^n$ recursive calls.)
+
+	Each axiom encodes one of the semantic playability properties
+	at the logical level.
+
+	The rules are Modus Ponens and Distribution.
+
+	The most important axiom for complexity is superadditivity:
+	it is precisely what makes satisfiability PSPACE-complete rather than
+	NP-complete.
+
+	Without it, each
+	$\langle\!\langle C\rangle\!\rangle\varphi$
+	requires only one recursive check.
+	With it, arbitrary subsets of modal formulas can be combined,
+	potentially forcing $2^n$ recursive calls.
 }
 
-
-% TODO: poi dobbiamo mostrare il problema della coincisione e dopo queste slide dobbiamo introdurre la QCL partendo dal problema della coincisione
-
+% ============================================================
+\section{Succinctness}
+% ============================================================
 
 \begin{frame}{The Succinctness Problem}
-	To express ``some coalition can force $\varphi$'' in CL:
-	\[ \bigvee_{C \subseteq \mathcal{A}g} \langle\!\langle C \rangle\!\rangle \varphi \]
 
-	\begin{itemize}
-		\item With $n$ agents, this formula grows \textbf{exponentially} ($2^n$ disjuncts).
-		\item Expressing general properties like ``a majority can win'' is \textbf{practically impossible} in CL.
-	\end{itemize}
-\end{frame}
+	To express
 
+	\begin{center}
+		\emph{``some coalition can force $\varphi$''}
+	\end{center}
 
-\begin{frame}{The Innovation: Predicates over Coalitions}
-	Instead of enumerating members, describe coalitions via \textbf{predicates} $P$:
+	in Coalition Logic, we need:
 
 	\[
-		P ::= \text{subseteq}(C) \mid \text{supseteq}(C) \mid \neg P \mid P \lor P
+		\bigvee_{C\subseteq\Ag}
+		\langle\!\langle C\rangle\!\rangle\varphi.
 	\]
 
-	\begin{description}
-		\item[$\text{subseteq}(D)$] $C \models \text{subseteq}(D) \iff C \subseteq D$
-		\item[$\text{supseteq}(D)$] $C \models \text{supseteq}(D) \iff C \supseteq D$
-	\end{description}
+	\vspace{0.8em}
+
+	\begin{itemize}
+
+		\item
+		      With $n$ agents, the formula contains
+		      \textbf{$2^n$ disjuncts}.
+
+		\item
+		      Its size therefore grows
+		      \textbf{exponentially} with the number of agents.
+
+		\item
+		      General properties such as
+		      \emph{``a majority can win''}
+		      become practically impossible to express compactly in CL.
+
+	\end{itemize}
+
+\end{frame}
+
+% ============================================================
+\section{Quantified Coalition Logic}
+% ============================================================
+
+\begin{frame}{The Innovation: Predicates over Coalitions}
+
+	Instead of explicitly enumerating coalition members,
+	QCL describes coalitions using \textbf{predicates} $P$:
+
+	\[
+		P ::=
+		\operatorname{subseteq}(C)
+		\mid
+		\operatorname{supseteq}(C)
+		\mid
+		\neg P
+		\mid
+		P\lor P.
+	\]
 
 	\vspace{0.5em}
-	Derived predicates:
+
+	\begin{align*}
+		C\models\operatorname{subseteq}(D)
+		 & \iff C\subseteq D,
+		\\[0.3em]
+		C\models\operatorname{supseteq}(D)
+		 & \iff C\supseteq D.
+	\end{align*}
+
+	\vspace{0.4em}
+
+	\textbf{Derived predicates:}
+
 	\begin{itemize}
-		\item $\text{eq}(D) \equiv \text{subseteq}(D) \land \text{supseteq}(D)$ --- exact equality
-		\item $\text{incl}(i) \equiv \text{supseteq}(\{i\})$ --- agent $i$ is a member
-		\item $\text{excl}(i) \equiv \neg \text{incl}(i)$ --- agent $i$ is not a member
-		\item $\text{any} \equiv \text{supseteq}(\emptyset)$ --- any coalition
+		\item
+		      $\operatorname{eq}(D)
+			      \equiv
+			      \operatorname{subseteq}(D)
+			      \land
+			      \operatorname{supseteq}(D)$
+		      \hfill exact equality;
+
+		\item
+		      $\operatorname{incl}(i)
+			      \equiv
+			      \operatorname{supseteq}(\{i\})$
+		      \hfill agent $i$ is a member;
+
+		\item
+		      $\operatorname{excl}(i)
+			      \equiv
+			      \neg\operatorname{incl}(i)$
+		      \hfill agent $i$ is not a member;
+
+		\item
+		      $\operatorname{any}
+			      \equiv
+			      \operatorname{supseteq}(\emptyset)$
+		      \hfill any coalition.
 	\end{itemize}
+
 \end{frame}
 
 \note{
-	Quantified Coalition Logic solves the succinctness problem by introducing a quantification mechanism
-	over coalitions. Instead of enumerating the members of a coalition, we describe coalitions through
-	predicates.
-	The two atomic predicates are inclusion and containment: subsetof D checks whether the coalition
-	is a subset of D, and supersetof D checks whether it contains D.
-	From these, we can derive useful predicates: eq D for exact equality, incl i to check
-	if agent i is a member, excl i for the opposite, and any which is satisfied by all coalitions.
-	Note that subsetof and supersetof are mutually definable due to the finiteness of the agent set, but defining supseteq starting from subseteq
-	requires an exponentially long formula, so we need both as primitivies.
+	Quantified Coalition Logic addresses the succinctness problem
+	by introducing a quantification mechanism over coalitions.
+
+	Instead of enumerating the members of a coalition,
+	coalitions are described through predicates.
+
+	The two atomic predicates are inclusion and containment:
+	subseteq(D) checks whether the coalition is a subset of D,
+	while supseteq(D) checks whether it contains D.
+
+	From these primitives we derive useful predicates:
+	eq(D) for exact equality, incl(i) to test whether agent i belongs
+	to the coalition, excl(i) for the opposite condition,
+	and any, which is satisfied by every coalition.
+
+	subseteq and supseteq are mutually definable because the set of agents
+	is finite. However, defining supseteq starting from subseteq requires
+	an exponentially long formula, so both are needed as primitives.
 }
+
+% ============================================================
 
 \begin{frame}{Syntax of QCL}
 
+	\vfill
+
 	\[
 		\boxed{
-			\varphi ::= \top
+			\varphi ::=
+			\top
 			\mid p
 			\mid \neg\varphi
 			\mid \varphi\lor\varphi
@@ -282,75 +750,104 @@
 		}
 	\]
 
-	\vspace{1em}
+	\vspace{1.2em}
 
 	\begin{itemize}
-		\item $\langle P\rangle\varphi$: \textbf{some} coalition satisfying $P$
+
+		\item
+		      $\langle P\rangle\varphi$:
+		      \textbf{some} coalition satisfying $P$
 		      can force $\varphi$.
-		\item $[P]\varphi$: \textbf{every} coalition satisfying $P$
+
+		      \vspace{0.5em}
+
+		\item
+		      $[P]\varphi$:
+		      \textbf{every} coalition satisfying $P$
 		      can force $\varphi$.
+
 	\end{itemize}
+
+	\vfill
 
 \end{frame}
 
-% TODO: i duali?
+% ============================================================
 
 \begin{frame}{Semantics of QCL}
 
 	\small
 
 	\begin{block}{Propositional cases}
+
 		\[
 			\begin{aligned}
-				\mathcal M,s \models_{\mathrm{QCL}} \top
-				 &                                                      \\[0.2em]
-				\mathcal M,s \models_{\mathrm{QCL}} p
-				 & \iff p \in \pi(s)                                    \\[0.2em]
-				\mathcal M,s \models_{\mathrm{QCL}} \neg\varphi
-				 & \iff \mathcal M,s \not\models_{\mathrm{QCL}} \varphi \\[0.2em]
-				\mathcal M,s \models_{\mathrm{QCL}} \varphi\lor\psi
+				\mathcal{M},s\models_{\mathrm{QCL}}\top
+				 &      \\[0.25em]
+				\mathcal{M},s\models_{\mathrm{QCL}}p
 				 & \iff
-				\mathcal M,s\models_{\mathrm{QCL}}\varphi
+				p\in\pi(s)
+				\\[0.25em]
+				\mathcal{M},s\models_{\mathrm{QCL}}\neg\varphi
+				 & \iff
+				\mathcal{M},s\not\models_{\mathrm{QCL}}\varphi
+				\\[0.25em]
+				\mathcal{M},s\models_{\mathrm{QCL}}\varphi\lor\psi
+				 & \iff
+				\mathcal{M},s\models_{\mathrm{QCL}}\varphi
 				\text{ or }
-				\mathcal M,s\models_{\mathrm{QCL}}\psi
+				\mathcal{M},s\models_{\mathrm{QCL}}\psi
 			\end{aligned}
 		\]
+
 	\end{block}
 
 	\begin{block}{Coalition modalities}
+
 		\[
 			\begin{aligned}
-				\mathcal M,s\models_{\mathrm{QCL}}\langle P\rangle\varphi
+				\mathcal{M},s
+				\models_{\mathrm{QCL}}
+				\langle P\rangle\varphi
 				\iff {} &
-				\exists C\subseteq\mathcal{A}g:
+				\exists C\subseteq\Ag:
 				C\models_{\mathrm{cp}}P
-				\ \land\
-				\exists S\in E(C,s): \\
-				        & \qquad
+				\land
+				\exists S\in E(C,s):
+				\\
+				        &
+				\qquad
 				\forall s'\in S,\;
-				\mathcal M,s'\models_{\mathrm{QCL}}\varphi
+				\mathcal{M},s'
+				\models_{\mathrm{QCL}}
+				\varphi
 			\end{aligned}
 		\]
 
 		\[
 			\begin{aligned}
-				\mathcal M,s\models_{\mathrm{QCL}}[P]\varphi
+				\mathcal{M},s
+				\models_{\mathrm{QCL}}
+				[P]\varphi
 				\iff {} &
-				\forall C\subseteq\mathcal{A}g:
+				\forall C\subseteq\Ag:
 				C\models_{\mathrm{cp}}P
-				\ \Longrightarrow\
-				\exists S\in E(C,s): \\
-				        & \qquad
+				\Longrightarrow
+				\exists S\in E(C,s):
+				\\
+				        &
+				\qquad
 				\forall s'\in S,\;
-				\mathcal M,s'\models_{\mathrm{QCL}}\varphi
+				\mathcal{M},s'
+				\models_{\mathrm{QCL}}
+				\varphi
 			\end{aligned}
 		\]
+
 	\end{block}
 
 \end{frame}
 
-% TODO: dimostrare equivalenza tra QCL e CL
-
-% TODO: dimostrare la succinctness
+% ============================================================
 
 \end{document}
