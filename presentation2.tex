@@ -412,6 +412,7 @@
 	\vfill
 
 	\begin{theorem}
+		Let $N$ be finite and non-empty, and $S$ finite and non-empty.
 		An effectivity function $E$ is playable if and only if
 		there exists a strategic game $G$ such that
 		\[
@@ -425,10 +426,302 @@
 
 % ============================================================
 
+% Proof adapted from Pauly (2002), Lemma 3.1 and Theorem 3.2, pp. 152--154.
+% The finite-state core R handles the empty coalition explicitly.
+\begin{frame}{Proof: Every Game Gives a Playable Function}
+	\small
+	Let $E_G$ be induced by a game with non-empty strategy sets.
+	\begin{enumerate}
+		\item $\emptyset\notin E_G(C)$: no strategy can force an impossible outcome.
+		\item $S\in E_G(C)$: every outcome belongs to $S$.
+		\item $N$-maximality:
+		\[
+			S\setminus X\notin E_G(\emptyset)
+			\Rightarrow \exists\sigma_N:\ o(\sigma_N)\in X
+			\Rightarrow X\in E_G(N).
+		\]
+		\item Outcome monotonicity: a strategy forcing $X$ also forces every $X'\supseteq X$.
+		\item Superadditivity: for disjoint $C_1,C_2$, combine their strategies;
+		the resulting outcome lies in $X_1\cap X_2$.
+	\end{enumerate}
+	\note{
+		\small
+		We first prove the direction from games to effectivity functions.
+		Fix any coalition C. Every partial strategy can be completed, since
+		all players have at least one strategy. Thus it cannot force the empty
+		set, and any partial strategy forces S.
+
+		The empty coalition has exactly one strategy: the empty tuple.
+		It forces a set precisely when every complete profile ends in that set.
+		If it cannot force the complement of X, some complete profile ends in X.
+		The grand coalition controls that whole profile, proving N-maximality.
+
+		Monotonicity follows by retaining the same witness strategy.
+		For superadditivity, disjoint coalitions can use their witness strategies
+		together without assigning conflicting actions to a player. Every
+		completion then satisfies both guarantees. This proves all five conditions.
+	}
+\end{frame}
+
+\begin{frame}{Proof: Two Consequences of Playability}
+	\begin{block}{Regularity}
+		If $X\in E(C)$ and $S\setminus X\in E(N\setminus C)$, then
+		\[
+			\emptyset=X\cap(S\setminus X)\in E(N),
+		\]
+		contradicting playability.
+	\end{block}
+	\begin{block}{Coalition monotonicity}
+		If $C\subseteq D$ and $X\in E(C)$, then $S\in E(D\setminus C)$, so
+		\[
+			X=X\cap S\in E(D).
+		\]
+	\end{block}
+	Both arguments use \textbf{superadditivity}.
+	\note{
+		\small
+		These are the two conclusions of Lemma 3.1 in the supplied paper.
+		Regularity says that complementary coalitions cannot guarantee
+		incompatible outcomes: combining their strategies would force nothing.
+
+		Coalition monotonicity says that adding members cannot remove power.
+		The extra members contribute the harmless guarantee S, and
+		superadditivity preserves the original guarantee X.
+		We will use coalition monotonicity both to construct legal strategies
+		and to prove that the constructed game gives no coalition extra power.
+	}
+\end{frame}
+
+\begin{frame}{Proof: The Empty Coalition}
+	Assume $S$ is finite and non-empty. Define
+	\[
+		R=\bigcap_{Y\in E(\emptyset)}Y.
+	\]
+	\begin{itemize}
+		\item $E(\emptyset)$ is closed under finite intersections by superadditivity.
+		\item Hence $R\in E(\emptyset)$ and $R\neq\emptyset$.
+		\item Outcome monotonicity gives
+		\[
+			X\in E(\emptyset)\quad\Longleftrightarrow\quad R\subseteq X.
+		\]
+	\end{itemize}
+	\begin{block}{Construction invariant}
+		Every outcome of the constructed game will belong to $R$.
+	\end{block}
+	\note{
+		\small
+		This step explicitly handles the empty coalition. Its effective sets
+		must contain every reachable outcome of a representing game.
+		Because S is finite, its power set is finite, so the intersection defining
+		R is a finite intersection. Superadditivity applies even to two empty coalitions: they are disjoint.
+		Repeated application puts R in E of the empty coalition; liveness makes
+		R non-empty. Upward closure gives the displayed equivalence.
+
+		The finite-state qualification is deliberate. The supplied paper states
+		Theorem 3.2 without this restriction, but its construction does not
+		explicitly handle the empty coalition in the first inclusion. For infinite
+		S, finite-intersection closure alone does not put R in E of the empty
+		coalition. The proof presented here therefore establishes the finite-state
+		version, using Pauly's construction with the additional intersection R.
+		More generally, the same argument works whenever E of the empty coalition
+		has a least non-empty member R. 
+	}
+\end{frame}
+
+\begin{frame}{Proof: Constructing the Strategies}
+	\small
+	Let $N=\{1,\ldots,n\}$. Each player chooses
+	\[
+		\sigma_i=(f_i,t_i,h_i).
+	\]
+	\begin{description}
+		\item[Guarantees] For every $D\subseteq N$ containing $i$,
+		\[
+			f_i(D)\in E(D).
+		\]
+		\item[Selector index] $t_i\in\{0,\ldots,n-1\}$.
+		\item[Outcome choice] For every non-empty $Y\subseteq S$,
+		\[
+			h_i(Y)\in Y.
+		\]
+	\end{description}
+	Strategy sets are non-empty: take $f_i(D)=S$ and any choice function $h_i$.
+	\note{
+		\small
+		We now start the constructive direction. A strategy has three independent
+		components. First, f specifies a legal guarantee for every coalition
+		that the player could belong to. Second, t is an integer used to decide
+		who selects the final outcome. Third, h specifies which element the player
+		would choose from each non-empty candidate set.
+
+		All legal functions f and h and all selector indices are available.
+		For finite S, a choice function can be obtained by fixing an ordering
+		of S and choosing the first element of each non-empty set.
+		We use indices zero through n minus one; the paper uses one through n.
+		Both give exactly the same residues modulo n.
+	}
+\end{frame}
+
+\begin{frame}{Proof: From Guarantees to an Outcome}
+	\small
+	Start with partition $\{N\}$. Repeatedly split each block $D$
+	by equality of the values $f_i(D)$, for $i\in D$.
+
+	At the stable partition $\{D_1,\ldots,D_k\}$, write
+	$f(D_\ell)$ for the common value on $D_\ell$ and set
+	\[
+		W(f)=R\cap\bigcap_{\ell=1}^{k}f(D_\ell).
+	\]
+	\begin{block}{Well-defined outcome}
+		Superadditivity gives $W(f)\in E(N)$, hence $W(f)\neq\emptyset$.
+		\[
+			j=1+\left(\sum_{i=1}^{n}t_i\bmod n\right),
+			\qquad o(\sigma_N)=h_j(W(f)).
+		\]
+	\end{block}
+	The partition stabilizes because $N$ is finite.
+	\note{
+		\small
+		For each current block D, group its members according to their declared
+		value at D. After splitting, evaluate the declarations again at the
+		new, smaller blocks. Never merge blocks. Every strict refinement increases
+		the number of blocks, which is bounded by n, so the process terminates.
+
+		At termination all players in a block agree on a set that this block
+		can force. The blocks are disjoint and cover N. Superadditivity puts
+		the intersection of their guarantees in E(N). Intersecting also with
+		R in E of the empty coalition keeps it in E(N), again by superadditivity.
+		Therefore W is non-empty, so every choice function is defined on W.
+
+		The sum modulo n chooses one player, whose choice function determines
+		the outcome inside W. A single player can control the selector by changing
+		their own index after the other indices have been fixed. The set W itself
+		depends only on f, not on the indices or the choice functions.
+	}
+\end{frame}
+
+\begin{frame}{Proof: Preserving All Original Power}
+	\small
+	We show $E(C)\subseteq E_G(C)$. Let $X\in E(C)$.
+	\begin{block}{Case $C\neq\emptyset$}
+		Every $i\in C$ chooses $f_i(D)=X$ whenever $C\subseteq D$.
+		These declarations are legal by coalition monotonicity.
+
+		Members of $C$ remain together throughout refinement, so some final
+		block $D_\ell$ contains $C$ and has $f(D_\ell)=X$.
+		\[
+			o(\sigma_N)\in W(f)\subseteq f(D_\ell)=X.
+		\]
+	\end{block}
+	\begin{block}{Case $C=\emptyset$}
+		$X\in E(\emptyset)$ implies $R\subseteq X$, so every profile satisfies
+		\[
+			o(\sigma_N)\in W(f)\subseteq R\subseteq X.
+		\]
+	\end{block}
+	\note{
+		\small
+		Take a set X that C can force according to E. If C is non-empty,
+		its members declare X at every coalition containing all of C.
+		At their other coalitions they can declare S. Coalition monotonicity
+		makes the X declarations legal. Their indices and choice functions
+		can be arbitrary. Fix any response of the outsiders.
+
+		Initially C is inside N. Whenever a block contains all of C,
+		its members in C all declare X at that block, so refinement cannot
+		separate them. This is an induction over the refinement steps.
+		At the final block containing C, the shared declaration must be X.
+		Thus W and the actual outcome lie in X, independently of the outsiders.
+
+		The empty coalition requires a separate argument: there are no members
+		whose declarations could impose X. Instead, the invariant W contained
+		in R gives the desired guarantee for every complete profile.
+	}
+\end{frame}
+
+\begin{frame}{Proof: No Extra Power for Proper Coalitions}
+	\small
+	Let $C\subsetneq N$, $X\notin E(C)$, and fix any $\sigma_C$.
+	Put $B=N\setminus C\neq\emptyset$.
+	\begin{enumerate}
+		\item Outsiders choose $f_i(D)=S$ for every $D$ containing $i$.
+		Then $B$ remains in one final block, whose guarantee is $S$.
+		\item Other blocks cover some $C_0\subseteq C$. Thus
+		\[
+			W(f)=R\cap\!\bigcap_{D_\ell\subseteq C}f(D_\ell)
+			\in E(C_0)\subseteq E(C).
+		\]
+		\item Since $X\notin E(C)$, monotonicity implies $W(f)\nsubseteq X$.
+		Choose $s\in W(f)\setminus X$.
+		\item An outsider $j\in B$ chooses $t_j$ to select themselves
+		and $h_j(W(f))=s$. Hence $o(\sigma_N)=s\notin X$.
+	\end{enumerate}
+	Therefore $X\notin E_G(C)$.
+	\note{
+		\small
+		We prove the reverse inclusion by contraposition. Start from an arbitrary
+		strategy of C; we must produce a response that avoids X.
+		All outsiders declare S everywhere. They always agree at any block
+		containing them, so they remain together. Their final block may include
+		some members of C, but its common value is still S.
+
+		Every remaining block is contained in C. Let C zero be their union.
+		Their guarantees, together with R from the empty coalition, combine
+		by superadditivity into W in E(C zero). If there are no remaining blocks,
+		the intersection is S and W equals R, so the same conclusion holds.
+		Coalition monotonicity now gives W in E(C).
+
+		If W were contained in X, outcome monotonicity would put X in E(C),
+		contrary to the assumption. Choose a point s outside X in W.
+		Choose the index of outsider j modulo n to select j, then choose
+		their function h to pick s from W. These choices do not change W.
+		This defeats the initially fixed strategy of C. This also covers C empty, with W equal to R.
+	}
+\end{frame}
+
+\begin{frame}{Proof: The Grand Coalition and Conclusion}
+	Let $X\notin E(N)$. By $N$-maximality,
+	\[
+		S\setminus X\in E(\emptyset).
+	\]
+	The first inclusion gives $S\setminus X\in E_G(\emptyset)$.
+	Thus every profile ends outside $X$, and $X\notin E_G(N)$.
+
+	\begin{block}{Both inclusions, for every coalition}
+		\[
+			E(C)\subseteq E_G(C)
+			\quad\text{and}\quad
+			E_G(C)\subseteq E(C)
+			\quad\Longrightarrow\quad E_G=E.
+		\]
+	\end{block}
+	\textbf{For finite $S$:} playability exactly characterizes strategic power.
+	\note{
+		\small
+		The previous counterstrategy argument needs an outsider, so it cannot
+		be used for the grand coalition. Instead, use N-maximality in its
+		contrapositive form. If N cannot force X according to E, the empty
+		coalition forces the complement of X according to E.
+
+		We already proved that every original guarantee survives in the game,
+		including guarantees of the empty coalition. Therefore every game
+		profile ends outside X. In particular, the grand coalition has no profile
+		that forces X. This completes the reverse inclusion for the final case.
+
+		We have now constructed non-empty strategy sets and a total outcome
+		function and proved equality for every coalition, including both extremes.
+		Combined with the first direction, this proves the finite-state
+		characterization. The construction is a representation argument:
+		its purpose is to preserve power, not to minimize the number of strategies.
+	}
+\end{frame}
+
+% ============================================================
+
 \begin{frame}{From Coalition Frames to Models}
 
 	Let \(N\) be a finite, non-empty set of agents and
-	\(S \neq \varnothing\) a set of states.
+	\(S \neq \varnothing\) a finite set of states.
 
 	\vspace{0.4em}
 
@@ -484,7 +777,7 @@
 
 		The requirement that \(E(s)\) be playable is important.
 		Pauly's characterization theorem states that an effectivity
-		function is playable exactly when it is generated by some
+		function over a finite set of states is playable exactly when it is generated by some
 		strategic game.
 
 		Therefore coalition frames retain precisely the coalitional
