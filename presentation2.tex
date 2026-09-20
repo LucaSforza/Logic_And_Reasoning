@@ -77,13 +77,12 @@
 		\small
 		Good morning. Today I will discuss Coalition Logic and its quantified extension.
 		The question I want to address is what a group of agents can guarantee when the
-		outcome also depends on the choices of other agents. This is a question about
-		strategic ability. For example, a group of voters may be large enough to determine
+		outcome also depends on the choices of other agents.
+		For example, a group of voters may be large enough to determine
 		an election even when everyone else votes against it.
 
 		I will first explain how games give us a semantics for this kind of ability.
-		Then I will introduce Coalition Logic and show how Quantified Coalition Logic
-		lets us describe entire families of coalitions, such as all majorities.
+		Then I will introduce Coalition Logic and show how Quantified Coalition Logic can resolve the succinctness problem.
 	}
 \end{frame}
 
@@ -166,11 +165,7 @@
 
 		If we interpret accessible states as outcomes that a single agent can choose,
 		then possibility becomes an ability: the agent can choose a transition leading
-		to phi. This interpretation assumes that the agent controls the choice of the
-		successor. In arbitrary modal logic, diamond itself only expresses possibility.
-		For games with a non-empty set of available choices at every state, the
-		corresponding Kripke relation is serial and it can not model simultaneous actions between agents.
-
+		to phi.
 		\medskip
 		{\scriptsize Source: Pauly (2002), Sections 2 and 7.1.}
 
@@ -511,14 +506,17 @@
 	\note{
 		\small
 		These properties describe how guarantees behave. Outcome monotonicity says that
-		a guarantee survives when we weaken the objective: forcing X also forces any
-		larger set. Coalition monotonicity concerns the agents instead: adding members
-		cannot remove an existing ability.
+		a guarantee survives when we weaken the objective: if a coalition can force X then also forces any
+		larger set.
+
+		Coalition monotonicity concerns the agents instead: adding members
+		cannot remove an existing ability. for all sets $X$ such that $C$ is effective for $X$, then coalition $C$ expanded with another agent is still effective for $X$.
 
 		Regularity says that complementary coalitions cannot guarantee incompatible
-		outcomes. Maximality is the converse condition: if the complement cannot force
-		the opposite outcome set, the coalition can force the original set. We will
-		require maximality only for the grand coalition, not for every coalition.
+		outcomes. if $C$ is effective for $X$ then all other agents can not have a join strategy for not $X$
+
+		Maximality is the converse condition: if the complement cannot force
+		the opposite outcome set, the coalition can force the original set.
 
 		Superadditivity is the cooperation principle. Disjoint coalitions can combine
 		their strategies and obtain both guarantees, represented by an intersection.
@@ -691,10 +689,7 @@
 		a proposition p and returns the set of states where a proposition p is true.
 
 		This is the same semantic information about power as the game-frame view,
-		expressed without explicit strategies. The finite-state characterization
-		theorem justifies that abstraction. We are now ready to give formulas an exact
-		truth condition in the resulting model.
-
+		expressed without explicit strategies.
 		\medskip
 		{\scriptsize Source: Pauly (2002), Section 4.}
 
@@ -762,8 +757,7 @@
 		The ability formula is true exactly when this set belongs to E of s,C.
 		Equivalently, C has a joint strategy that reaches a phi-state against every
 		other response from other agents. In our previous example, the grand coalition can force p, but neither singleton
-		coalition can. This makes the connection between syntax and the game concrete.
-
+		coalition can.
 		\medskip
 		{\scriptsize Source: Pauly (2002), Section 4. QCL notation follows Agotnes et al. (2008), Section 2.}
 
@@ -806,10 +800,7 @@
 		modus ponens and replacement of provably equivalent objectives complete the system.
 
 		Soundness says that everything derivable is valid over playable coalition models.
-		Completeness says that every validity is derivable. This is a logical result,
-		distinct from the earlier representation theorem about games and effectivity
-		functions. I state the result without its canonical-model proof.
-
+		Completeness says that every validity is derivable.
 		\medskip
 		{\scriptsize Source: Pauly (2002), Figure 1 and Theorem 5.5.}
 
@@ -848,14 +839,8 @@
 		the subsets are majorities, giving two to the n minus one conjuncts.
 
 		Coalition monotonicity helps: it is enough to check the smallest majorities.
-		Their number is still the central binomial coefficient displayed here. This
-		motivates a language that names the condition on a coalition directly.
+		Their number is still the central binomial coefficient displayed here.
 
-		Notice why I use this example. On playable models, saying that some coalition
-		can force phi reduces to saying that the grand coalition can. Enumerating all
-		coalitions in that case would introduce avoidable repetition. Also, counting
-		the terms of a particular expansion is not a proof that every equivalent
-		formula must be that long.
 
 		\medskip
 		{\scriptsize Source: Adapted motivation from Agotnes et al. (2008), Sections 3 and 6.1. Counts refer to enumeration.}
@@ -1170,25 +1155,25 @@
 	the lower bound applies to every equivalent CL formula, not only to $\tau(\varphi_i)$.
 
 	\note{
-		\small
-		The previous slide showed equal expressive power. Theorem 5 states an
-		exponential difference in description length over general models.
-		With at least two agents, there is an infinite family of increasingly
-		long QCL formulas with this property: every equivalent CL formula has
-		length at least two raised to the length of the QCL formula.
+	\small
+	The previous slide showed equal expressive power. Theorem 5 states an
+	exponential difference in description length over general models.
+	With at least two agents, there is an infinite family of increasingly
+	long QCL formulas with this property: every equivalent CL formula has
+	length at least two raised to the length of the QCL formula.
 
-		Ell counts formula length, including coalition and predicate descriptions.
-		Equivalence means agreement at every state of every model in the comparison
-		class. Tau supplies an equivalent CL formula. The crucial word is ``every'':
-		no alternative CL formulation avoids the bound for this family.
+	Ell counts formula length, including coalition and predicate descriptions.
+	Equivalence means agreement at every state of every model in the comparison
+	class. Tau supplies an equivalent CL formula. The crucial word is ``every'':
+	no alternative CL formulation avoids the bound for this family.
 
-		This is a lower bound on all equivalent formulas, not merely the size of
-		one translation. It holds for a family, not for every QCL formula.
-		I state the result without its proof. Next, cardinality predicates let
-		us describe majority coalitions directly.
+	This is a lower bound on all equivalent formulas, not merely the size of
+	one translation. It holds for a family, not for every QCL formula.
+	I state the result without its proof. Next, cardinality predicates let
+	us describe majority coalitions directly.
 
-		\medskip
-		{\scriptsize Source: {\AA}gotnes et al. (2008), Section 4.2, Theorem 5, pp.~281--282.}
+	\medskip
+	{\scriptsize Source: {\AA}gotnes et al. (2008), Section 4.2, Theorem 5, pp.~281--282.}
 	}
 \end{frame}
 
