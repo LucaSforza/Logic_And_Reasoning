@@ -169,7 +169,7 @@
 		to phi. This interpretation assumes that the agent controls the choice of the
 		successor. In arbitrary modal logic, diamond itself only expresses possibility.
 		For games with a non-empty set of available choices at every state, the
-		corresponding Kripke relation is serial.
+		corresponding Kripke relation is serial and it can not model simultaneous actions between agents.
 
 		\medskip
 		{\scriptsize Source: Pauly (2002), Sections 2 and 7.1.}
@@ -364,7 +364,7 @@
 		\small
 		We now attach those games to states. Gamma maps each state s to a strategic game
 		whose outcomes belong to the same state space S. The agents remain the same
-		throughout the frame, while their available strategies and the outcome function
+		in all the possible games, while their available strategies and the outcome function
 		may depend on the current state.
 
 		The map is total: there is a game at every state. If we need a terminal situation,
@@ -425,12 +425,11 @@
 		each coalition can guarantee. This is the effectivity function. Notice its type:
 		E of C is a family of sets of outcomes, not just a set of outcomes.
 
-		Read the defining condition from left to right. X belongs to E of C when there
+		Read the defining condition from left to right. X belongs to E of C (or X is effective by coalition C) when there
 		exists a joint strategy for C such that every completion by the remaining agents
-		produces an outcome in X. The coalition chooses its strategy before we quantify
-		over the outsiders' responses. It may guarantee that the result lies somewhere
+		produces an outcome in X. It may guarantee that the result lies somewhere
 		in X without controlling which member of X occurs. An arbitrary function of
-		this type need not arise from a game. Playability will identify the relevant ones.
+		this type need not arise from a game. Playability will identify the relevant ones which we are interessed.
 
 		\medskip
 		{\scriptsize Source: Pauly (2002), Section 3.1.}
@@ -441,29 +440,29 @@
 % ============================================================
 
 \begin{frame}{A Concrete Example of Coalitional Power}
-    Agents $N=\{a,b\}$ choose $H$ or $T$ simultaneously.
-    Let $S=\{w,l\}$, with $p$ true exactly at $w$.
+	Agents $N=\{a,b\}$ choose $H$ or $T$ simultaneously.
+	Let $S=\{w,l\}$, with $p$ true exactly at $w$.
 
-    \begin{center}
-        \renewcommand{\arraystretch}{1.25}
-        \begin{tabular}{c cc}
-            \toprule
-            $a\backslash b$ & $H$ & $T$ \\
-            \midrule
-            $H$ & $w$ & $l$ \\
-            $T$ & $l$ & $w$ \\
-            \bottomrule
-        \end{tabular}
-    \end{center}
+	\begin{center}
+		\renewcommand{\arraystretch}{1.25}
+		\begin{tabular}{c cc}
+			\toprule
+			$a\backslash b$ & $H$ & $T$ \\
+			\midrule
+			$H$             & $w$ & $l$ \\
+			$T$             & $l$ & $w$ \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
 
-    \begin{itemize}
-        \item Every row and every column contains both outcomes.
-              Neither agent alone can guarantee $\{w\}$ or $\{l\}$.
-        \item Together they can choose a matching or a mismatching pair:
-              $\{w\},\{l\}\in E_G(\{a,b\})$.
-        \item Individually, their only effective set is $S$:
-              $E_G(\{a\})=E_G(\{b\})=\{S\}$.
-    \end{itemize}
+	\begin{itemize}
+		\item Every row and every column contains both outcomes.
+		      Neither agent alone can guarantee $\{w\}$ or $\{l\}$.
+		\item Together they can choose a matching or a mismatching pair:
+		      $\{w\},\{l\}\in E_G(\{a,b\})$.
+		\item Individually, their only effective set is $S$:
+		      $E_G(\{a\})=E_G(\{b\})=\{S\}$.
+	\end{itemize}
 
 	\note{
 		\small
@@ -488,26 +487,26 @@
 \end{frame}
 
 \begin{frame}{Properties of Effectivity Functions}
-    \small
-    Write $\overline{C}=N\setminus C$ and $\overline{X}=S\setminus X$.
-    \begin{align*}
-        \text{Outcome monotonicity:}\quad
-        &X\in E(C),\ X\subseteq X' \ \Rightarrow\ X'\in E(C).\\[0.5em]
-        \text{Coalition monotonicity:}\quad
-        &C\subseteq C' \ \Rightarrow\ E(C)\subseteq E(C').\\[0.5em]
-        C\text{-regularity:}\quad
-        &X\in E(C) \ \Rightarrow\ \overline{X}\notin E(\overline{C}).\\[0.5em]
-        C\text{-maximality:}\quad
-        &\overline{X}\notin E(\overline{C}) \ \Rightarrow\ X\in E(C).
-    \end{align*}
-    \begin{block}{Superadditivity: disjoint coalitions combine their guarantees}
-        If $C_1\cap C_2=\emptyset$, then
-        \[
-            X_1\in E(C_1),\ X_2\in E(C_2)
-            \ \Rightarrow\ X_1\cap X_2\in E(C_1\cup C_2).
-        \]
-    \end{block}
-    Regularity or maximality means the corresponding property holds for every $C$.
+	\small
+	Write $\overline{C}=N\setminus C$ and $\overline{X}=S\setminus X$.
+	\begin{align*}
+		\text{Outcome monotonicity:}\quad
+		 & X\in E(C),\ X\subseteq X' \ \Rightarrow\ X'\in E(C).         \\[0.5em]
+		\text{Coalition monotonicity:}\quad
+		 & C\subseteq C' \ \Rightarrow\ E(C)\subseteq E(C').            \\[0.5em]
+		C\text{-regularity:}\quad
+		 & X\in E(C) \ \Rightarrow\ \overline{X}\notin E(\overline{C}). \\[0.5em]
+		C\text{-maximality:}\quad
+		 & \overline{X}\notin E(\overline{C}) \ \Rightarrow\ X\in E(C).
+	\end{align*}
+	\begin{block}{Superadditivity: disjoint coalitions combine their guarantees}
+		If $C_1\cap C_2=\emptyset$, then
+		\[
+			X_1\in E(C_1),\ X_2\in E(C_2)
+			\ \Rightarrow\ X_1\cap X_2\in E(C_1\cup C_2).
+		\]
+	\end{block}
+	Regularity or maximality means the corresponding property holds for every $C$.
 
 	\note{
 		\small
@@ -570,6 +569,7 @@
 
 	\note{
 		\small
+		Leggi inizio slide.
 		We can now state the five conditions that define playability. No coalition can
 		force the empty outcome set, because every joint profile has an outcome.
 		Every coalition can force S, because every outcome is in S. These conditions
@@ -580,7 +580,7 @@
 		empty coalition does not guarantee the complement of X, then some complete
 		profile reaches X, and the grand coalition can choose it.
 
-		Coalition monotonicity and regularity follow from these conditions. They are
+		it can be proven that: Coalition monotonicity and regularity follow from these conditions. They are
 		not additional assumptions in this definition. The next theorem explains why
 		these five conditions are the right ones for representing strategic power.
 
@@ -688,8 +688,7 @@
 		force from s. The pair S,E is the coalition frame.
 
 		To evaluate formulas, we add the valuation pi. Our convention is that pi takes
-		a proposition p and returns the set of states where p is true. Thus the atomic
-		truth condition will be s belongs to pi of p.
+		a proposition p and returns the set of states where a proposition p is true.
 
 		This is the same semantic information about power as the game-frame view,
 		expressed without explicit strategies. The finite-state characterization
@@ -759,10 +758,10 @@
 		operator with square brackets; I use the QCL paper's notation to avoid confusing
 		it with the universal quantifier that comes later.
 
-		Phi superscript M denotes the truth set of phi: every state where phi holds.
+		Phi of M denotes the truth set of phi: every state where phi holds.
 		The ability formula is true exactly when this set belongs to E of s,C.
 		Equivalently, C has a joint strategy that reaches a phi-state against every
-		response. In our table, the grand coalition can force p, but neither singleton
+		other response from other agents. In our previous example, the grand coalition can force p, but neither singleton
 		coalition can. This makes the connection between syntax and the game concrete.
 
 		\medskip
@@ -772,40 +771,39 @@
 \end{frame}
 
 \begin{frame}{CL: Axioms and Completeness}
-    \small
-    The five playability conditions have modal counterparts:
-    \begin{align*}
-        &\neg\can{C}\bot,\qquad \can{C}\top
-            &&\text{Liveness and safety}\\[0.4em]
-        &\neg\can{\emptyset}\neg\varphi\to\can{N}\varphi
-            &&N\text{-maximality}\\[0.4em]
-        &\can{C}(\varphi\land\psi)\to\can{C}\psi
-            &&\text{Outcome monotonicity}\\[0.4em]
-        &(\can{C_1}\varphi\land\can{C_2}\psi)
-            \to\can{C_1\cup C_2}(\varphi\land\psi)
-            &&C_1\cap C_2=\emptyset
-    \end{align*}
-    Add propositional tautologies, modus ponens, and the rule
-    \[
-        \frac{\varphi\leftrightarrow\psi}
-        {\can{C}\varphi\leftrightarrow\can{C}\psi}.
-    \]
-    \begin{block}{Soundness and completeness (Pauly 2002)}
-        $\vdash_{\mathrm{CL}}\varphi\iff\models_{\mathrm{CL}}\varphi$:
-        provability captures validity over playable coalition models.
-    \end{block}
+	\small
+	The five playability conditions have modal counterparts:
+	\begin{align*}
+		 & \neg\can{C}\bot,\qquad \can{C}\top
+		 &                                                 & \text{Liveness and safety}  \\[0.4em]
+		 & \neg\can{\emptyset}\neg\varphi\to\can{N}\varphi
+		 &                                                 & N\text{-maximality}         \\[0.4em]
+		 & \can{C}(\varphi\land\psi)\to\can{C}\psi
+		 &                                                 & \text{Outcome monotonicity} \\[0.4em]
+		 & (\can{C_1}\varphi\land\can{C_2}\psi)
+		\to\can{C_1\cup C_2}(\varphi\land\psi)
+		 &                                                 & C_1\cap C_2=\emptyset
+	\end{align*}
+	Add propositional tautologies, modus ponens, and the rule
+	\[
+		\frac{\varphi\leftrightarrow\psi}
+		{\can{C}\varphi\leftrightarrow\can{C}\psi}.
+	\]
+	\begin{block}{Soundness and completeness (Pauly 2002)}
+		$\vdash_{\mathrm{CL}}\varphi\iff\models_{\mathrm{CL}}\varphi$:
+		provability captures validity over playable coalition models.
+	\end{block}
 
 	\note{
 		\small
 		The axioms mirror the semantic conditions. The first two exclude forcing a
 		contradiction and permit forcing a tautology. The next formula expresses
 		grand-coalition maximality. Outcome monotonicity lets us weaken an objective
-		from phi and psi to psi.
+		from (phi and psi) to psi.
 
 		The last schema is the most characteristic one: disjoint coalitions that can
 		force phi and psi can join and force their conjunction. Propositional reasoning,
 		modus ponens and replacement of provably equivalent objectives complete the system.
-		The equivalence rule applies to theorems, not arbitrary contingent assumptions.
 
 		Soundness says that everything derivable is valid over playable coalition models.
 		Completeness says that every validity is derivable. This is a logical result,
@@ -823,26 +821,27 @@
 % ============================================================
 
 \begin{frame}{The Succinctness Problem}
-    Consider the requirement:
-    \begin{center}
-        \emph{``Every majority coalition can force $\varphi$.''}
-    \end{center}
-    With $n=|N|$ agents, its direct CL specification is
-    \[
-        \bigwedge_{\substack{C\subseteq N\\ |C|>n/2}}
-        \can{C}\varphi.
-    \]
-    \begin{itemize}
-        \item For odd $n$, this enumeration has $2^{n-1}$ conjuncts.
-        \item Coalition monotonicity lets us keep only minimal majorities,
-              but there are still $\binom{n}{(n+1)/2}$ of them.
-        \item We want to describe the family of coalitions directly.
-    \end{itemize}
-    \medskip
-    \textbf{Question:} can we quantify over coalitions with a given property?
+	Consider the requirement:
+	\begin{center}
+		\emph{``Every majority coalition can force $\varphi$.''}
+	\end{center}
+	With $n=|N|$ agents, its direct CL specification is
+	\[
+		\bigwedge_{\substack{C\subseteq N\\ |C|>n/2}}
+		\can{C}\varphi.
+	\]
+	\begin{itemize}
+		\item For odd $n$, this enumeration has $2^{n-1}$ conjuncts.
+		\item Coalition monotonicity lets us keep only minimal majorities,
+		      but there are still $\binom{n}{(n+1)/2}$ of them.
+		\item We want to describe the family of coalitions directly.
+	\end{itemize}
+	\medskip
+	\textbf{Question:} can we quantify over coalitions with a given property?
 
 	\note{
 		\small
+		But now we find a problem of succinctness.
 		Now consider a specification about an entire family: every majority coalition
 		can force phi. CL names each coalition explicitly, so the direct specification
 		is a conjunction over all majorities. With an odd number n of agents, half of
@@ -929,18 +928,24 @@
 
 	\note{
 		\small
-		QCL introduces a separate language for properties of coalitions. Subseteq of D
-		means that all members of the coalition belong to D. Supseteq of D means that
-		the coalition contains every member of D. Boolean connectives combine these tests.
+		The main Innovation for solving this problem is to create a language with predicates over coalitions.
+		as atomic formulas we have Subseteq of D and it means that all members of the coalition belong to D.
+		Supseteq of D means that the coalition contains every member of D and boolean connectives combine
+		these tests.
 
-		Using both conditions gives equality with D. Incl of i says that i belongs to
+		The derived predicates are:
+		equality.
+		Incl of i says that i belongs to
 		the coalition, and excl of i says that i does not. Any holds for every coalition
 		because every set contains the empty set.
 
 		There are two different levels of evaluation. A predicate is evaluated on a
 		coalition, whereas a QCL formula is evaluated at a state of a model. The predicate
-		selects the coalitions over which the modal operator quantifies. At this point,
+		selects the coalitions over which the modal operator quantifies. But at this point,
 		cardinality is not a primitive. I will add it explicitly for the voting example.
+
+		We can also think that subseteq and supseteq are mutually definable, but it require an explonentially long formula
+		se we require both as atoms.
 
 		\medskip
 		{\scriptsize Source: Agotnes et al. (2008), Section 3.1.}
@@ -1013,28 +1018,28 @@
 % ============================================================
 
 \begin{frame}{Semantics of QCL}
-    We keep the same finite playable models $\mathcal{M}=(S,E,\pi)$.
-    Boolean clauses are unchanged, with $\mathcal{M},s\models p\iff s\in\pi(p)$.
+	We keep the same finite playable models $\mathcal{M}=(S,E,\pi)$.
+	Boolean clauses are unchanged, with $\mathcal{M},s\models p\iff s\in\pi(p)$.
 
-    \begin{block}{Existential quantification over coalitions}
-        \[
-        \begin{aligned}
-            \mathcal{M},s\models\langle P\rangle\varphi
-            \iff {}&\exists C\subseteq N:\ C\models_{\mathrm{cp}}P\\
-                   &\hspace{3.2em}\land\ \varphi^{\mathcal{M}}\in E(s,C).
-        \end{aligned}
-        \]
-    \end{block}
-    \begin{block}{Universal quantification over coalitions}
-        \[
-        \begin{aligned}
-            \mathcal{M},s\models[P]\varphi
-            \iff {}&\forall C\subseteq N:\ C\models_{\mathrm{cp}}P\\
-                   &\hspace{3.2em}\Longrightarrow\ \varphi^{\mathcal{M}}\in E(s,C).
-        \end{aligned}
-        \]
-    \end{block}
-    Each qualifying coalition may use its own strategy to force $\varphi$.
+	\begin{block}{Existential quantification over coalitions}
+		\[
+			\begin{aligned}
+				\mathcal{M},s\models\langle P\rangle\varphi
+				\iff {} & \exists C\subseteq N:\ C\models_{\mathrm{cp}}P        \\
+				        & \hspace{3.2em}\land\ \varphi^{\mathcal{M}}\in E(s,C).
+			\end{aligned}
+		\]
+	\end{block}
+	\begin{block}{Universal quantification over coalitions}
+		\[
+			\begin{aligned}
+				\mathcal{M},s\models[P]\varphi
+				\iff {} & \forall C\subseteq N:\ C\models_{\mathrm{cp}}P                  \\
+				        & \hspace{3.2em}\Longrightarrow\ \varphi^{\mathcal{M}}\in E(s,C).
+			\end{aligned}
+		\]
+	\end{block}
+	Each qualifying coalition may use its own strategy to force $\varphi$.
 
 	\note{
 		\small
@@ -1049,10 +1054,7 @@
 		require one shared strategy for all of them.
 
 		If no coalition satisfies P, the existential formula is false and the universal
-		formula is vacuously true. These are the ordinary empty-domain conventions for
-		the restricted quantifiers. The truth-set presentation is equivalent to finding
-		an effective outcome set entirely contained in the truth set, by outcome monotonicity.
-
+		formula is trivially true.
 		\medskip
 		{\scriptsize Source: Agotnes et al. (2008), Section 3.2, interpreted here on the finite playable subclass.}
 
@@ -1062,25 +1064,25 @@
 % ============================================================
 
 \begin{frame}{Why the Two Operators Are Not Dual}
-    \begin{align*}
-        [P]\varphi
-            &:\quad \text{every qualifying coalition can force }\varphi;\\[0.5em]
-        \neg\langle P\rangle\neg\varphi
-            &:\quad \text{no qualifying coalition can force }\neg\varphi.
-    \end{align*}
-    \begin{block}{The order of quantifiers matters}
-        \centering
-        $[P]\varphi:\ \forall C\ \exists\sigma_C\ \forall\sigma_{N\setminus C}$
-        \qquad
-        $\neg\langle P\rangle\neg\varphi:\
-        \forall C\ \forall\sigma_C\ \exists\sigma_{N\setminus C}$
-    \end{block}
-    In our $H/T$ game, take $P=\operatorname{eq}(\{a\})$.
-    Agent $a$ alone can force neither $p$ nor $\neg p$. Therefore:
-    \[
-        [P]p\text{ is false},\qquad
-        \neg\langle P\rangle\neg p\text{ is true}.
-    \]
+	\begin{align*}
+		[P]\varphi
+		 & :\quad \text{every qualifying coalition can force }\varphi;  \\[0.5em]
+		\neg\langle P\rangle\neg\varphi
+		 & :\quad \text{no qualifying coalition can force }\neg\varphi.
+	\end{align*}
+	\begin{block}{The order of quantifiers matters}
+		\centering
+		$[P]\varphi:\ \forall C\ \exists\sigma_C\ \forall\sigma_{N\setminus C}$
+		\qquad
+		$\neg\langle P\rangle\neg\varphi:\
+			\forall C\ \forall\sigma_C\ \exists\sigma_{N\setminus C}$
+	\end{block}
+	In our $H/T$ game, take $P=\operatorname{eq}(\{a\})$.
+	Agent $a$ alone can force neither $p$ nor $\neg p$. Therefore:
+	\[
+		[P]p\text{ is false},\qquad
+		\neg\langle P\rangle\neg p\text{ is true}.
+	\]
 
 	\note{
 		\small
@@ -1106,22 +1108,22 @@
 \end{frame}
 
 \begin{frame}{CL and QCL: Same Expressive Power}
-    A named coalition is a special case:
-    \[
-        \can{C}\varphi\ \equiv\ \langle\operatorname{eq}(C)\rangle\varphi.
-    \]
-    Conversely, finite quantification can be expanded:
-    \begin{align*}
-        \tau(\langle P\rangle\varphi)
-            &=\bigvee_{\substack{C\subseteq N\\C\models_{\mathrm{cp}}P}}
-                \can{C}\tau(\varphi),\\[0.5em]
-        \tau([P]\varphi)
-            &=\bigwedge_{\substack{C\subseteq N\\C\models_{\mathrm{cp}}P}}
-                \can{C}\tau(\varphi).
-    \end{align*}
-    \begin{block}{Truth-preserving translations}
-        For a fixed finite set of agents, CL and QCL express the same properties.
-    \end{block}
+	A named coalition is a special case:
+	\[
+		\can{C}\varphi\ \equiv\ \langle\operatorname{eq}(C)\rangle\varphi.
+	\]
+	Conversely, finite quantification can be expanded:
+	\begin{align*}
+		\tau(\langle P\rangle\varphi)
+		 & =\bigvee_{\substack{C\subseteq N   \\C\models_{\mathrm{cp}}P}}
+		\can{C}\tau(\varphi),                 \\[0.5em]
+		\tau([P]\varphi)
+		 & =\bigwedge_{\substack{C\subseteq N \\C\models_{\mathrm{cp}}P}}
+		\can{C}\tau(\varphi).
+	\end{align*}
+	\begin{block}{Truth-preserving translations}
+		For a fixed finite set of agents, CL and QCL express the same properties.
+	\end{block}
 
 	\note{
 		\small
@@ -1147,22 +1149,22 @@
 \end{frame}
 
 \begin{frame}{Succinctness: More Compact Specifications}
-    \begin{description}
-        \item[Expressive power] Which properties can the language describe?
-        \item[Succinctness] How long must the description be?
-    \end{description}
-    \medskip
-    In $[P]\varphi$, both the coalition condition and the objective appear once.
-    Its direct CL expansion repeats $\varphi$ for every coalition satisfying $P$.
+	\begin{description}
+		\item[Expressive power] Which properties can the language describe?
+		\item[Succinctness] How long must the description be?
+	\end{description}
+	\medskip
+	In $[P]\varphi$, both the coalition condition and the objective appear once.
+	Its direct CL expansion repeats $\varphi$ for every coalition satisfying $P$.
 
-    \begin{block}{Example: every majority can force $\varphi$}
-        For $11$ agents, direct enumeration gives $2^{10}=1024$ conjuncts.
-        Keeping only the $6$-agent coalitions still gives $\binom{11}{6}=462$.
-        A cardinality predicate describes this family directly.
-    \end{block}
-    \small
-    An exponential expansion alone does not establish an exponential lower
-    bound for every equivalent CL formula.
+	\begin{block}{Example: every majority can force $\varphi$}
+		For $11$ agents, direct enumeration gives $2^{10}=1024$ conjuncts.
+		Keeping only the $6$-agent coalitions still gives $\binom{11}{6}=462$.
+		A cardinality predicate describes this family directly.
+	\end{block}
+	\small
+	An exponential expansion alone does not establish an exponential lower
+	bound for every equivalent CL formula.
 
 	\note{
 		\small
@@ -1190,24 +1192,24 @@
 \section{Application: Majority Voting}
 
 \begin{frame}{Cardinality Predicates}
-    Extend the predicate language with $\operatorname{geq}(k)$:
-    \[
-        C\models_{\mathrm{cp}}\operatorname{geq}(k)
-        \quad\Longleftrightarrow\quad |C|\geq k.
-    \]
-    This extension is called \textbf{QCL$(\geq)$}.
-    \begin{block}{Strict majority of $n=|N|$ agents}
-        \[
-            \operatorname{maj}_n
-            \equiv\operatorname{geq}\!\left(\left\lfloor\frac n2\right\rfloor+1\right).
-        \]
-    \end{block}
-    \begin{itemize}
-        \item $[\operatorname{maj}_n]\varphi$: every majority can force $\varphi$.
-        \item $\neg\langle\neg\operatorname{maj}_n\rangle\varphi$:
-              no non-majority coalition can force $\varphi$.
-        \item Membership names are irrelevant to the cardinality test.
-    \end{itemize}
+	Extend the predicate language with $\operatorname{geq}(k)$:
+	\[
+		C\models_{\mathrm{cp}}\operatorname{geq}(k)
+		\quad\Longleftrightarrow\quad |C|\geq k.
+	\]
+	This extension is called \textbf{QCL$(\geq)$}.
+	\begin{block}{Strict majority of $n=|N|$ agents}
+		\[
+			\operatorname{maj}_n
+			\equiv\operatorname{geq}\!\left(\left\lfloor\frac n2\right\rfloor+1\right).
+		\]
+	\end{block}
+	\begin{itemize}
+		\item $[\operatorname{maj}_n]\varphi$: every majority can force $\varphi$.
+		\item $\neg\langle\neg\operatorname{maj}_n\rangle\varphi$:
+		      no non-majority coalition can force $\varphi$.
+		\item Membership names are irrelevant to the cardinality test.
+	\end{itemize}
 
 	\note{
 		\small
@@ -1232,25 +1234,25 @@
 \end{frame}
 
 \begin{frame}{Application: Majority Voting}
-    Three voters choose between $\omega_1$ and $\omega_2$.
-    Each votes for one outcome, and the majority determines the result.
-    \begin{block}{Every majority can choose either outcome}
-        \[
-            [\operatorname{geq}(2)]\omega_1
-            \ \land\ [\operatorname{geq}(2)]\omega_2.
-        \]
-    \end{block}
-    \begin{block}{No coalition of fewer than two voters can force an outcome}
-        \[
-            \neg\langle\neg\operatorname{geq}(2)\rangle\omega_1
-            \ \land\ \neg\langle\neg\operatorname{geq}(2)\rangle\omega_2.
-        \]
-    \end{block}
-    Exactly one outcome occurs, regardless of the votes:
-    \[
-        \can{\emptyset}\bigl((\omega_1\lor\omega_2)
-        \land\neg(\omega_1\land\omega_2)\bigr).
-    \]
+	Three voters choose between $\omega_1$ and $\omega_2$.
+	Each votes for one outcome, and the majority determines the result.
+	\begin{block}{Every majority can choose either outcome}
+		\[
+			[\operatorname{geq}(2)]\omega_1
+			\ \land\ [\operatorname{geq}(2)]\omega_2.
+		\]
+	\end{block}
+	\begin{block}{No coalition of fewer than two voters can force an outcome}
+		\[
+			\neg\langle\neg\operatorname{geq}(2)\rangle\omega_1
+			\ \land\ \neg\langle\neg\operatorname{geq}(2)\rangle\omega_2.
+		\]
+	\end{block}
+	Exactly one outcome occurs, regardless of the votes:
+	\[
+		\can{\emptyset}\bigl((\omega_1\lor\omega_2)
+		\land\neg(\omega_1\land\omega_2)\bigr).
+	\]
 
 	\note{
 		\small
@@ -1278,23 +1280,23 @@
 \section{Conclusions}
 
 \begin{frame}{Conclusions}
-    \begin{itemize}
-        \item \textbf{CL formalizes strategic ability:}
-              a coalition has a joint choice that succeeds against every response.
-              \medskip
-        \item \textbf{Effectivity functions record coalitional power:}
-              finite playable functions correspond to strategic games.
-              \medskip
-        \item \textbf{QCL describes families of coalitions:}
-              quantification preserves expressive power and gives direct
-              specifications of requirements such as majority voting.
-    \end{itemize}
-    \medskip
-    \begin{block}{Scope}
-        We describe what coalitions \emph{can} achieve in the next step.
-        Preferences, equilibria and unbounded temporal objectives require
-        additional machinery.
-    \end{block}
+	\begin{itemize}
+		\item \textbf{CL formalizes strategic ability:}
+		      a coalition has a joint choice that succeeds against every response.
+		      \medskip
+		\item \textbf{Effectivity functions record coalitional power:}
+		      finite playable functions correspond to strategic games.
+		      \medskip
+		\item \textbf{QCL describes families of coalitions:}
+		      quantification preserves expressive power and gives direct
+		      specifications of requirements such as majority voting.
+	\end{itemize}
+	\medskip
+	\begin{block}{Scope}
+		We describe what coalitions \emph{can} achieve in the next step.
+		Preferences, equilibria and unbounded temporal objectives require
+		additional machinery.
+	\end{block}
 
 	\note{
 		\small
@@ -1320,19 +1322,19 @@
 \end{frame}
 
 \begin{frame}{References}
-    \begin{thebibliography}{9}
-        \bibitem{pauly2002}
-        Marc Pauly (2002).
-        \newblock \emph{A Modal Logic for Coalitional Power in Games}.
-        \newblock Journal of Logic and Computation, 12(1), 149--166.
+	\begin{thebibliography}{9}
+		\bibitem{pauly2002}
+		Marc Pauly (2002).
+		\newblock \emph{A Modal Logic for Coalitional Power in Games}.
+		\newblock Journal of Logic and Computation, 12(1), 149--166.
 
-        \bibitem{agotnes2008}
-        Thomas {\AA}gotnes, Wiebe van der Hoek and Michael Wooldridge (2008).
-        \newblock \emph{Quantified Coalition Logic}.
-        \newblock Synthese, 165, 269--294.
-        \newblock \href{https://doi.org/10.1007/s11229-008-9363-1}
-                      {doi:10.1007/s11229-008-9363-1}.
-    \end{thebibliography}
+		\bibitem{agotnes2008}
+		Thomas {\AA}gotnes, Wiebe van der Hoek and Michael Wooldridge (2008).
+		\newblock \emph{Quantified Coalition Logic}.
+		\newblock Synthese, 165, 269--294.
+		\newblock \href{https://doi.org/10.1007/s11229-008-9363-1}
+		{doi:10.1007/s11229-008-9363-1}.
+	\end{thebibliography}
 
 	\note{
 		\small
