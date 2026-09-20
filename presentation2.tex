@@ -1148,44 +1148,47 @@
 	}
 \end{frame}
 
-\begin{frame}{Succinctness: More Compact Specifications}
-	\begin{description}
-		\item[Expressive power] Which properties can the language describe?
-		\item[Succinctness] How long must the description be?
-	\end{description}
-	\medskip
-	In $[P]\varphi$, both the coalition condition and the objective appear once.
-	Its direct CL expansion repeats $\varphi$ for every coalition satisfying $P$.
+\begin{frame}{The Succinctness Theorem}
+	\begin{theorem}[{\AA}gotnes et al., 2008, Theorem 5]
+		Assume $|N|\geq 2$. Over general models, there is an infinite sequence
+		of distinct QCL formulas $\varphi_0,\varphi_1,\ldots$ of increasing length
+		such that, for every $i\geq 0$:
+		\begin{enumerate}
+			\item $\tau(\varphi_i)$ is a CL formula equivalent to $\varphi_i$;
+			\item every CL formula $\psi_i$ equivalent to $\varphi_i$ satisfies
+			      \[
+				      \boxed{\ell(\psi_i)\geq 2^{\ell(\varphi_i)}}.
+			      \]
+		\end{enumerate}
+	\end{theorem}
+	\smallskip
+	Here $\ell$ is the paper's formula-length measure, including the sizes
+	of coalition descriptions and predicates.
 
-	\begin{block}{Example: every majority can force $\varphi$}
-		For $11$ agents, direct enumeration gives $2^{10}=1024$ conjuncts.
-		Keeping only the $6$-agent coalitions still gives $\binom{11}{6}=462$.
-		A cardinality predicate describes this family directly.
-	\end{block}
-	\small
-	An exponential expansion alone does not establish an exponential lower
-	bound for every equivalent CL formula.
+	\medskip
+	\textbf{QCL is exponentially more succinct than CL:}
+	the lower bound applies to every equivalent CL formula, not only to $\tau(\varphi_i)$.
 
 	\note{
 		\small
-		Expressive power and succinctness answer different questions. Two languages
-		may describe the same properties while giving very different lengths to
-		their descriptions. A QCL operator keeps the condition P and the objective
-		phi in one place, whereas its direct CL translation repeats the objective.
+		The previous slide showed equal expressive power. Theorem 5 states an
+		exponential difference in description length over general models.
+		With at least two agents, there is an infinite family of increasingly
+		long QCL formulas with this property: every equivalent CL formula has
+		length at least two raised to the length of the QCL formula.
 
-		For eleven agents, enumerating all majorities gives 1024 conjuncts. Even after
-		using coalition monotonicity, there are 462 minimal majorities of size six.
-		A cardinality test will describe the whole family without listing those sets.
+		Ell counts formula length, including coalition and predicate descriptions.
+		Equivalence means agreement at every state of every model in the comparison
+		class. Tau supplies an equivalent CL formula. The crucial word is ``every'':
+		no alternative CL formulation avoids the bound for this family.
 
-		These numbers measure the displayed enumeration. They do not prove a lower
-		bound for every logically equivalent CL formula. The QCL paper treats a formal
-		exponential separation over general models in Section 4.2. Here I keep the
-		claim tied to the explicit translation and our playable-model examples.
-		Next I will introduce the cardinality predicate used by the voting specification.
+		This is a lower bound on all equivalent formulas, not merely the size of
+		one translation. It holds for a family, not for every QCL formula.
+		I state the result without its proof. Next, cardinality predicates let
+		us describe majority coalitions directly.
 
 		\medskip
-		{\scriptsize Source: Agotnes et al. (2008), Sections 4.2 and 6.1. Enumeration counts computed for n=11.}
-
+		{\scriptsize Source: {\AA}gotnes et al. (2008), Section 4.2, Theorem 5, pp.~281--282.}
 	}
 \end{frame}
 
